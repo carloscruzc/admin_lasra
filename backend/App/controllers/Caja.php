@@ -339,74 +339,7 @@ html;
         
 
     }
-    // public function getSell(){
-    //     $codigo = $_POST['codigo'];
-
-    //     date_default_timezone_set('America/Mexico_City');
-
-    //     // $this->generaterQr($clave_ticket);
-
-    //     $datos_user = AsistentesDao::getDatauser($codigo)[0];
-    //     $user_id = $datos_user['user_id']; 
-
-        
-        
-    //     $nombre_completo = $datos_user['nombre'] . " " . $datos_user['apellidop'] . " " . $datos_user['apellidom'];
-
-
-    //     $productos = CajaDao::getProductosPendientesPagoTicketSitio($user_id);
-
-    //     // echo count($productos);
-    //     // exit;
-
-    //     if(count($productos) <= 0){
-    //         $data = [
-    //             "status" => 'fail'
-    //         ];
-    //         echo json_encode($data);
-    //     }
-
-    //     $tipo_cambio = CajaDao::getTipoCambio()['tipo_cambio'];
-
-      
-       
-
-    //     foreach($productos as $key => $value){            
-            
-            
-    //         // if($value['es_congreso'] == 1){
-    //         //     $precio = $value['amout_due'];
-    //         // }else if($value['es_servicio'] == 1){
-    //         //     $precio = $value['precio_publico'];
-    //         // }else if($value['es_curso'] == 1){
-    //         //     $precio = $value['precio_publico'];
-    //         // }
-
-            
-           
-    //         $total_productos = CajaDao::getCountProductos($user_id,$value['id_producto'])[0];
-    //         $productos[$key]['cantidad'] = $total_productos['numero_productos'];
-         
-    //         // array_push($productos[$key],["cantidad" => $total_productos['numero_productos']]);
-
-
-    //     }
-
-
-    //     if($productos){
-    //         $data = [
-    //             "status" => 'success',
-    //             "nombre_completo" => $nombre_completo,
-    //             "datos_user" => $datos_user,
-    //             "productos" => $productos,
-    //             "tipo_cambio" => $tipo_cambio
-                
-    //         ];
-    //         echo json_encode($data);
-    //     }
-        
-    // }
-
+    
 
     public function setPay(){
 
