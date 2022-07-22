@@ -202,6 +202,9 @@
 <script>
     $(document).ready(function() {
 
+        $('#comprobantes a').addClass('active');
+        $('#comprobantes .fa-file').addClass('text-white');
+
         $(".btn_ver_comprobante").on("click", function() {
             var url_archivo = $(this).attr('data-url-archivo');
             var user_id = $(this).attr('data-user-id');
