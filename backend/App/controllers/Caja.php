@@ -695,11 +695,18 @@ html;
 
         //imagen Qr
         // $pdf->Image('qrs/'.$clave.'.png' , 152 ,245, 35 , 38,'PNG');
+        $fecha_split = explode(' ',$fecha);
+        $path_file = 'comporbantes_pago/'.$user_id.'-'.$fecha_split[0].'.pdf';
+        $name_file = $user_id.'-'.$fecha_split[0].'.pdf';
 
+        if (file_exists($path_file)) {
+            $name_file = $user_id.'-'.$fecha_split[0].'-2.pdf';
+        }
+        
 
+        // $pdf->Output();
+        $pdf->Output('F','comporbantes_pago/'.$name_file.'.pdf',true);
         $pdf->Output();
-        // $pdf->Output('F','constancias/'.$clave.$id_curso.'.pdf');
-
         // $pdf->Output('F', 'C:/pases_abordar/'. $clave.'.pdf');
     }
 
