@@ -129,18 +129,19 @@ html;
 
             if($value['es_congreso'] == 1 && $value['clave_socio'] == ""){
                 $precio = $value['amout_due'];
+                // $precio = $value['precio_publico'];
             }elseif($value['es_congreso'] == 1 && $value['clave_socio'] != ""){
                 $precio = $value['amout_due'];
             }
             else if($value['es_servicio'] == 1 && $value['clave_socio'] == ""){
                 $precio = $value['precio_publico'];
             }else if($value['es_servicio'] == 1 && $value['clave_socio'] != ""){
-                $precio = $value['precio_publico'];
+                $precio = $value['precio_socio'];
             }
             else if($value['es_curso'] == 1  && $value['clave_socio'] == ""){
                 $precio = $value['precio_publico'];
             }else if($value['es_curso'] == 1  && $value['clave_socio'] != ""){
-                $precio = $value['precio_publico'];
+                $precio = $value['precio_socio'];
             }
             
             $count_producto = CajaDao::getCountProductos($user_id,$value['id_producto'])[0];
@@ -219,21 +220,19 @@ html;
 
             if($value['es_congreso'] == 1 && $value['clave_socio'] == ""){
                 $precio = $value['amout_due'];
+                // $precio = $value['precio_publico'];
             }elseif($value['es_congreso'] == 1 && $value['clave_socio'] != ""){
-                $precio = 0;
-                $checked = 'checked';
+                $precio = $value['amout_due'];
             }
             else if($value['es_servicio'] == 1 && $value['clave_socio'] == ""){
                 $precio = $value['precio_publico'];
             }else if($value['es_servicio'] == 1 && $value['clave_socio'] != ""){
-                $precio = 0;
-                $precio = $value['precio_publico'];
+                $precio = $value['precio_socio'];
             }
             else if($value['es_curso'] == 1  && $value['clave_socio'] == ""){
                 $precio = $value['precio_publico'];
             }else if($value['es_curso'] == 1  && $value['clave_socio'] != ""){
-                $precio = 0;
-                $precio = $value['precio_publico'];
+                $precio = $value['precio_socio'];
             }
 
             if($value['max_compra'] <= 1){
