@@ -426,6 +426,15 @@ sql;
       return $mysqli->update($query);
     }
 
+    public static function updateReferencia($id,$referencia){
+      $mysqli = Database::getInstance(true);
+      $query=<<<sql
+      UPDATE utilerias_administradores SET referencia = '$referencia' WHERE user_id = '$id'
+sql;
+
+      return $mysqli->update($query);
+    }
+
     public static function getIdTicket($clave){
       $mysqli = Database::getInstance();
       $query=<<<sql

@@ -31,34 +31,14 @@ class Principal extends Controller{
      
 html;
 
-    //   $permisoGlobalHidden = (Controller::getPermisoGlobalUsuario($this->__usuario)[0]['permisos_globales']) != 1 ? "style=\"display:none;\"" : "";
-    //   $asistentesHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_asistentes", 1)==0)? "style=\"display:none;\"" : "";  
-    //   $vuelosHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_vuelos", 1)==0)? "style=\"display:none;\"" : "";  
-    //   $pickUpHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_pickup", 1)==0)? "style=\"display:none;\"" : "";
-    //   $habitacionesHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_habitaciones", 1)==0)? "style=\"display:none;\"" : ""; 
-    //   $cenasHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_cenas", 1)==0)? "style=\"display:none;\"" : ""; 
-    //   $cenasHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_cenas", 1)==0)? "style=\"display:none;\"" : ""; 
-    //   $aistenciasHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_asistencias", 1)==0)? "style=\"display:none;\"" : ""; 
-    //   $vacunacionHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_vacunacion", 1)==0)? "style=\"display:none;\"" : ""; 
-    //   $pruebasHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_pruebas_covid", 1)==0)? "style=\"display:none;\"" : "";
-    //   $configuracionHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_configuracion", 1)==0)? "style=\"display:none;\"" : "";
-    //   $utileriasHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_utilerias", 1)==0)? "style=\"display:none;\"" : "";  
+    
 
-    //   $all_ra = AsistentesDao::getAllRegistrosAcceso();
-    // //   $this->setTicketVirtual($all_ra);
+      $all_ra = AsistentesDao::getAllRegistrosAcceso();
+
+    //   var_dump($all_ra);
+      $this->setReferencia($all_ra);
     //   $this->setClaveRA($all_ra);
 
-    //   View::set('permisoGlobalHidden',$permisoGlobalHidden);
-    //   View::set('asistentesHidden',$asistentesHidden);
-    //   View::set('vuelosHidden',$vuelosHidden);
-    //   View::set('pickUpHidden',$pickUpHidden);
-    //   View::set('habitacionesHidden',$habitacionesHidden);
-    //   View::set('cenasHidden',$cenasHidden);
-    //   View::set('aistenciasHidden',$aistenciasHidden);
-    //   View::set('vacunacionHidden',$vacunacionHidden);
-    //   View::set('pruebasHidden',$pruebasHidden);
-    //   View::set('configuracionHidden',$configuracionHidden);
-    //   View::set('utileriasHidden',$utileriasHidden);
 
       View::set('asideMenu',$this->_contenedor->asideMenu());
       View::set('header',$this->_contenedor->header($extraHeader));
@@ -77,6 +57,28 @@ html;
                 $this->generaterQr($clave_10);
             }
         }
+    }
+
+    public function setReferencia($asistentes){
+
+
+        foreach ($asistentes as $key => $value) {
+            if ($value['referencia'] == '' || $value['clave'] == NULL || $value['clave'] == 'NULL' || $value['clave'] == ' ') {
+                $date = date('Y-m-d');
+                $str_nombre = str_split($value['nombre']);
+                $str_apellidop = str_split($value['apellidop']);
+                $str_apellidom = str_split($value['apellidom']);
+
+                $fecha = explode('-',$date);
+
+                $referencia = $str_nombre[0].$str_nombre[1].$str_apellidop[0].$str_apellidop[1].$fecha[0].$fecha[1].$fecha[2];
+
+                AsistentesDao::updateReferencia($value['user_id'], $referencia);
+                
+            }
+        }
+
+      
     }
 
     public function setClaveRA($all_ra){
