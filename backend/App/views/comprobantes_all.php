@@ -1,6 +1,6 @@
 <?php echo $header; ?>
 <title>
-    Comprobantes - Lasra - GRUPO LAHE
+    Comprobantes - LASRA - GRUPO LAHE
 </title>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -78,7 +78,7 @@
                         <div class="col-auto">
                             <div class="bg-gradient-pink avatar avatar-xl position-relative">
                                 <!-- <img src="../../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm"> -->
-                                <span class="fa fal fa-stream" style="font-size: xx-large;"></span>
+                                <span class="fa fal fa-receipt" style="font-size: xx-large;"></span>
                             </div>
                         </div>
                         <div class="col-auto my-auto">
@@ -203,7 +203,7 @@
     $(document).ready(function() {
 
         $('#comprobantes a').addClass('active');
-        $('#comprobantes .fa-file').addClass('text-white');
+        $('#comprobantes .fa-receipt').addClass('text-white');
 
         $(".btn_ver_comprobante").on("click", function() {
             var url_archivo = $(this).attr('data-url-archivo');

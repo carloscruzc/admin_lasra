@@ -924,7 +924,7 @@ html;
                 else
                 {
                     $clave_socio .= <<<html
-                    <span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>SOCIO AMH NO ACTIVO</strong></span>
+                    <span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>SOCIO NO ACTIVO</strong></span>
                     <span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>TOTAL ANUALIDADES ADEUDADAS: {$socio['adeudos']}</strong></span>  
 html;
                 }
@@ -956,11 +956,11 @@ html;
                     if($impreso >= 1){
                         $gafetes_httml .=<<<html
                 <td style="text-align:center; vertical-align:middle;">
-                <span class="badge badge-success" style="background-color: #7CE644; color:white;"><strong>GAFETE YA IMPRESO</strong></span>
+                <span class="badge badge-success" style="background-color: #44509C; color:white;"><strong>GAFETE YA IMPRESO</strong></span>
                 <br>
-                <span class="badge badge-success" style="background-color: #08D3C0; color:white;"><strong>{$impreso['fecha_hora']}</strong></span>
+                <span class="badge badge-success" style="background-color: #1279C4; color:white;"><strong>{$impreso['fecha_hora']}</strong></span>
                 <br>
-                    <a href="/RegistroAsistencia/abrirpdfGafete/{$value['clave']}/{$value['ticket_virtual']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
+                    <a style="margin-top:5px;" href="/RegistroAsistencia/abrirpdfGafete/{$value['user_id']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
 
                     <!--<a href="/Constancias/abrirConstancia/{$value['clave']}/{$id_producto}" class="btn bg-pink btn-icon-only text-white" title="Imprimir Constancia Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>
                     
@@ -974,7 +974,7 @@ html;
                 <td style="text-align:center; vertical-align:middle;">
                 <span class="badge badge-success" style="background-color: #0c6300; color:white; margin:10px;"><strong>DISPONIBLE PARA IMPRIMIR</strong></span>
                 <br>
-                    <a href="/RegistroAsistencia/abrirpdfGafete/{$value['clave']}/{$value['ticket_virtual']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
+                    <a href="/RegistroAsistencia/abrirpdfGafete/{$value['user_id']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
 
                     <!--<a href="/Constancias/abrirConstancia/{$value['clave']}/{$id_producto}" class="btn bg-pink btn-icon-only text-white" title="Imprimir Constancia Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>
                     
@@ -993,11 +993,11 @@ html;
                     if($impreso >= 1){
                         $gafetes_httml .=<<<html
                 <td style="text-align:center; vertical-align:middle;">
-                <span class="badge badge-success" style="background-color: #7CE644; color:white;"><strong>GAFETE YA IMPRESO</strong></span>
+                <span class="badge badge-success" style="background-color: #44509C; color:white;"><strong>GAFETE YA IMPRESO</strong></span>
                 <br>
-                <span class="badge badge-success" style="background-color: #08D3C0; color:white;"><strong>{$impreso['fecha_hora']}</strong></span>
+                <span class="badge badge-success" style="background-color: #1279C4; color:white;"><strong>{$impreso['fecha_hora']}</strong></span>
                 <br>
-                    <a href="/RegistroAsistencia/abrirpdfGafete/{$value['clave']}/{$value['ticket_virtual']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
+                    <a style="margin-top:5px;" href="/RegistroAsistencia/abrirpdfGafete/{$value['user_id']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
 
                     <!--<a href="/Constancias/abrirConstancia/{$value['clave']}/{$id_producto}" class="btn bg-pink btn-icon-only text-white" title="Imprimir Constancia Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>
                     
@@ -1013,9 +1013,9 @@ html;
                 
                     $gafetes_httml .=<<<html
                 <td style="text-align:center; vertical-align:middle;">
-                <span class="badge badge-success" style="background-color: #08D3C0; color:white; margin:10px;"><strong>REVISE ANTES DE IMPRIMIR</strong></span>
+                <span class="badge badge-success" style="background-color: #1279C4; color:white; margin:10px;"><strong>REVISE ANTES DE IMPRIMIR</strong></span>
                 <br>
-                    <a href="/RegistroAsistencia/abrirpdfGafete/{$value['clave']}/{$value['ticket_virtual']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
+                    <a href="/RegistroAsistencia/abrirpdfGafete/{$value['user_id']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
 
                     <!--<a href="/Constancias/abrirConstancia/{$value['clave']}/{$id_producto}" class="btn bg-pink btn-icon-only text-white" title="Imprimir Constancia Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>
                     
@@ -1278,7 +1278,7 @@ html;
                             </div>
                            
                             <!--<div class="d-flex flex-column justify-content-center text-black">
-                                  <a href="/RegistroAsistencia/abrirpdfGafete/{$value['clave']}/{$value['ticket_virtual']}" class="btn bg-pink btn-icon-only morado-musa-text" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
+                                  <a href="/RegistroAsistencia/abrirpdfGafete/{$value['user_id']}" class="btn bg-pink btn-icon-only morado-musa-text" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
                             </div>-->
                             <!--<div class="d-flex flex-column justify-content-center text-black">
                                  <button class="btn bg-turquoise btn-icon-only text-white" data-toggle="modal" data-target="#modal-constancia-{$value['id_registro_acceso']}" id="btn-etiqueta-{$value['id_registro_acceso']}" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="Imprimir Etiquetas" title="Imprimir Etiquetas"><i class="fas fa-tag"></i></button>
@@ -1286,7 +1286,7 @@ html;
                         </div>
                         <div class="d-flex flex-column justify-content-center text-black">
                         <div>
-                            <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>{$value['clave']}</strong></span>                              <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>{$value['user_id']} </strong></span>
+                            <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>{$value['referencia']}</strong></span>                              <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>{$value['user_id']} </strong></span>
                         </div>
                             <div class="d-flex flex-column justify-content-center">
                                 <a href="/Asistentes/Detalles/{$value['user_id']}" target="_blank">
@@ -1299,7 +1299,7 @@ html;
                             {$clave_beca_2}
                             <div class="d-flex flex-column justify-content-center">
                                 <u><h6 class="mb-0 text-sm text-black"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['usuario']}</h6></u>
-                                <h6 class="mb-0 text-sm text-black"><span class="fa fa-map-pin" style="font-size: 13px"></span> {$value['pais']}</h6>
+                                <h6 class="mb-0 text-sm text-black"><span class="fa fa-flag" style="font-size: 13px"></span> {$value['pais']}<span class="fa fa-map-pin" style="margin-left: 3px; font-size: 13px"></span> {$value['estado']}</h6>
                             </div>
                             <hr>
                             <div class="d-flex flex-column justify-content-center">
@@ -1429,362 +1429,364 @@ html;
         return $modal;
     }
 
-    public function getComprobanteVacunacionById($id)
-    {
+    /*COMPROBANTES DE VACUNACION Y PRUEBAS COVID*/
 
-        $comprobantes = ComprobantesVacunacionDao::getComprobateByClaveUser($id);
-        $tabla = '';
-        foreach ($comprobantes as $key => $value) {
+//     public function getComprobanteVacunacionById($id)
+//     {
 
-            $tabla .= <<<html
-        <tr>
-          <td class="text-center">
-            <span class="badge badge-success"><i class="fas fa-check"> </i> Aprobado</span> <br>
-            <span class="badge badge-secondary">Folio <i class="fas fa-hashtag"> </i> {$value['id_c_v']}</span>
-             <hr>
-             <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br><span class="fas fa-suitcase"> </span> {$value['nombre_ejecutivo']} <span class="badge badge-success" style="background-color:  {$value['color']}; color:white "><strong>{$value['nombre_linea_ejecutivo']}</strong></span></p>-->
+//         $comprobantes = ComprobantesVacunacionDao::getComprobateByClaveUser($id);
+//         $tabla = '';
+//         foreach ($comprobantes as $key => $value) {
+
+//             $tabla .= <<<html
+//         <tr>
+//           <td class="text-center">
+//             <span class="badge badge-success"><i class="fas fa-check"> </i> Aprobado</span> <br>
+//             <span class="badge badge-secondary">Folio <i class="fas fa-hashtag"> </i> {$value['id_c_v']}</span>
+//              <hr>
+//              <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br><span class="fas fa-suitcase"> </span> {$value['nombre_ejecutivo']} <span class="badge badge-success" style="background-color:  {$value['color']}; color:white "><strong>{$value['nombre_linea_ejecutivo']}</strong></span></p>-->
                       
-          </td>
-          <td>
-            <h6 class="mb-0 text-sm"> <span class="fas fa-user-md"> </span>  {$value['nombre_completo']}</h6>
-            <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-business-time" style="font-size: 13px;"></span><b> Bu: </b>{$value['nombre_bu']}</p>-->
-              <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-pills" style="font-size: 13px;"></span><b> Linea Principal: </b>{$value['nombre_linea']}</p>
-              <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-hospital" style="font-size: 13px;"></span><b> Posición: </b>{$value['nombre_posicion']}</p>-->
+//           </td>
+//           <td>
+//             <h6 class="mb-0 text-sm"> <span class="fas fa-user-md"> </span>  {$value['nombre_completo']}</h6>
+//             <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-business-time" style="font-size: 13px;"></span><b> Bu: </b>{$value['nombre_bu']}</p>-->
+//               <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-pills" style="font-size: 13px;"></span><b> Linea Principal: </b>{$value['nombre_linea']}</p>
+//               <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-hospital" style="font-size: 13px;"></span><b> Posición: </b>{$value['nombre_posicion']}</p>-->
 
-            <hr>
+//             <hr>
 
-              <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br></p-->
+//               <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br></p-->
 
-              <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span><b> </b>{$value['telefono']}</p>
-              <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-mail-bulk" style="font-size: 13px;"></span><b>  </b><a "mailto:{$value['email']}">{$value['email']}</a></p-->
+//               <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span><b> </b>{$value['telefono']}</p>
+//               <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-mail-bulk" style="font-size: 13px;"></span><b>  </b><a "mailto:{$value['email']}">{$value['email']}</a></p-->
 
-              <div class="d-flex flex-column justify-content-center">
-                  <u><a href="mailto:{$value['email']}"><h6 class="mb-0 text-sm"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['email']}</h6></a></u>
-                  <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank"><p class="text-sm font-weight-bold text-secondary mb-0"><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span> {$value['telefono']}</p></a></u>
-              </div>
-          </td>
-          <td>
-            <p class="text-center" style="font-size: small;"><span class="fa fa-calendar-check-o" style="font-size: 13px;"></span> Fecha Carga: {$value['fecha_carga_documento']}</p>
-            <p class="text-center" style="font-size: small;"><span class="fa fa-syringe" style="font-size: 13px;"></span> # Dosis: {$value['numero_dosis']}</p>
-            <p class="text-center" style="font-size: small;"><span class="fa fa-cubes" style="font-size: 13px;"></span> <strong>Marca: {$value['marca_dosis']}</strong></p>
-          </td>
-          <td class="text-center">
-            <button type="button" class="btn bg-gradient-primary btn_iframe" data-document="{$value['documento']}" data-toggle="modal" data-target="#ver-documento-{$value['id_c_v']}">
-              <i class="fas fa-eye"></i>
-            </button>
-          </td>
-        </tr>
+//               <div class="d-flex flex-column justify-content-center">
+//                   <u><a href="mailto:{$value['email']}"><h6 class="mb-0 text-sm"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['email']}</h6></a></u>
+//                   <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank"><p class="text-sm font-weight-bold text-secondary mb-0"><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span> {$value['telefono']}</p></a></u>
+//               </div>
+//           </td>
+//           <td>
+//             <p class="text-center" style="font-size: small;"><span class="fa fa-calendar-check-o" style="font-size: 13px;"></span> Fecha Carga: {$value['fecha_carga_documento']}</p>
+//             <p class="text-center" style="font-size: small;"><span class="fa fa-syringe" style="font-size: 13px;"></span> # Dosis: {$value['numero_dosis']}</p>
+//             <p class="text-center" style="font-size: small;"><span class="fa fa-cubes" style="font-size: 13px;"></span> <strong>Marca: {$value['marca_dosis']}</strong></p>
+//           </td>
+//           <td class="text-center">
+//             <button type="button" class="btn bg-gradient-primary btn_iframe" data-document="{$value['documento']}" data-toggle="modal" data-target="#ver-documento-{$value['id_c_v']}">
+//               <i class="fas fa-eye"></i>
+//             </button>
+//           </td>
+//         </tr>
 
-        <div class="modal fade" id="ver-documento-{$value['id_c_v']}" tabindex="-1" role="dialog" aria-labelledby="ver-documento-{$value['id_c_v']}" aria-hidden="true">
-          <div class="modal-dialog" role="document" style="max-width: 1000px;">
-            <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Comprobante de Vacunación</h5>
-                  <span type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
-                      X
-                  </span>
-              </div>
-              <div class="modal-body bg-gray-200">
-                <div class="row">
-                  <div class="col-md-8 col-12">
-                    <div class="card card-body mb-4 iframe">
-                      <!--<iframe src="https://registro.foromusa.com/comprobante_vacunacion/{$value['documento']}" style="width:100%; height:700px;" frameborder="0" >
-                      </iframe>-->
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-12">
-                    <div class="card card-body mb-4">
-                      <h5>Datos Personales</h5>
-                      <div class="mb-2">
-                        <h6 class="fas fa-user"> </h6>
-                        <span> <b>Nombre:</b> {$value['nombre_completo']}</span>
-                        <span class="badge badge-success">Aprobado</span>
-                      </div>
-                      <!-- <div class="mb-2">
-                        <h6 class="fas fa-address-card"> </h6>
-                        <span> <b>Número de empleado:</b> {$value['numero_empleado']}</span>
-                      </div>
-                      <div class="mb-2">
-                        <h6 class="fas fa-business-time"> </h6>
-                        <span> <b>Bu:</b> {$value['nombre_bu']}</span>
-                      </div>-->
-                      <div class="mb-2">
-                        <h6 class="fas fa-pills"> </h6>
-                        <span> <b>Línea:</b> {$value['nombre_linea']}</span>
-                      </div>
-                      <!--<div class="mb-2">
-                        <h6 class="fas fa-hospital"> </h6>
-                        <span> <b>Posición:</b> {$value['nombre_posicion']}</span>
-                      </div>-->
-                      <div class="mb-2">
-                        <h6 class="fa fa-mail-bulk"> </h6>
-                        <span> <b>Correo Electrónico:</b> <u><a href="mailto:{$value['email']}">{$value['email']}</a></u></span>
-                      </div>
-                      <div class="mb-2">
-                      <h6 class="fa fa-whatsapp" style="font-size: 13px; color:green;"> </h6>
-                      <span> <b></b> <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank">{$value['telefono']}</a></u></span>
-                      </div>
-                    </div>
-                    <div class="card card-body mb-4">
-                      <h5>Datos del Comprobante</h5>
-                      <div class="mb-2">
-                        <h6 class="fas fa-calendar"> </h6>
-                        <span> <b>Fecha de alta:</b> {$value['fecha_carga_documento']}</span>
-                      </div>
-                      <div class="mb-2">
-                        <h6 class="fas fa-hashtag"> </h6>
-                        <span> <b>Número de Dósis:</b> {$value['numero_dosis']}</span>
-                      </div>
-                      <div class="mb-2">
-                        <h6 class="fas fa-syringe"> </h6>
-                        <span> <b>Marca:</b> {$value['marca_dosis']}</span>
-                      </div>
-                    </div>
-                    <div class="card card-body">
-                      <h5>Notas</h5>
-html;
+//         <div class="modal fade" id="ver-documento-{$value['id_c_v']}" tabindex="-1" role="dialog" aria-labelledby="ver-documento-{$value['id_c_v']}" aria-hidden="true">
+//           <div class="modal-dialog" role="document" style="max-width: 1000px;">
+//             <div class="modal-content">
+//               <div class="modal-header">
+//                   <h5 class="modal-title" id="exampleModalLabel">Comprobante de Vacunación</h5>
+//                   <span type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+//                       X
+//                   </span>
+//               </div>
+//               <div class="modal-body bg-gray-200">
+//                 <div class="row">
+//                   <div class="col-md-8 col-12">
+//                     <div class="card card-body mb-4 iframe">
+//                       <!--<iframe src="https://registro.foromusa.com/comprobante_vacunacion/{$value['documento']}" style="width:100%; height:700px;" frameborder="0" >
+//                       </iframe>-->
+//                     </div>
+//                   </div>
+//                   <div class="col-md-4 col-12">
+//                     <div class="card card-body mb-4">
+//                       <h5>Datos Personales</h5>
+//                       <div class="mb-2">
+//                         <h6 class="fas fa-user"> </h6>
+//                         <span> <b>Nombre:</b> {$value['nombre_completo']}</span>
+//                         <span class="badge badge-success">Aprobado</span>
+//                       </div>
+//                       <!-- <div class="mb-2">
+//                         <h6 class="fas fa-address-card"> </h6>
+//                         <span> <b>Número de empleado:</b> {$value['numero_empleado']}</span>
+//                       </div>
+//                       <div class="mb-2">
+//                         <h6 class="fas fa-business-time"> </h6>
+//                         <span> <b>Bu:</b> {$value['nombre_bu']}</span>
+//                       </div>-->
+//                       <div class="mb-2">
+//                         <h6 class="fas fa-pills"> </h6>
+//                         <span> <b>Línea:</b> {$value['nombre_linea']}</span>
+//                       </div>
+//                       <!--<div class="mb-2">
+//                         <h6 class="fas fa-hospital"> </h6>
+//                         <span> <b>Posición:</b> {$value['nombre_posicion']}</span>
+//                       </div>-->
+//                       <div class="mb-2">
+//                         <h6 class="fa fa-mail-bulk"> </h6>
+//                         <span> <b>Correo Electrónico:</b> <u><a href="mailto:{$value['email']}">{$value['email']}</a></u></span>
+//                       </div>
+//                       <div class="mb-2">
+//                       <h6 class="fa fa-whatsapp" style="font-size: 13px; color:green;"> </h6>
+//                       <span> <b></b> <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank">{$value['telefono']}</a></u></span>
+//                       </div>
+//                     </div>
+//                     <div class="card card-body mb-4">
+//                       <h5>Datos del Comprobante</h5>
+//                       <div class="mb-2">
+//                         <h6 class="fas fa-calendar"> </h6>
+//                         <span> <b>Fecha de alta:</b> {$value['fecha_carga_documento']}</span>
+//                       </div>
+//                       <div class="mb-2">
+//                         <h6 class="fas fa-hashtag"> </h6>
+//                         <span> <b>Número de Dósis:</b> {$value['numero_dosis']}</span>
+//                       </div>
+//                       <div class="mb-2">
+//                         <h6 class="fas fa-syringe"> </h6>
+//                         <span> <b>Marca:</b> {$value['marca_dosis']}</span>
+//                       </div>
+//                     </div>
+//                     <div class="card card-body">
+//                       <h5>Notas</h5>
+// html;
 
-            if ($value['nota'] != '') {
-                $tabla .= <<<html
-                      <div class="editar_section" id="editar_section">
-                        <p id="">
-                          {$value['nota']}
-                        </p>
-                        <button id="editar_nota" type="button" class="btn bg-gradient-primary w-50 editar_nota" >
-                          Editar
-                        </button>
-                      </div>
+//             if ($value['nota'] != '') {
+//                 $tabla .= <<<html
+//                       <div class="editar_section" id="editar_section">
+//                         <p id="">
+//                           {$value['nota']}
+//                         </p>
+//                         <button id="editar_nota" type="button" class="btn bg-gradient-primary w-50 editar_nota" >
+//                           Editar
+//                         </button>
+//                       </div>
 
-                      <div class="hide-section editar_section_textarea" id="editar_section_textarea">
-                        <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
-                          <input type="text" id="id_comprobante_vacuna" name="id_comprobante_vacuna" value="{$value['id_c_v']}" readonly style="display:none;"> 
-                          <p>
-                            <textarea class="form-control" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required> {$value['nota']} </textarea>
-                          </p>
-                          <div class="row">
-                            <div class="col-md-6 col-12">
-                            <button type="submit" id="guardar_editar_nota" class="btn bg-gradient-dark guardar_editar_nota" >
-                              Guardar
-                            </button>
-                            </div>
-                            <div class="col-md-6 col-12">
-                              <button type="button" id="cancelar_editar_nota" class="btn bg-gradient-danger cancelar_editar_nota" >
-                                Cancelar
-                              </button>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-html;
-            } else {
-                $tabla .= <<<html
-                      <p>
-                        {$value['nota']}
-                      </p>
-                      <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
-                        <input type="text" id="id_comprobante_vacuna" name="id_comprobante_vacuna" value="{$value['id_c_v']}" readonly style="display:none;"> 
-                        <p>
-                          <textarea class="form-control" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required></textarea>
-                        </p>
-                        <button type="submit" class="btn bg-gradient-dark w-50" >
-                          Guardar
-                        </button>
-                      </form>
-html;
-            }
-            $tabla .= <<<html
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-html;
-        }
+//                       <div class="hide-section editar_section_textarea" id="editar_section_textarea">
+//                         <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
+//                           <input type="text" id="id_comprobante_vacuna" name="id_comprobante_vacuna" value="{$value['id_c_v']}" readonly style="display:none;"> 
+//                           <p>
+//                             <textarea class="form-control" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required> {$value['nota']} </textarea>
+//                           </p>
+//                           <div class="row">
+//                             <div class="col-md-6 col-12">
+//                             <button type="submit" id="guardar_editar_nota" class="btn bg-gradient-dark guardar_editar_nota" >
+//                               Guardar
+//                             </button>
+//                             </div>
+//                             <div class="col-md-6 col-12">
+//                               <button type="button" id="cancelar_editar_nota" class="btn bg-gradient-danger cancelar_editar_nota" >
+//                                 Cancelar
+//                               </button>
+//                             </div>
+//                           </div>
+//                         </form>
+//                       </div>
+// html;
+//             } else {
+//                 $tabla .= <<<html
+//                       <p>
+//                         {$value['nota']}
+//                       </p>
+//                       <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
+//                         <input type="text" id="id_comprobante_vacuna" name="id_comprobante_vacuna" value="{$value['id_c_v']}" readonly style="display:none;"> 
+//                         <p>
+//                           <textarea class="form-control" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required></textarea>
+//                         </p>
+//                         <button type="submit" class="btn bg-gradient-dark w-50" >
+//                           Guardar
+//                         </button>
+//                       </form>
+// html;
+//             }
+//             $tabla .= <<<html
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+// html;
+//         }
 
 
-        return $tabla;
-    }
+//         return $tabla;
+//     }
 
-    public function getPruebasCovidById($id)
-    {
-        $pruebas = PruebasCovidUsuariosDao::getComprobateByIdUser($id);
-        $tabla = '';
-        foreach ($pruebas as $key => $value) {
-            $tabla .= <<<html
-        <tr>
-          <td class="text-center">
-            <span class="badge badge-success"><i class="fas fa-check"></i> Aprobada</span> <br>
-            <span class="badge badge-secondary">Folio <i class="fas fa-hashtag"> </i> {$value['id_c_v']}</span>
-            <hr>
-            <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br><span class="fas fa-suitcase"> </span> {$value['nombre_ejecutivo']} <span class="badge badge-success" style="background-color:  {$value['color']}; color:white "><strong>{$value['nombre_linea_ejecutivo']}</strong></span></p>-->
-          </td>
-          <td>
-            <h6 class="mb-0 text-sm"> <span class="fas fa-user-md"> </span>  {$value['nombre_completo']}</h6>
-            <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-business-time" style="font-size: 13px;"></span><b> Bu: </b>{$value['nombre_bu']}</p>-->
-              <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-pills" style="font-size: 13px;"></span><b> Linea Principal: </b>{$value['nombre_linea']}</p>
-              <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-hospital" style="font-size: 13px;"></span><b> Posición: </b>{$value['nombre_posicion']}</p>-->
+//     public function getPruebasCovidById($id)
+//     {
+//         $pruebas = PruebasCovidUsuariosDao::getComprobateByIdUser($id);
+//         $tabla = '';
+//         foreach ($pruebas as $key => $value) {
+//             $tabla .= <<<html
+//         <tr>
+//           <td class="text-center">
+//             <span class="badge badge-success"><i class="fas fa-check"></i> Aprobada</span> <br>
+//             <span class="badge badge-secondary">Folio <i class="fas fa-hashtag"> </i> {$value['id_c_v']}</span>
+//             <hr>
+//             <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br><span class="fas fa-suitcase"> </span> {$value['nombre_ejecutivo']} <span class="badge badge-success" style="background-color:  {$value['color']}; color:white "><strong>{$value['nombre_linea_ejecutivo']}</strong></span></p>-->
+//           </td>
+//           <td>
+//             <h6 class="mb-0 text-sm"> <span class="fas fa-user-md"> </span>  {$value['nombre_completo']}</h6>
+//             <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-business-time" style="font-size: 13px;"></span><b> Bu: </b>{$value['nombre_bu']}</p>-->
+//               <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-pills" style="font-size: 13px;"></span><b> Linea Principal: </b>{$value['nombre_linea']}</p>
+//               <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-hospital" style="font-size: 13px;"></span><b> Posición: </b>{$value['nombre_posicion']}</p>-->
 
-            <hr>
+//             <hr>
 
-              <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br></p-->
+//               <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br></p-->
 
-              <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span><b> </b>{$value['telefono']}</p>
-              <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-mail-bulk" style="font-size: 13px;"></span><b>  </b><a "mailto:{$value['email']}">{$value['email']}</a></p-->
+//               <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span><b> </b>{$value['telefono']}</p>
+//               <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-mail-bulk" style="font-size: 13px;"></span><b>  </b><a "mailto:{$value['email']}">{$value['email']}</a></p-->
 
-              <div class="d-flex flex-column justify-content-center">
-                  <u><a href="mailto:{$value['email']}"><h6 class="mb-0 text-sm"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['email']}</h6></a></u>
-                  <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank"><p class="text-sm font-weight-bold text-secondary mb-0"><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span> {$value['telefono']}</p></a></u>
-              </div>
-          </td>
-          <td>
-            <p class="text-center" style="font-size: small;">{$value['fecha_carga_documento']}</p>
-          </td>
-          <td>
-            <p class="text-center" style="font-size: small;">{$value['tipo_prueba']}</p>
-          </td>
-          <td>
-            <p class="text-center" style="font-size: small;">{$value['resultado']}</p>
-          </td>
-          <td class="text-center">
-            <button type="button" class="btn bg-gradient-primary btn_iframe_pruebas_covid" data-document="{$value['documento']}" data-toggle="modal" data-target="#ver-documento-{$value['id_c_v']}">
-              <i class="fas fa-eye"></i>
-            </button>
-          </td>
-        </tr>
+//               <div class="d-flex flex-column justify-content-center">
+//                   <u><a href="mailto:{$value['email']}"><h6 class="mb-0 text-sm"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['email']}</h6></a></u>
+//                   <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank"><p class="text-sm font-weight-bold text-secondary mb-0"><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span> {$value['telefono']}</p></a></u>
+//               </div>
+//           </td>
+//           <td>
+//             <p class="text-center" style="font-size: small;">{$value['fecha_carga_documento']}</p>
+//           </td>
+//           <td>
+//             <p class="text-center" style="font-size: small;">{$value['tipo_prueba']}</p>
+//           </td>
+//           <td>
+//             <p class="text-center" style="font-size: small;">{$value['resultado']}</p>
+//           </td>
+//           <td class="text-center">
+//             <button type="button" class="btn bg-gradient-primary btn_iframe_pruebas_covid" data-document="{$value['documento']}" data-toggle="modal" data-target="#ver-documento-{$value['id_c_v']}">
+//               <i class="fas fa-eye"></i>
+//             </button>
+//           </td>
+//         </tr>
 
-        <div class="modal fade" id="ver-documento-{$value['id_c_v']}" tabindex="-1" role="dialog" aria-labelledby="ver-documento-{$value['id_c_v']}" aria-hidden="true">
-          <div class="modal-dialog" role="document" style="max-width: 1000px;">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Documento Prueba SARS-CoV-2</h5>
-                      <span type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
-                          X
-                      </span>
-                  </div>
-                  <div class="modal-body bg-gray-200">
-                    <div class="row">
-                      <div class="col-md-8 col-12">
-                        <div class="card card-body mb-4 iframe">
-                          <!--<iframe src="/PDF/{$value['documento']}" style="width:100%; height:700px;" frameborder="0" >
-                          </iframe>-->
-                        </div>
-                      </div>
-                      <div class="col-md-4 col-12">
-                        <div class="card card-body mb-4">
-                          <h5>Datos Personales</h5>
-                          <div class="mb-2">
-                            <h6 class="fas fa-user"> </h6>
-                            <span> <b>Nombre:</b> {$value['nombre_completo']}</span>
-                            <span class="badge badge-success">Aprobado</span>
-                          </div>
-                          <!--<div class="mb-2">
-                            <h6 class="fas fa-address-card"> </h6>
-                            <span> <b>Número de empleado:</b> {$value['numero_empleado']}</span>
-                          </div>
-                          <div class="mb-2">
-                            <h6 class="fas fa-business-time"> </h6>
-                            <span> <b>Bu:</b> {$value['nombre_bu']}</span>
-                          </div>-->
-                          <div class="mb-2">
-                            <h6 class="fas fa-pills"> </h6>
-                            <span> <b>Línea:</b> {$value['nombre_linea']}</span>
-                          </div>
-                          <!--<div class="mb-2">
-                            <h6 class="fas fa-hospital"> </h6>
-                            <span> <b>Posición:</b> {$value['nombre_posicion']}</span>
-                          </div>-->
-                          <div class="mb-2">
-                            <h6 class="fa fa-mail-bulk"> </h6>
-                            <span> <b>Correo Electrónico:</b> <u><a href="mailto:{$value['email']}">{$value['email']}</a></u></span>
-                          </div>
-                          <div class="mb-2">
-                            <h6 class="fa fa-whatsapp" style="font-size: 13px; color:green;"> </h6>
-                            <span> <b></b> <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank">{$value['telefono']}</a></u></span>
-                          </div>
-                        </div>
-                        <div class="card card-body mb-4">
-                          <h5>Datos de la Prueba</h5>
-                          <div class="mb-2">
-                            <h6 class="fas fa-calendar"> </h6>
-                            <span> <b>Fecha de alta:</b> {$value['fecha_carga_documento']}</span>
-                          </div>
-                          <div class="mb-2">
-                            <h6 class="fas fa-hashtag"> </h6>
-                            <span> <b>Resultado:</b> {$value['resultado']}</span>
-                          </div>
-                          <div class="mb-2">
-                            <h6 class="fas fa-syringe"> </h6>
-                            <span> <b>Tipo de prueba:</b> {$value['tipo_prueba']}</span>
-                          </div>
-                        </div>
-                        <div class="card card-body">
-                          <h5>Notas</h5>
+//         <div class="modal fade" id="ver-documento-{$value['id_c_v']}" tabindex="-1" role="dialog" aria-labelledby="ver-documento-{$value['id_c_v']}" aria-hidden="true">
+//           <div class="modal-dialog" role="document" style="max-width: 1000px;">
+//               <div class="modal-content">
+//                   <div class="modal-header">
+//                       <h5 class="modal-title" id="exampleModalLabel">Documento Prueba SARS-CoV-2</h5>
+//                       <span type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+//                           X
+//                       </span>
+//                   </div>
+//                   <div class="modal-body bg-gray-200">
+//                     <div class="row">
+//                       <div class="col-md-8 col-12">
+//                         <div class="card card-body mb-4 iframe">
+//                           <!--<iframe src="/PDF/{$value['documento']}" style="width:100%; height:700px;" frameborder="0" >
+//                           </iframe>-->
+//                         </div>
+//                       </div>
+//                       <div class="col-md-4 col-12">
+//                         <div class="card card-body mb-4">
+//                           <h5>Datos Personales</h5>
+//                           <div class="mb-2">
+//                             <h6 class="fas fa-user"> </h6>
+//                             <span> <b>Nombre:</b> {$value['nombre_completo']}</span>
+//                             <span class="badge badge-success">Aprobado</span>
+//                           </div>
+//                           <!--<div class="mb-2">
+//                             <h6 class="fas fa-address-card"> </h6>
+//                             <span> <b>Número de empleado:</b> {$value['numero_empleado']}</span>
+//                           </div>
+//                           <div class="mb-2">
+//                             <h6 class="fas fa-business-time"> </h6>
+//                             <span> <b>Bu:</b> {$value['nombre_bu']}</span>
+//                           </div>-->
+//                           <div class="mb-2">
+//                             <h6 class="fas fa-pills"> </h6>
+//                             <span> <b>Línea:</b> {$value['nombre_linea']}</span>
+//                           </div>
+//                           <!--<div class="mb-2">
+//                             <h6 class="fas fa-hospital"> </h6>
+//                             <span> <b>Posición:</b> {$value['nombre_posicion']}</span>
+//                           </div>-->
+//                           <div class="mb-2">
+//                             <h6 class="fa fa-mail-bulk"> </h6>
+//                             <span> <b>Correo Electrónico:</b> <u><a href="mailto:{$value['email']}">{$value['email']}</a></u></span>
+//                           </div>
+//                           <div class="mb-2">
+//                             <h6 class="fa fa-whatsapp" style="font-size: 13px; color:green;"> </h6>
+//                             <span> <b></b> <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank">{$value['telefono']}</a></u></span>
+//                           </div>
+//                         </div>
+//                         <div class="card card-body mb-4">
+//                           <h5>Datos de la Prueba</h5>
+//                           <div class="mb-2">
+//                             <h6 class="fas fa-calendar"> </h6>
+//                             <span> <b>Fecha de alta:</b> {$value['fecha_carga_documento']}</span>
+//                           </div>
+//                           <div class="mb-2">
+//                             <h6 class="fas fa-hashtag"> </h6>
+//                             <span> <b>Resultado:</b> {$value['resultado']}</span>
+//                           </div>
+//                           <div class="mb-2">
+//                             <h6 class="fas fa-syringe"> </h6>
+//                             <span> <b>Tipo de prueba:</b> {$value['tipo_prueba']}</span>
+//                           </div>
+//                         </div>
+//                         <div class="card card-body">
+//                           <h5>Notas</h5>
                           
-html;
-            if ($value['nota'] != '') {
-                $tabla .= <<<html
-                          <div class="editar_section" id="editar_section">
-                            <p id="">
-                              {$value['nota']}
-                            </p>
-                            <button id="editar_nota" type="button" class="btn bg-gradient-primary w-50 editar_nota" >
-                              Editar
-                            </button>
-                          </div>
+// html;
+//             if ($value['nota'] != '') {
+//                 $tabla .= <<<html
+//                           <div class="editar_section" id="editar_section">
+//                             <p id="">
+//                               {$value['nota']}
+//                             </p>
+//                             <button id="editar_nota" type="button" class="btn bg-gradient-primary w-50 editar_nota" >
+//                               Editar
+//                             </button>
+//                           </div>
 
-                          <div class="hide-section editar_section_textarea" id="editar_section_textarea">
-                            <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
-                              <input type="text" id="id_prueba_covid" name="id_prueba_covid" value="{$value['id_c_v']}" readonly style="display:none;"> 
-                              <p>
-                                <textarea class="form-control nota" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required> {$value['nota']} </textarea>
-                              </p>
-                              <div class="row">
-                                <div class="col-md-6 col-12">
-                                <button type="submit" id="guardar_editar_nota" class="btn bg-gradient-dark guardar_editar_nota" >
-                                  Guardar
-                                </button>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                  <button type="button" id="cancelar_editar_nota" class="btn bg-gradient-danger cancelar_editar_nota" >
-                                    Cancelar
-                                  </button>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-html;
-            } else {
-                $tabla .= <<<html
-                          <p>
-                            {$value['nota']}
-                          </p>
-                          <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
-                            <input type="text" id="id_prueba_covid" name="id_prueba_covid" value="{$value['id_c_v']}" readonly style="display:none;"> 
-                            <p>
-                              <textarea class="form-control nota" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required></textarea>
-                            </p>
-                            <button type="submit" class="btn bg-gradient-dark w-50" >
-                              Guardar
-                            </button>
-                          </form>
-html;
-            }
-            $tabla .= <<<html
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-html;
-        }
+//                           <div class="hide-section editar_section_textarea" id="editar_section_textarea">
+//                             <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
+//                               <input type="text" id="id_prueba_covid" name="id_prueba_covid" value="{$value['id_c_v']}" readonly style="display:none;"> 
+//                               <p>
+//                                 <textarea class="form-control nota" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required> {$value['nota']} </textarea>
+//                               </p>
+//                               <div class="row">
+//                                 <div class="col-md-6 col-12">
+//                                 <button type="submit" id="guardar_editar_nota" class="btn bg-gradient-dark guardar_editar_nota" >
+//                                   Guardar
+//                                 </button>
+//                                 </div>
+//                                 <div class="col-md-6 col-12">
+//                                   <button type="button" id="cancelar_editar_nota" class="btn bg-gradient-danger cancelar_editar_nota" >
+//                                     Cancelar
+//                                   </button>
+//                                 </div>
+//                               </div>
+//                             </form>
+//                           </div>
+// html;
+//             } else {
+//                 $tabla .= <<<html
+//                           <p>
+//                             {$value['nota']}
+//                           </p>
+//                           <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
+//                             <input type="text" id="id_prueba_covid" name="id_prueba_covid" value="{$value['id_c_v']}" readonly style="display:none;"> 
+//                             <p>
+//                               <textarea class="form-control nota" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required></textarea>
+//                             </p>
+//                             <button type="submit" class="btn bg-gradient-dark w-50" >
+//                               Guardar
+//                             </button>
+//                           </form>
+// html;
+//             }
+//             $tabla .= <<<html
+//                         </div>
+//                       </div>
+//                     </div>
+//                   </div>
+//               </div>
+//           </div>
+//         </div>
+// html;
+//         }
 
 
-        return $tabla;
-    }
+//         return $tabla;
+//     }
 
     public function getAsistentesFaltantes()
     {

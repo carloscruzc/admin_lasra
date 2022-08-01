@@ -1,6 +1,6 @@
 <?php echo $header; ?>
 <title>
-    Administradores - AMH - GRUPO LAHE
+    Administradores - LASRA - GRUPO LAHE
 </title>
 
 <body class="bg-white-aside g-sidenav-show  bg-gray-100">

@@ -42,7 +42,7 @@ class Caja extends Controller
         <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/amh.png">
         <link rel="icon" type="image/png" href="/assets/img/amh.png">
         <title>
-            CAJA - AMH 
+            CAJA - LASRA 
         </title>
         <!--     Fonts and icons     -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -496,7 +496,7 @@ html;
         <link rel="apple-touch-icon" sizes="76x76" href="https://foromusa.com/assets/images/Musa0-01.png">
         <link rel="icon" type="image/png" href="https://foromusa.com/assets/images/Musa0-01.png">
         <title>
-            CAJA - APM 
+            CAJA - LASRA
         </title>
         <!--     Fonts and icons     -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />

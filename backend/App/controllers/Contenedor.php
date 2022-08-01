@@ -146,10 +146,10 @@ html;
                       </a>
                   </li>
 
-                  <li id="comprobantes" class="nav-item" {$constanciasHidden};>
+                  <li id="comprobantes" class="nav-item" {$comprobantesHidden};>
                       <a href="/ComprobantesPago" class="nav-link " aria-controls="basicExamples" role="button" aria-expanded="false">
                           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                              <span class="fas fa-file morado-musa-text"></span>
+                              <span class="fas fa-receipt morado-musa-text"></span>
                           </div>
                           <span class="nav-link-text ms-1">Comprobantes de Pago</span>
                       </a>

@@ -10374,12 +10374,12 @@ fieldset:disabled .btn {
 }
 
 .bg-gradient-pink-white {
-  background-image:  linear-gradient(0deg, #7CE644, #08D3C0 70%);
+  background-image:  linear-gradient(0deg, #02A7E9, #293A90 70%);
  
 }
 
 .bg-gradient-pink {
-  background-image:  linear-gradient(0deg, #7CE644, #08D3C0 70%);
+  background-image:  linear-gradient(0deg, #02A7E9, #293A90 70%);
 }
 
 .bg-gradient-red {
@@ -10387,7 +10387,7 @@ fieldset:disabled .btn {
 }
 
 .morado-musa-text{
-  color: #08D3C0;
+  color: #254498;
 }
 
 .bg-musa-morado{
@@ -10400,7 +10400,7 @@ fieldset:disabled .btn {
 }
 
 .bg-turquoise{
-  background-color: #7CE644;
+  background-color: #02A6E8;
   color:#FFFFFF;
 }
 
@@ -22889,7 +22889,7 @@ z-index: 9999;
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon {
   /* background-image: linear-gradient(310deg, #ff0032 0%, #b10303 100%); */
-  background-image:  linear-gradient(0deg, #7CE644, #08D3C0 70%);
+  background-image:  linear-gradient(0deg, #02A7E9, #293A90 70%);
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon svg .color-background,

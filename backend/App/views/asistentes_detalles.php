@@ -77,9 +77,9 @@
                         <div class="card-header p-3 pb-0">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h6>Detalles - Asistente AMH</h6>
+                                    <h6>Detalles - Asistente LASRA</h6>
                                     <p class="text-sm mb-0">
-                                        Fecha de Alta: <b><?php echo $detalles_registro['date']; ?></b>
+                                        Fecha de Alta: <b><?php echo $detalles_registro['fecha']; ?></b>
                                     </p>
                                     <p class="text-sm">
                                         Usuario: <b><?php echo $detalles['usuario']; ?></b>
@@ -102,7 +102,7 @@
                                                     <span class="text-lg font-weight-bold mb-2 mt-2"><?php echo $detalles_registro['nombre'] . ' '; echo $detalles_registro['apellido_paterno'] . ' '; echo $detalles_registro['apellido_materno']; ?>
                                                     <u><a  href="mailto:{$value['email']}"><h6 class="mb-2 text-smy text-black"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> CORREO: <?php echo $detalles_registro['usuario'];?> </h6></a></u>
                                                     <h6 class="mb-2 text-smy text-black"><span class="fa fa-flag" style="font-size: 13px"></span>PAÍS: <?php echo $detalles_registro['pais'];?> </h6>
-                                                    <h6 class="mb-2 text-smy text-black"><span class="fa fa-flag" style="font-size: 13px"></span>ESTADO: <?php echo $detalles_registro['estado'];?> </h6>
+                                                    <h6 class="mb-2 text-smy text-black"><span class="fa fa-map-pin" style="font-size: 13px"></span>ESTADO: <?php echo $detalles_registro['estado'];?> </h6>
                                                     <!-- <h6 class="mb-2 text-smy text-black"><span class="fas fa-user-md style="font-size: 13px"></span>CATEGORÍA: <?php echo $detalles_registro['categoria'];?> </h6> -->
                                                     <br> <br>
                                                     <p class="text-sm mb-3"></p>

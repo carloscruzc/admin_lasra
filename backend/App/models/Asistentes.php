@@ -250,7 +250,7 @@ sql;
     $query=<<<sql
     SELECT ra.*, ra.apellidop as apellido_paterno, ra.apellidom as apellido_materno, ra.clave AS clave_ticket, CONCAT(ra.clave,'.png') AS qr, ra.clave  
     FROM utilerias_administradores ra
-    WHERE ra.clave = '$clave'
+    WHERE ra.user_id = '$clave'
 sql;
     return $mysqli->queryAll($query);
 }

@@ -1,6 +1,6 @@
 <?php echo $header; ?>
 <title>
-    Conceptos - AMH - GRUPO LAHE
+    Conceptos - LASRA - GRUPO LAHE
 </title>
 <body class="g-sidenav-show  bg-gray-100">
     <?php echo $asideMenu;?>

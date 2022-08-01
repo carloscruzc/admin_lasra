@@ -31,7 +31,7 @@ class RegistroAsistencia extends Controller
         <link rel="apple-touch-icon" sizes="76x76" href="https://foromusa.com/assets/images/Mus-01.png">
         <link rel="icon" type="image/png" href="https://foromusa.com/assets/images/Mu0-01.png">
         <title>
-            Asistencia APM
+            Asistencia LASRA
         </title>
         <!--     Fonts and icons     -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -419,7 +419,6 @@ html;
         
         // $user_id = new \stdClass();
         // $user_id->_user_id = $datos_user['user_id'];
-
         $insertImpresionGafete = RegistroAsistenciaDao::insertImpGafete($datos_user['user_id'],$_SESSION['utilerias_administradores_id']);
 
 
