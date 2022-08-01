@@ -1,6 +1,6 @@
 <?php echo $header;?>
 <title>
-    Asistentes - AMH - GRUPO LAHE    
+    Asistentes - LASRA - GRUPO LAHE    
 </title>
 <body class="g-sidenav-show  bg-gray-100">
     <?php echo $asideMenu;?>
@@ -90,7 +90,7 @@
                         <div class="col-auto my-auto">
                             <div class="h-100">
                                 <h5 class="mb-1">
-                                    Congresistas AMH
+                                    ASISTENTES LASRA
                                 </h5>
                                 <p class="mb-0 font-weight-bold text-sm">
                                 </p>

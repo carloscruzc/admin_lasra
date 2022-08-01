@@ -30,8 +30,8 @@ class Contenedor extends Controller{
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
 
             <a class="navbar-brand m-0" href="/Principal/" target="_blank">
-                <img src="/assets/img/amh_1.png" class="navbar-brand-img h-100" alt="main_logo">
-                <img src="/assets/img/amh.png" class="navbar-brand-img h-100" alt="main_logo">
+                <img src="/assets/img/logo_lasra.png" class="navbar-brand-img h-100" alt="main_logo">
+                <img src="/assets/img/logo_lasra.png" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold"></span>
                 <p style="margin-top: 15px;"><span class="fa fa-user morado-musa-text"></span> {$_SESSION['nombre']}</p>
             </a>
@@ -64,7 +64,7 @@ html;
               <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
   
               <a class="navbar-brand m-0" href="/Principal/" target="_blank">
-                  <img src="/assets/img/amh_1.png" class="navbar-brand-img h-100" alt="main_logo">
+                  <img src="/assets/img/logo_lasra.png" class="navbar-brand-img h-100" alt="main_logo">
                   <span class="ms-1 font-weight-bold"></span>
                   <p style="margin-top: 15px;"><span class="fa fa-user morado-musa-text"></span> {$_SESSION['nombre']}</p>
               </a>
@@ -244,39 +244,39 @@ html;
     public function header($extra = ''){
      $usuario = $this->__usuario;
      
-        $principal = Controller::getPermisosUsuario($usuario, "seccion_principal", 1);
-        $principalAdd = Controller::getPermisosUsuario($usuario, "seccion_principal", 1);
-        $asistentes = Controller::getPermisosUsuario($usuario, "seccion_asistentes", 1);
-        $asistentessAdd = Controller::getPermisosUsuario($usuario, "seccion_asistentes", 1);
-        $bu = Controller::getPermisosUsuario($usuario, "seccion_bu", 1);
-        $buAdd = Controller::getPermisosUsuario($usuario, "seccion_bu", 1);
-        $lineas = Controller::getPermisosUsuario($usuario, "seccion_lineas", 1);
-        $lineasAdd = Controller::getPermisosUsuario($usuario, "seccion_lineas", 1);
-        $posiciones = Controller::getPermisosUsuario($usuario, "seccion_posiciones", 1);
-        $posicionesAdd = Controller::getPermisosUsuario($usuario, "seccion_posiciones", 1);
-        $restaurantes = Controller::getPermisosUsuario($usuario, "seccion_restaurantes", 1);
-        $restaurantesAdd = Controller::getPermisosUsuario($usuario, "seccion_restaurantes", 1);
-        $gafete = Controller::getPermisosUsuario($usuario, "seccion_gafete", 1);
-        $gafeteAdd = Controller::getPermisosUsuario($usuario, "seccion_gafete", 1);
-        $vuelos = Controller::getPermisosUsuario($usuario, "seccion_vuelos", 1);
-        $vuelosAdd = Controller::getPermisosUsuario($usuario, "seccion_vuelos", 1);
-        $pickup = Controller::getPermisosUsuario($usuario, "seccion_pickup", 1);
-        $pickupAdd = Controller::getPermisosUsuario($usuario, "seccion_pickup", 1);
-        $habitaciones = Controller::getPermisosUsuario($usuario, "seccion_habitaciones", 1);
-        $habitacionesAdd = Controller::getPermisosUsuario($usuario, "seccion_habitaciones", 1);
-        $cenas = Controller::getPermisosUsuario($usuario, "seccion_cenas", 1);
-        $cenasAdd = Controller::getPermisosUsuario($usuario, "seccion_cenas", 1);
-        $vacunacion = Controller::getPermisosUsuario($usuario, "seccion_vacunacion", 1);
-        $vacunacionAdd = Controller::getPermisosUsuario($usuario, "seccion_vacunacion", 1);
+        // $principal = Controller::getPermisosUsuario($usuario, "seccion_principal", 1);
+        // $principalAdd = Controller::getPermisosUsuario($usuario, "seccion_principal", 1);
+        // $asistentes = Controller::getPermisosUsuario($usuario, "seccion_asistentes", 1);
+        // $asistentessAdd = Controller::getPermisosUsuario($usuario, "seccion_asistentes", 1);
+        // $bu = Controller::getPermisosUsuario($usuario, "seccion_bu", 1);
+        // $buAdd = Controller::getPermisosUsuario($usuario, "seccion_bu", 1);
+        // $lineas = Controller::getPermisosUsuario($usuario, "seccion_lineas", 1);
+        // $lineasAdd = Controller::getPermisosUsuario($usuario, "seccion_lineas", 1);
+        // $posiciones = Controller::getPermisosUsuario($usuario, "seccion_posiciones", 1);
+        // $posicionesAdd = Controller::getPermisosUsuario($usuario, "seccion_posiciones", 1);
+        // $restaurantes = Controller::getPermisosUsuario($usuario, "seccion_restaurantes", 1);
+        // $restaurantesAdd = Controller::getPermisosUsuario($usuario, "seccion_restaurantes", 1);
+        // $gafete = Controller::getPermisosUsuario($usuario, "seccion_gafete", 1);
+        // $gafeteAdd = Controller::getPermisosUsuario($usuario, "seccion_gafete", 1);
+        // $vuelos = Controller::getPermisosUsuario($usuario, "seccion_vuelos", 1);
+        // $vuelosAdd = Controller::getPermisosUsuario($usuario, "seccion_vuelos", 1);
+        // $pickup = Controller::getPermisosUsuario($usuario, "seccion_pickup", 1);
+        // $pickupAdd = Controller::getPermisosUsuario($usuario, "seccion_pickup", 1);
+        // $habitaciones = Controller::getPermisosUsuario($usuario, "seccion_habitaciones", 1);
+        // $habitacionesAdd = Controller::getPermisosUsuario($usuario, "seccion_habitaciones", 1);
+        // $cenas = Controller::getPermisosUsuario($usuario, "seccion_cenas", 1);
+        // $cenasAdd = Controller::getPermisosUsuario($usuario, "seccion_cenas", 1);
+        // $vacunacion = Controller::getPermisosUsuario($usuario, "seccion_vacunacion", 1);
+        // $vacunacionAdd = Controller::getPermisosUsuario($usuario, "seccion_vacunacion", 1);
 
-        $pruebas_covid = Controller::getPermisosUsuario($usuario, "seccion_pruebas_covid", 1);
-        $pruebas_covidAdd = Controller::getPermisosUsuario($usuario, "seccion_pruebas_covid", 1);
-        $asistencias = Controller::getPermisosUsuario($usuario, "seccion_asistencias", 1);
-        $asistenciasAdd = Controller::getPermisosUsuario($usuario, "seccion_asistencias", 1);
-        $utilerias = Controller::getPermisosUsuario($usuario, "seccion_utilerias", 1);
-        $utileriasAdd = Controller::getPermisosUsuario($usuario, "seccion_utilerias", 1);
-        $configuracion = Controller::getPermisosUsuario($usuario, "seccion_configuracion", 1);
-        $configuracionAdd = Controller::getPermisosUsuario($usuario, "seccion_configuracion", 1);
+        // $pruebas_covid = Controller::getPermisosUsuario($usuario, "seccion_pruebas_covid", 1);
+        // $pruebas_covidAdd = Controller::getPermisosUsuario($usuario, "seccion_pruebas_covid", 1);
+        // $asistencias = Controller::getPermisosUsuario($usuario, "seccion_asistencias", 1);
+        // $asistenciasAdd = Controller::getPermisosUsuario($usuario, "seccion_asistencias", 1);
+        // $utilerias = Controller::getPermisosUsuario($usuario, "seccion_utilerias", 1);
+        // $utileriasAdd = Controller::getPermisosUsuario($usuario, "seccion_utilerias", 1);
+        // $configuracion = Controller::getPermisosUsuario($usuario, "seccion_configuracion", 1);
+        // $configuracionAdd = Controller::getPermisosUsuario($usuario, "seccion_configuracion", 1);
       
      $header =<<<html
         <!DOCTYPE html>
@@ -285,8 +285,8 @@ html;
           <head>
             <!--<meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-            <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/amh_1.png">
-            <link rel="icon" type="image/png" href="/assets/img/amh_1.png">-->
+            <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/logo_lasra.png">
+            <link rel="icon" type="image/png" href="/assets/img/logo_lasra.png">-->
             
             <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
             <!-- Nucleo Icons -->
@@ -303,8 +303,8 @@ html;
 
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-            <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/amh.png">
-            <link rel="icon" type="image/png" href="/img/amh.png">
+            <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/logo_lasra.png">
+            <link rel="icon" type="image/png" href="/assets/img/logo_lasra.png">
 
             <!--     Fonts and icons     -->
             <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
