@@ -531,13 +531,13 @@
                 </div>
             </div>
 
-            <div class="fixed-bottom space-wa" hidden>
+            <!-- <div class="fixed-bottom space-wa" hidden>
                 <div class="m-5">
                     <a href="https://api.whatsapp.com/send?phone=5255 8010 4181&text=Buen%20d%C3%ADa" target="_blank">
                         <span class="fa fa-whatsapp px-3 py-2-5 icon-wa bg-gradient-success"></span>
                     </a>
                 </div>
-            </div>
+            </div> -->
 
             <br>
 
