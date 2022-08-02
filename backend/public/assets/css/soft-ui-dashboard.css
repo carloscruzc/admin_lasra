@@ -10404,6 +10404,16 @@ fieldset:disabled .btn {
   color:#FFFFFF;
 }
 
+.bg-turquoise-1{
+  background-color: #08D3C0;
+  color:#FFFFFF;
+}
+
+.bg-turquoise-2{
+  background-color: #78a6e8;
+  color:#FFFFFF;
+}
+
 .user-select-all {
   user-select: all !important;
 }

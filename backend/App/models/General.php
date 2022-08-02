@@ -157,7 +157,7 @@ sql;
     $mysqli = Database::getInstance(true);
     $query =<<<sql
     SELECT ua.* FROM utilerias_administradores ua 
-    WHERE ua.clave = '$clave';
+    WHERE ua.user_id = '$clave';
 sql;
 
   return $mysqli->queryAll($query);
