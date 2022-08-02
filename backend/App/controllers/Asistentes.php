@@ -749,6 +749,7 @@ html;
             $gafetes_httml = '';
             $id_producto = 1;
             $miembro_apm = '';
+            $sociote = '';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //             if($value['scholarship'] != '')//si la beca es diferente de vacio entonces
 //             {
@@ -903,6 +904,16 @@ html;
 //                 }
 //             }
 ////////////////////////////////////////////////////////////////////////////////////////////
+        if($value['clave_socio'] == 'SOCIO'){
+            $sociote .= <<<html
+            <span class="badge" style="background-image: linear-gradient(0deg, #02A7E9, #293A90 70%); color:#FFF !important; "><strong>{$value['clave_socio']}</strong></span>
+html;
+        }else{
+            $sociote .= <<<html
+            <span class="badge" style="background-image: linear-gradient(0deg, rgba(234, 6, 6, 0.6), #b80505 50%); color:#FFF !important; "><strong>{$value['clave_socio']}</strong></span>
+html;
+        }
+        
         $socio = GeneralDao::getAdeudosUser($value['user_id']);
         
         if($value['socio'] == '4')
@@ -1286,7 +1297,7 @@ html;
                         </div>
                         <div class="d-flex flex-column justify-content-center text-black">
                         <div>
-                            <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>{$value['referencia']}</strong></span>                              <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>{$value['user_id']} </strong></span>
+                            <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>{$value['referencia']}</strong></span><span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>{$value['user_id']} </strong></span> {$sociote}
                         </div>
                             <div class="d-flex flex-column justify-content-center">
                                 <a href="/Asistentes/Detalles/{$value['user_id']}" target="_blank">
