@@ -21,7 +21,7 @@ class Contenedor extends Controller{
     public function asideMenu(){
 
       $permiso_caja = (Controller::getPermisoUser($this->__usuario)['menu_caja']) != 1 ? "display:none;" : "";
-
+      $permisos = (Controller::getPermisoUser($this->__usuario)['perfil_id']) != 1 ? "style=\"display:none;\"" : "";
 
       if(Controller::getPermisoUser($this->__usuario)['menu_caja'] == 1){
         $menu = <<<html

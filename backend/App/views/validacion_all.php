@@ -177,11 +177,11 @@
                                                     <tr>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th> 
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Datos</th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Producto</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tipo de Pago</th>   
-                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha Pendiente</th>
-                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>                                
+                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha Pendiente</th>                               
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -287,6 +287,7 @@
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Datos</th>
+                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Producto(s)</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Comprobante</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha Liberación</th>                                
                                                     </tr>
@@ -341,7 +342,8 @@
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Datos</th>
-                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Producto</th>
+                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Producto(s)</th>
+                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Monto</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Comprobante</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>                                
                                                     </tr>
@@ -562,7 +564,7 @@
 
 <script type="text/javascript">
 
-		function confirmarsolicitar(id_pendiente_pago,user_id) {
+		function confirmarsolicitar(clave,user_id,id_pendiente_pago) {
 			//var respuesta = confirm("Estas seguro de volver a solicitar el comprobante de pago?");
 			const swalWithBootstrapButtons = Swal.mixin({
 				customClass: {
@@ -582,7 +584,7 @@
 				reverseButtons: true
 			}).then((result) => {
 				if (result.isConfirmed) {
-					solicitarComprobante(id_pendiente_pago,user_id);
+					solicitarComprobante(clave,user_id,id_pendiente_pago);
 					Swal.fire({
 						position: 'top-end',
 						icon: 'success',
@@ -608,22 +610,23 @@
 			})
 		}
 
-		function solicitarComprobante(id_pendiente_pago,user_id) {
+		function solicitarComprobante(clave,user_id,id_pendiente_pago) {
 
 			$.ajax({
 					url: '/Validacion/updateSolicitar',
 					type: 'POST',
 					dataType: 'json',
 					data: {
-						id_pendiente_pago: id_pendiente_pago,
-						user_id: user_id
+						clave: clave,
+						user_id: user_id,
+                        id_pendiente_pago: id_pendiente_pago
 					}
 				})
 				.done(function(json) {
 					if (json == 1) {
 						//borrarregistro(user_id);
 
-						enviarcorreo(id_pendiente_pago,user_id);
+						enviarcorreo(user_id,id_pendiente_pago);
 
 					}
 
@@ -632,13 +635,13 @@
 
 
 
-		function enviarcorreo(id_pendiente_pago,user_id) {
+		function enviarcorreo(user_id,id_pendiente_pago) {
 			$.ajax({
 					type: 'POST',
 					url: '/Mailer/mailer',
 					data: {
-						id_pendiente_pago: id_pendiente_pago,
-						user_id: user_id
+						user_id: user_id,
+                        id_pendiente_pago: id_pendiente_pago
 					}
 				})
 				.done(function(r)
@@ -654,7 +657,7 @@
 
 
 
-		function confirmarvalidar(id_pendiente_pago,user_id,id_producto) {
+		function confirmarvalidar(id_pendiente_pago,user_id,id_producto,clave) {
 
 			const swalWithBootstrapButtons = Swal.mixin({
 				customClass: {
@@ -674,21 +677,19 @@
 				reverseButtons: true
 			}).then((result) => {
 				if (result.isConfirmed) {
-					validarComprobante(id_pendiente_pago,user_id,id_producto);
+					validarComprobante(id_pendiente_pago,user_id,id_producto,clave);
 
-					// Swal.fire({
-					// 	position: 'top-end',
-					// 	icon: 'success',
-					// 	title: 'Comprobante liberado!',
-					// 	showConfirmButton: false,
+					Swal.fire({
+						position: 'top-end',
+						icon: 'success',
+						title: 'Comprobante liberado!',
+						showConfirmButton: false,
 						
-					// })
+					})
 
-					// window.setTimeout(function() {
-					// 	location.reload();
-					// }, 1000);
-
-
+					window.setTimeout(function() {
+						location.reload();
+					}, 500);
 
 				} else if (
 					/* Read more about handling dismissals below */
@@ -701,11 +702,9 @@
 					)
 				}
 			})
-
-
 		}
 
-		function validarComprobante(id_pendiente_pago,user_id,id_producto) {
+		function validarComprobante(id_pendiente_pago,user_id,id_producto,clave) {
 			$.ajax({
 					url: '/Validacion/updateComprobante',
 					type: 'POST',
@@ -713,7 +712,8 @@
 					data: {
 						id_pendiente_pago: id_pendiente_pago,
 						user_id: user_id,
-                        id_producto: id_producto
+                        id_producto: id_producto,
+                        clave: clave
 					}
 				})
 				.done(function(json) {
@@ -721,7 +721,7 @@
 					if (json == 1) {
 						//alert(json.mensaje);
 						//location.reload();
-						insertarAsignaProducto(id_pendiente_pago,user_id,id_producto);
+						insertarAsignaProducto(id_pendiente_pago,user_id,id_producto,clave);
 					} else {
 						// alert(json.mensaje);
 						//location.reload();
@@ -739,7 +739,7 @@
                 data: {
                     id_pendiente_pago: id_pendiente_pago,
                     user_id: user_id,
-                    id_producto: id_producto
+                    id_producto: id_producto,
                 }
             })
             .done(function(json) {

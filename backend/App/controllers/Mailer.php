@@ -12,15 +12,20 @@ use \Core\Controller;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use \App\models\Vuelos as VuelosDao;
+use \App\models\Estadisticas as EstadisticasDao;
 
 
 class Mailer
 {
 
 
-    public function mailer($msg)
+    public function mailer()
     {
         $mail = new PHPMailer(true);
+        $user_id = $_POST['user_id'];
+        $id_pendiente_pago = $_POST['id_pendiente_pago'];
+
+        $msg = EstadisticasDao::getSolicitado($user_id,$id_pendiente_pago);
 
         try {
             //Server settings
@@ -28,16 +33,16 @@ class Mailer
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'contacto@convencionasofarma2022.mx';                     //SMTP username contacto@convencionasofarma2022.mx
-            $mail->Password   = 'lxwqdkznaznpwpcg';                               //SMTP password
+            $mail->Username   = 'anestesiaregisonal@gmail.com';                     //SMTP username contacto@convencionasofarma2022.mx
+            $mail->Password   = 'rtjkdhbmxkohnsmd';                               //SMTP password
             // $mail->Password   = 'grupolahe664';                               //SMTP password
             $mail->SMTPSecure = 'ssl';
             $mail->SMTPAutoTLS = false;            //Enable implicit TLS encryption
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom($msg['email'], 'MUSA 2022 Asofarma');
-            $mail->addAddress($msg['email'], $msg['name']);     //Add a recipient
+            $mail->setFrom($msg['usuario'], 'LASRA 2022');
+            $mail->addAddress($msg['usuario'], $msg['nombre']);     //Add a recipient
 
 
             $html = '     
@@ -92,21 +97,32 @@ class Mailer
         <body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
             
             <div class="container">
-                <img src="https://registro.foromusa.com/img/musa-01.png" alt="">
+                <!--<img src="https://registro.foromusa.com/img/musa-01.png" alt="">-->
                 <br>
                 <p>
-                    Hola <b>'.$msg['name'].'</b>
+                    Hola, <b>'.$msg['nombre'].'</b>
                 </p>
                 <br>
                 <p>
-                Le informamos que su itinerario se encuentra disponible, si desea consultarlo de clic en el siguiente enlace, <a href="https://convencionasofarma2022.mx/">https://convencionasofarma2022.mx/</a>, ingrese su correo electrónico y su contraseña, diríjase a itinerarios, de clic en ITINERARIO y visualice si sus datos son correctos, si usted detecta un error, comuníquese a la línea de soporte a través de WhatsApp en el siguiente enlace.<br>
+                Le informamos que su comprobante de pago ha sido rechazado ó el archivo en cuestión se encuentra 
+                dañado, le solicitamos que, de favor y de la manera más atenta, suba su comprobante de pago nuevamente
+                a la plataforma, la subida del archivo se encontrará nuevamente disponible en el siguiente enlace,
+                <a href="https://registro.lasra-mexico.org/ComprobantePago/">
+                https://registro.lasra-mexico.org/ComprobantePago/
+                </a>, ingrese su correo electrónico y diríjase a comprobantes, de clic en 
+                subir archivo y verifique que el archivo a subir sea el correcto.
+                </p>
+                <br>
+                <p>Si sus datos son correctos y usted detecta error alguno, comuníquese a 
+                la línea de soporte a través de WhatsApp en el siguiente enlace.<br>
                 <a href="https://api.whatsapp.com/send?phone=52558010%204181&text=Buen%20d%C3%ADa">https://api.whatsapp.com/send?phone=52558010%204181&text=Buen%20d%C3%ADa<a/> 
                 </p>
                 <br>
                 <p>
-                Recuerde que sus pases de abordar estarán disponibles hasta 48 horas de anticipación al vuelo, debe tener cargado y validado con éxito su comprobante de vacunación y su prueba SARS-CoV-2 con un lapso no mayor a 48 horas del vuelo.
+                Tome en cuenta que el archivo a subir debe de ser en formato PDF o PNG, sin más que decir esperamos
+                que tenga un excelente día, estamos a sus ordenes.
                 </p>
-                <img src="https://registro.foromusa.com/img/musa-01.png" alt="firma">
+                <!--<img src="https://registro.foromusa.com/img/musa-01.png" alt="firma">-->
 
                     
                 

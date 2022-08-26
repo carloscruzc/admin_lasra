@@ -174,11 +174,15 @@ html;
         session_start();
         $_SESSION['usuario'] = $user['usuario'];
         $_SESSION['nombre'] = $user['nombre'];
+        $_SESSION['perfil'] = $user['menu_caja'];
         $_SESSION['utilerias_administradores_id'] = $user['utilerias_administradores_id'];
 
         if($user['menu_caja'] == 1){
             header("location: /Caja/");
-        }else{
+        }else if($user['menu_caja'] == 2){
+            header("location: /Validacion/");
+        }
+        else{
             header("location: /Principal/");
         }
 

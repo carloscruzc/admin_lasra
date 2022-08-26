@@ -264,17 +264,24 @@ html;
         $status_pendiente = '<span class="badge badge-success" style="background-color: #9A1622; color:white "><strong>VOLVER A SUBIR</strong></span>';
       }
 
+
+      $productos = EstadisticasDao::getNombreProductos($value['user_id']);
+      $todos = '';
+      foreach ($productos as $key => $all_productos){
+        $variable = $all_productos['nombre_producto'];
+        $todos .= $variable.('<br>');
+      }
       $numero_gafete = $numero_gafete + 1;
 
       $tabla.=<<<html
       <tr>
         <td>$numero_gafete</td>
-        <td>{$value['id_registrado']}</td>
-        <td class="text-center">{$value['nombre']}<br>{$value['email']}</td>
-        <td class="text-center">{$value['nombre_producto']}</td>
+        <td>{$value['user_id']}</td>
+        <td class="text-center">{$status_pendiente}</td>
+        <td class="text-center">{$value['nombre']}<br>{$value['usuario']}</td>
+        <td class="text-center">{$todos}</td>
         <td class="text-center">{$value['tipo_pago']}{$tipo_pago}</td> 
         <td class="text-center">{$value['fecha']}</td>
-        <td class="text-center">{$status_pendiente}</td>
       </tr>
  
 html;
@@ -290,14 +297,21 @@ html;
     $total_consta = 0;
     
     foreach ($datos_consta as $key => $value) {
+
+      $productos = EstadisticasDao::getNombreProductos($value['user_id']);
+      $todos = '';
+      foreach ($productos as $key => $all_productos){
+        $variable = $all_productos['nombre_producto'];
+        $todos .= $variable.('<br>');
+      }
       $numero_constancia = $numero_constancia + 1;
 
       $tabla_constancia.=<<<html
       <tr>
         <td>$numero_constancia</td>
-        <td>{$value['id_registrado']}</td>
-        <td class="text-center">{$value['nombre']}<br>{$value['email']}</td>
-        <td class="text-center">{$value['nombre_producto']}</td>
+        <td>{$value['user_id']}</td>
+        <td class="text-center">{$value['nombre']}<br>{$value['usuario']}</td>
+        <td class="text-center">{$todos}</td>
         <td class="text-center">{$value['tipo_pago']}
           <br>VER COMPROBANTE<br>
           <div data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}">
@@ -305,10 +319,10 @@ html;
           </div>
         </td>
         <td class="text-center">
-          <button onclick="confirmarsolicitar({$value['id_pendiente_pago']},{$value['user_id']})" title="Volver a solicitar" class="btn btn-warning" type="button" id="button">
+          <button onclick="confirmarsolicitar('{$value['clave']}',{$value['user_id']},{$value['id_pendiente_pago']})" title="Volver a solicitar" class="btn btn-warning" type="button" id="button">
             <span class="fa fa-undo-alt" style="color:white"></span>
           </button><br>
-          <button onclick="confirmarvalidar({$value['id_pendiente_pago']},{$value['user_id']},{$value['id_producto']})" type="button" class="btn btn-primary">
+          <button onclick="confirmarvalidar({$value['id_pendiente_pago']},{$value['user_id']},{$value['id_producto']},'{$value['clave']}')" type="button" class="btn btn-primary">
             LIBERAR
           </button>
         </td>
@@ -330,13 +344,21 @@ html;
     
     foreach ($datos_socios as $key => $value) {
 
+
+      $productos = EstadisticasDao::getNombreProductos($value['user_id']);
+      $todos = '';
+      foreach ($productos as $key => $all_productos){
+        $variable = $all_productos['nombre_producto'];
+        $todos .= $variable.('<br>');
+      }
       $numero_socios = $numero_socios + 1;
 
       $tabla_socios.=<<<html
       <tr>
         <td>$numero_socios</td>
-        <td>{$value['id_registrado']}</td>
-        <td class="text-center">{$value['nombre']}<br>{$value['email']}</td>
+        <td>{$value['user_id']}</td>
+        <td class="text-center">{$value['nombre']}<br>{$value['usuario']}</td>
+        <td class="text-center">{$todos}</td>
         <td class="text-center">{$value['tipo_pago']}
           <br>VER COMPROBANTE<br>
           <div data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}">
@@ -364,7 +386,9 @@ html;
         $tipo_pago = '<span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>SIN SELECCIONAR</strong></span>';
       }
 
-      if($value['status'] == 0){
+      if($value['url_archivo'] != '' && $value['status'] == 0){
+        $status_pendiente = '<span class="badge badge-success" style="background-color: #03A5E7; color:white "><strong>EN ESPERA</strong></span>';
+      }else if($value['status'] == 0){
         $status_pendiente = '<span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>PENDIENTE</strong></span>';
       }else if($value['status'] == 2){
         $status_pendiente = '<span class="badge badge-success" style="background-color: #9A1622; color:white "><strong>VOLVER A SUBIR</strong></span>';
@@ -405,25 +429,31 @@ html;
 html;
         $acciones .=<<<html
         <td class="text-center">
-          <button onclick="confirmarsolicitar({$value['id_pendiente_pago']},{$value['id_registrado']})" title="Volver a solicitar" class="btn btn-warning" type="button" id="button">
+          <button onclick="confirmarsolicitar('{$value['clave']}',{$value['user_id']},{$value['id_pendiente_pago']})" title="Volver a solicitar" class="btn btn-warning" type="button" id="button">
             <span class="fa fa-undo-alt" style="color:white"></span>
           </button><br>
-          <button onclick="confirmarvalidar({$value['id_pendiente_pago']},{$value['id_registrado']},{$value['id_producto']})" type="button" class="btn btn-primary">
+          <button onclick="confirmarvalidar({$value['id_pendiente_pago']},{$value['user_id']},{$value['id_producto']},'{$value['clave']}')" type="button" class="btn btn-primary">
             LIBERAR
           </button>
         </td>
 html;
       }
 
+      $productos = EstadisticasDao::getNombreProductos($value['user_id']);
+      $todos = '';
+      foreach ($productos as $key => $all_productos){
+        $variable = $all_productos['nombre_producto'];
+        $todos .= $variable.('<br>');
+      }
       $numero_caja = $numero_caja + 1;
-
       $tabla_caja.=<<<html
       <tr>
         <td>$numero_caja</td>
-        <td>{$value['id_registrado']}</td>
+        <td>{$value['user_id']}</td>
         <td class="text-center">{$status_pendiente}</td>
-        <td class="text-center">{$value['nombre']}<br>{$value['email']}</td>
-        <td class="text-center">{$value['nombre_producto']}</td>
+        <td class="text-center">{$value['nombre']}<br>{$value['usuario']}</td>
+        <td class="text-center">{$todos}</td>
+        <td class="text-center">$ {$value['monto']}.00</td>
         <td class="text-center">{$value['tipo_pago']}{$tipo_pago}
         {$comprobante}
         </td>
@@ -436,9 +466,7 @@ html;
       $total_pesos = $total_pesos + 1;
     }
 
-
-
-    if($_SESSION['perfil'] == "Validar"){
+    if($_SESSION['perfil'] == 2){
       // View::set('asideMenu',$this->_contenedor->asideMenu());
     }else{
       View::set('asideMenu',$this->_contenedor->asideMenu());
@@ -462,16 +490,15 @@ html;
 
     public function updateSolicitar()
     {
-
         $documento = new \stdClass();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $id_registrado = $_POST['id_registrado'];
-            $id_pendiente_pago = $_POST['id_pendiente_pago'];
+            $user_id = $_POST['user_id'];
+            $clave = $_POST['clave'];
 
-            $documento->_id_registrado = $id_registrado;
-            $documento->_id_pendiente_pago = $id_pendiente_pago;
+            $documento->_user_id = $user_id;
+            $documento->_clave = $clave;
 
             // var_dump($documento);
             $id = EstadisticasDao::updateSolicitar($documento);
@@ -498,9 +525,10 @@ html;
             $user_id = $_POST['user_id'];
             // $id_pendiente_pago = $_POST['id_pendiente_pago'];
             $id_producto = $_POST['id_producto'];
+            $clave = $_POST['clave'];
 
             $documento->_user_id = $user_id;
-            // $documento->_id_pendiente_pago = $id_pendiente_pago;
+            $documento->_clave = $clave;
             $documento->_id_producto = $id_producto;
             $documento->_fecha = $fecha;
 
@@ -527,11 +555,12 @@ html;
         $fecha = $date->format('Y-m-d H:i:s');
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+          $user_id = $_POST['user_id'];
 
+          $productos = EstadisticasDao::getNombreProductos($user_id);
+          foreach($productos as $key => $value){
 
-          foreach($documento as $key => $value){
-            $user_id = $_POST['user_id'];
-            $id_producto = $_POST['id_producto'];
+            $id_producto = $value['id_producto'];
 
             $documento->_user_id = $user_id;
             $documento->_id_producto = $id_producto;
