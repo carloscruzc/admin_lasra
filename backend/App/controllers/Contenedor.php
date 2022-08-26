@@ -146,6 +146,15 @@ html;
                       </a>
                   </li>
 
+                  <li id="validacion" class="nav-item" {$permisos}>
+                  <a href="/Validacion/" class="nav-link " aria-controls="basicExamples" role="button" aria-expanded="false">
+                      <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                          <span class="fas fa-clipboard-check morado-musa-text"></span>
+                      </div>
+                      <span class="nav-link-text ms-1">Validación de comprobantes</span>
+                  </a>
+              </li>
+
                   <li id="comprobantes" class="nav-item" {$comprobantesHidden};>
                       <a href="/ComprobantesPago" class="nav-link " aria-controls="basicExamples" role="button" aria-expanded="false">
                           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">

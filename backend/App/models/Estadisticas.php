@@ -43,6 +43,115 @@ sql;
         
     }
 
+    public static function getPendientes(){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pp.user_id, pp.status, CONCAT(ua.nombre," ",ua.apellidop," ",ua.apellidom) as nombre, 
+      ua.usuario, pr.nombre as nombre_producto, pp.tipo_pago, pp.fecha
+      FROM pendiente_pago pp
+      INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
+      INNER JOIN productos pr ON pr.id_producto = pp.id_producto
+      WHERE pp.url_archivo = '';;
+sql;
+      return $mysqli->queryAll($query);
+        
+    }
+
+
+    public static function updateComprobante($data){
+      $mysqli = Database::getInstance(true);
+      $query=<<<sql
+      UPDATE pendiente_pago SET status = 1, fecha_liberado = :fecha
+      WHERE user_id = :user_id;
+  sql;
+      $parametros = array(
+        ':user_id'=>$data->_user_id,
+        ':fecha'=>$data->_fecha
+      );
+  
+      $accion = new \stdClass();
+      $accion->_sql= $query;
+      $accion->_parametros = $parametros;
+      $accion->_id = $data->_administrador_id;
+      // UtileriasLog::addAccion($accion);
+      return $mysqli->update($query, $parametros);
+  }
+
+
+  public static function insertarAsignaProducto($data){
+    $mysqli = Database::getInstance(1);
+    $query=<<<sql
+    INSERT INTO asigna_producto(user_id, id_producto, fecha_asignacion)
+    VALUES(:user_id, :id_producto, :fecha);
+  sql;
+  
+        $parametros = array(
+          ':user_id'=>$data->_user_id,
+          ':id_producto'=>$data->_id_producto,
+          ':fecha'=>$data->_fecha,
+        );
+        $id = $mysqli->insert($query,$parametros);
+        return $id;
+      
+  }
+
+
+
+
+
+    public static function getProcesados(){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pp.id_pendiente_pago,pp.user_id, CONCAT(ua.nombre," ",ua.apellidop," ",ua.apellidom) as nombre, 
+      ua.usuario, pr.nombre as nombre_producto, pp.id_producto,pp.tipo_pago, pp.fecha, pp.url_archivo
+      FROM pendiente_pago pp
+      INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
+      INNER JOIN productos pr ON pr.id_producto = pp.id_producto
+      WHERE pp.url_archivo != '' AND pp.url_archivo != 'Registro_Becado' AND pp.status != 1;
+sql;
+      return $mysqli->queryAll($query);
+        
+    }
+
+    public static function getLiberados(){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pp.id_pendiente_pago,pp.user_id, CONCAT(ua.nombre," ",ua.apellidop," ",ua.apellidom) as nombre, 
+      ua.usuario, pr.nombre as nombre_producto, pp.id_producto,pp.tipo_pago, pp.fecha_liberado, pp.url_archivo
+      FROM pendiente_pago pp
+      INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
+      INNER JOIN productos pr ON pr.id_producto = pp.id_producto
+      WHERE pp.url_archivo != 'Registro_Becado' AND pp.status = 1;
+sql;
+      return $mysqli->queryAll($query);
+         
+    }
+
+    public static function getTodos(){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pp.id_pendiente_pago, pp.status,pp.user_id,CONCAT(ua.nombre," ",ua.apellidop," ",ua.apellidom) as nombre, 
+      ua.usuario, pr.nombre as nombre_producto, pp.id_producto,pp.tipo_pago, pp.fecha_liberado, pp.url_archivo
+      FROM pendiente_pago pp
+      INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
+      INNER JOIN productos pr ON pr.id_producto = pp.id_producto
+      WHERE pp.url_archivo != 'Registro_Becado';
+sql;
+      return $mysqli->queryAll($query);
+        
+    }
+
+    public static function getProductosAsignaProducto($user_id,$id_producto){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT * FROM asigna_producto WHERE user_id = $user_id and id_producto = $id_producto
+    sql;
+      return $mysqli->queryAll($query);
+    }    
+    
+
+    
+
     public static function getById($id){
          
     }

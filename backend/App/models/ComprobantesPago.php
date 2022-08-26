@@ -37,7 +37,7 @@ sql;
     
     public static function getById($id){
          
-    }
+    } 
 
     public static function deleteProducto($id){
       $mysqli = Database::getInstance(true);
