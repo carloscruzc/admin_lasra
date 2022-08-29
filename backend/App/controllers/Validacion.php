@@ -583,6 +583,32 @@ html;
         }
     }
 
+    public function updateSocio()
+    {
+        $documento = new \stdClass();
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $user_id = $_POST['user_id'];
+            $documento->_user_id = $user_id;
+
+            $checarSocio = EstadisticasDao::getChecarSocio($user_id);
+            if($checarSocio){
+            $id = EstadisticasDao::updateSocio($documento);
+            if ($id) {
+                echo "1";
+            } else {
+                echo "2";
+                // header("Location: /Home/");
+            }
+          }else{
+
+            }
+        } else {
+            echo 'fail REQUEST';
+        }
+    }
+
     public function getCaja(){
       $fecha = $_POST['fecha'];
       $total = 0;

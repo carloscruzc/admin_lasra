@@ -194,6 +194,35 @@ sql;
         
     }
 
+    public static function getChecarSocio($user_id){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT * FROM utilerias_administradores ua
+      INNER JOIN asigna_producto ap ON ap.user_id = ua.user_id
+      WHERE ua.user_id = $user_id AND ap.id_producto = 2;
+sql;
+      return $mysqli->queryOne($query);
+        
+    }
+
+    public static function updateSocio($data){
+      $mysqli = Database::getInstance(true);
+      $query=<<<sql
+      UPDATE utilerias_administradores SET socio = 1 
+      WHERE user_id = :user_id;
+  sql;
+      $parametros = array(
+        ':user_id'=>$data->_user_id
+      );
+  
+      $accion = new \stdClass();
+      $accion->_sql= $query;
+      $accion->_parametros = $parametros;
+      $accion->_id = $data->_administrador_id;
+      // UtileriasLog::addAccion($accion);
+      return $mysqli->update($query, $parametros);
+  }
+
     public static function getProductosAsignaProducto($user_id,$id_producto){
       $mysqli = Database::getInstance();
       $query=<<<sql

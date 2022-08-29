@@ -669,7 +669,7 @@
 
 			swalWithBootstrapButtons.fire({
 				title: '¿Está seguro?',
-				text: "Al librerar el comprobante Usted ya no podrá volver a solicitar el comprobante de pagó.",
+				text: "Al liberar el comprobante usted ya no podrá volver a solicitar el comprobante de pagó.",
 				icon: 'warning',
 				showCancelButton: true,
 				confirmButtonText: 'OK',
@@ -689,7 +689,7 @@
 
 					window.setTimeout(function() {
 						location.reload();
-					}, 500);
+					}, 700);
 
 				} else if (
 					/* Read more about handling dismissals below */
@@ -744,15 +744,33 @@
             })
             .done(function(json) {
                 console.log(json);
-                if (json.exito == 1) {
+                if (json  == 1) {
+                    console.log("checamos si es socio");
+                    checarSocio(user_id);
                     //borrarregistro(user_id);
-
                     //enviarcorreo(user_id);
-
                 }
 
             })
 
+        }
+
+        function checarSocio(user_id) {
+        $.ajax({
+                url: '/Validacion/updateSocio',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    user_id: user_id
+                }
+            })
+            .done(function(json) {
+                console.log(json);
+                if (json == 1) {
+                    //borrarregistro(user_id);
+                    //enviarcorreo(user_id);
+                }
+            })
         }
 
 

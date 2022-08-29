@@ -136,7 +136,7 @@ class Mailer
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'AVISO, ITINERARIO DISPONIBLE PARA CONSULTA.';
+            $mail->Subject = 'AVISO, COMPROBANTE LASRA 2022.';
             $mail->Body    = $html;
             $mail->CharSet = 'UTF-8';
 
