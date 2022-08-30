@@ -265,7 +265,7 @@ html;
       }
 
 
-      $productos = EstadisticasDao::getNombreProductos($value['user_id']);
+      $productos = EstadisticasDao::getNombreProductos($value['clave']);
       $todos = '';
       foreach ($productos as $key => $all_productos){
         $variable = $all_productos['nombre_producto'];
@@ -298,7 +298,7 @@ html;
     
     foreach ($datos_consta as $key => $value) {
 
-      $productos = EstadisticasDao::getNombreProductos($value['user_id']);
+      $productos = EstadisticasDao::getNombreProductos($value['clave']);
       $todos = '';
       foreach ($productos as $key => $all_productos){
         $variable = $all_productos['nombre_producto'];
@@ -345,7 +345,7 @@ html;
     foreach ($datos_socios as $key => $value) {
 
 
-      $productos = EstadisticasDao::getNombreProductos($value['user_id']);
+      $productos = EstadisticasDao::getNombreProductos($value['clave']);
       $todos = '';
       foreach ($productos as $key => $all_productos){
         $variable = $all_productos['nombre_producto'];
@@ -439,7 +439,7 @@ html;
 html;
       }
 
-      $productos = EstadisticasDao::getNombreProductos($value['user_id']);
+      $productos = EstadisticasDao::getNombreProductos($value['clave']);
       $todos = '';
       foreach ($productos as $key => $all_productos){
         $variable = $all_productos['nombre_producto'];
@@ -556,8 +556,9 @@ html;
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           $user_id = $_POST['user_id'];
+          $clave = $_POST['clave'];
 
-          $productos = EstadisticasDao::getNombreProductos($user_id);
+          $productos = EstadisticasDao::getNombreProductos($clave);
           foreach($productos as $key => $value){
 
             $id_producto = $value['id_producto'];

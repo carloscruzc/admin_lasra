@@ -1,6 +1,6 @@
 <?php echo $header; ?>
 <title>
-    Validación - AMC - GRUPO LAHE
+    Validación - LASRA - GRUPO LAHE
 </title>
 <body class="g-sidenav-show  bg-gray-100">
     <?php echo $asideMenu;?>
@@ -397,7 +397,7 @@
             var pdf = $(this).attr('data-pdf');
             //alert(pdf);
 
-            $('.cont-modal').html('<iframe src="https://congreso.amc.org.mx/comprobantesPago/'+pdf+'" " style="width:100%; height:700px;" frameborder="0" ></iframe>');
+            $('.cont-modal').html('<iframe src="https://registro.lasra-mexico.org/comprobantesPago/'+pdf+'" " style="width:100%; height:700px;" frameborder="0" ></iframe>');
         })
     });
 </script>
@@ -730,7 +730,7 @@
 		}
 
 
-		function insertarAsignaProducto(id_pendiente_pago,user_id,id_producto) {
+		function insertarAsignaProducto(id_pendiente_pago,user_id,id_producto,clave) {
 
         $.ajax({
                 url: '/Validacion/insertarAsignaProducto',
@@ -740,6 +740,7 @@
                     id_pendiente_pago: id_pendiente_pago,
                     user_id: user_id,
                     id_producto: id_producto,
+                    clave: clave
                 }
             })
             .done(function(json) {

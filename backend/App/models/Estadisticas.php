@@ -173,6 +173,20 @@ sql;
       FROM pendiente_pago pp
       INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
       INNER JOIN productos pr ON pr.id_producto = pp.id_producto
+      WHERE pp.url_archivo != 'Registro_Becado' AND pp.clave = '$id';
+sql;
+      return $mysqli->queryAll($query);
+        
+    }
+
+    public static function getNombreProductosInsert($id){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pp.id_pendiente_pago, pp.status,pp.user_id,CONCAT(ua.nombre," ",ua.apellidop," ",ua.apellidom) as nombre, 
+      ua.usuario, pr.nombre as nombre_producto, pp.id_producto,pp.tipo_pago, pp.fecha_liberado, pp.url_archivo
+      FROM pendiente_pago pp
+      INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
+      INNER JOIN productos pr ON pr.id_producto = pp.id_producto
       WHERE pp.url_archivo != 'Registro_Becado' AND pp.user_id = '$id';
 sql;
       return $mysqli->queryAll($query);
