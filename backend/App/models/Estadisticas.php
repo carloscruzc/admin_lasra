@@ -47,7 +47,7 @@ sql;
       $mysqli = Database::getInstance();
       $query=<<<sql
       SELECT pp.user_id, pp.status, CONCAT(ua.nombre," ",ua.apellidop," ",ua.apellidom) as nombre, 
-      ua.usuario, pr.nombre as nombre_producto, pp.tipo_pago, pp.fecha
+      ua.usuario, pp.clave,pr.nombre as nombre_producto, pp.tipo_pago, pp.fecha
       FROM pendiente_pago pp
       INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
       INNER JOIN productos pr ON pr.id_producto = pp.id_producto

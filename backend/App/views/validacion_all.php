@@ -179,7 +179,7 @@
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th> 
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Datos</th>
-                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Producto</th>
+                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Producto(s)</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tipo de Pago</th>   
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha Pendiente</th>                               
                                                     </tr>
@@ -233,7 +233,7 @@
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Datos</th>
-                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Producto</th>
+                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Producto(s)</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tipo de Pago</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
                                                     </tr>
@@ -646,7 +646,10 @@
 				})
 				.done(function(r)
 					{
-						// alert("Se ha enviado el correo correctamente");
+                        console.log('correo enviado a:');
+						console.log(user_id);
+                        console.log(id_pendiente_pago);
+                        // alert("Se ha enviado el correo correctamente");
 						// mensaje.html(r);
 					});
 		}

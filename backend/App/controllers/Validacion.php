@@ -264,7 +264,7 @@ html;
         $status_pendiente = '<span class="badge badge-success" style="background-color: #9A1622; color:white "><strong>VOLVER A SUBIR</strong></span>';
       }
 
-
+      
       $productos = EstadisticasDao::getNombreProductos($value['clave']);
       $todos = '';
       foreach ($productos as $key => $all_productos){
@@ -301,9 +301,10 @@ html;
       $productos = EstadisticasDao::getNombreProductos($value['clave']);
       $todos = '';
       foreach ($productos as $key => $all_productos){
-        $variable = $all_productos['nombre_producto'];
+        $variable = $all_productos['nombre_producto'];  
         $todos .= $variable.('<br>');
       }
+      
       $numero_constancia = $numero_constancia + 1;
 
       $tabla_constancia.=<<<html
