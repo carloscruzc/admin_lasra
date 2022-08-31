@@ -315,8 +315,8 @@ html;
         <td class="text-center">{$todos}</td>
         <td class="text-center">{$value['tipo_pago']}
           <br>VER COMPROBANTE<br>
-          <div data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}">
-            <button data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
+          <div data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}">
+            <button data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
           </div>
         </td>
         <td class="text-center">
@@ -362,8 +362,8 @@ html;
         <td class="text-center">{$todos}</td>
         <td class="text-center">{$value['tipo_pago']}
           <br>VER COMPROBANTE<br>
-          <div data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}">
-            <button data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
+          <div data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}">
+            <button data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
           </div>
         </td>
         <td class="text-center">{$value['fecha_liberado']}</td>
@@ -424,8 +424,8 @@ html;
       }else{
         $comprobante .=<<<html
         <br>VER COMPROBANTE<br>
-        <div data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}">
-          <button data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
+        <div data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}">
+          <button data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
         </div>
 html;
         $acciones .=<<<html
