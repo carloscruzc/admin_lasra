@@ -119,7 +119,7 @@ class Mailer
                 </p>
                 <br>
                 <p>
-                Tome en cuenta que el archivo a subir debe de ser en formato PDF o PNG, sin más que decir esperamos
+                Tome en cuenta que el archivo a subir debe de ser en formato PDF, PNG, JPG ó JPEG, sin más que decir esperamos
                 que tenga un excelente día, estamos a sus ordenes.
                 </p>
                 <!--<img src="https://registro.foromusa.com/img/musa-01.png" alt="firma">-->
