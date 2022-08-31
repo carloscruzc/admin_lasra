@@ -34,6 +34,9 @@ html;
     
 
       $all_ra = AsistentesDao::getAllRegistrosAcceso();
+      if($_SESSION['perfil'] == 2){
+        header("Location: /Validacion/");  
+      }
 
     //   var_dump($all_ra);
       $this->setReferencia($all_ra);
