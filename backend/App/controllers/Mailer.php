@@ -35,7 +35,7 @@ class Mailer
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
             $mail->Username   = 'correoslasra@gmail.com';                     //SMTP username contacto@convencionasofarma2022.mx
             $mail->Password   = 'lrsxlknwkiisvbdb';                               //SMTP password
-            // $mail->Password   = 'grupolahe664';                               //SMTP password
+            // $mail->Password   = '/*/*ia88tl41';                               //SMTP password
             $mail->SMTPSecure = 'ssl';
             $mail->SMTPAutoTLS = false;            //Enable implicit TLS encryption
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
@@ -119,7 +119,7 @@ class Mailer
                 </p>
                 <br>
                 <p>
-                Tome en cuenta que el archivo a subir debe de ser en formato PDF, PNG, JPG ó JPEG, sin más que decir esperamos
+                Tome en cuenta que el archivo a subir debe de ser en formato PDF, PNG, JPG o JPEG, sin más que decir esperamos
                 que tenga un excelente día, estamos a sus ordenes.
                 </p>
                 <!--<img src="https://registro.foromusa.com/img/musa-01.png" alt="firma">-->

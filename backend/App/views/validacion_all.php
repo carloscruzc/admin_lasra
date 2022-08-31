@@ -106,13 +106,13 @@
                                                     <li class="nav-item">
                                                         <a class="nav-link mb-0 px-0 py-1" href="#cam1" data-bs-toggle="tab" role="tab" aria-selected="true">
                                                             <span class="fas fa-exclamation"></span>
-                                                            <span class="ms-1">Pendientes</span>
+                                                            <span class="ms-1">Registros sin Comprobante</span>
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a class="nav-link mb-0 px-0 py-1" href="#cam2" data-bs-toggle="tab" role="tab" aria-selected="false">
                                                             <span class="fa fa-clock-o"></span>
-                                                            <span class="ms-1">Procesar</span>
+                                                            <span class="ms-1">Liberar Pagos</span>
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
