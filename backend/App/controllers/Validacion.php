@@ -568,10 +568,7 @@ html;
             $documento->_id_producto = $id_producto;
             $documento->_fecha = $fecha;
 
-
-    
                    $id = EstadisticasDao::insertarAsignaProducto($documento);
-
          
             }
             if ($id) {
