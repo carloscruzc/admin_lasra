@@ -98,6 +98,12 @@
                                             <div class="mt-2 nav-wrapper active position-relative end-0">
                                                 <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist">
                                                     <li class="nav-item">
+                                                        <a class="nav-link mb-0 px-0 py-1" href="#cam5" data-bs-toggle="tab" role="tab" aria-selected="true">
+                                                            <span class="fas fa-school"></span>
+                                                            <span class="ms-1">Estudiantes</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
                                                         <a class="nav-link mb-0 px-0 py-1" href="#cam3" data-bs-toggle="tab" role="tab" aria-selected="true">
                                                             <span class="fas fa-list"></span>
                                                             <span class="ms-1">Todos</span>
@@ -179,7 +185,7 @@
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th> 
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Datos</th>
-                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Producto(s)</th>
+                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Producto</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tipo de Pago</th>   
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha Pendiente</th>                               
                                                     </tr>
@@ -233,7 +239,7 @@
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Datos</th>
-                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Producto(s)</th>
+                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Producto</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tipo de Pago</th>
                                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
                                                     </tr>
@@ -361,6 +367,60 @@
                             </div>
                         </div>
                 </div>
+
+                <div class="tab-pane fade position-relative height-350 border-radius-lg" id="cam5" role="tabpanel" aria-labelledby="cam3">
+                    <div class="d-flex m-1">
+                        <div class="ms-auto d-flex">
+                            <div class="pe-4 mt-1 position-relative">
+                                <hr class="vertical dark mt-0">
+                            </div>
+                            <div class="ps-4">
+                                <div class="panel-body" <?php echo $visible; ?>></div>
+                                <a style="background: #1C6C42; color: #ffffff;" href="#" type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3"><i class="fa fa-file-excel" aria-hidden="true"></i></a>
+                                <a style="background: #9A1622; color: #ffffff;" href="#" type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3"><i class="fa fa-file-pdf" aria-hidden="true"></i></a>
+                                <button type="button" class="btn bg-gradient-secondary btn-icon-only mb-0 mt-3" data-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Puedes descargar los reportes en archivos PDF o EXCEL.">
+                                    <span class="fa fa-info"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card mb-4">
+                                    <div class="card-header pb-0">
+                                        <h5>Todos los registros</h5>
+                                        <!-- <p style="font-size: 12px">
+                                        <span class="fa fa-plane" style="color: #125a16"> </span> Aeropuerto de Salida a la Convención
+                                        <span class="fa fa-flag" style="color: #353535"> </span> Aeropuerto de Llegada (Sede Convención)
+                                        <span class="fa fa-ticket" style="color: #1a8fdd"> </span> No. de Vuelo
+                                    </p> -->
+                                    </div>
+                                    <div class="card-body px-0 pt-0 pb-2">
+                                        <div class="table-responsive p-0">
+                                            <table class="table align-items-center mb-0 table table-striped table-bordered" id="estudiante-list">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
+                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Datos</th>
+                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Comprobante</th>
+                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>                                
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php echo $tabla_estudiante;?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="cont_total_consta" style="padding: 20px;">
+                                        <span style="font-size: 25px; color:green;">Total Registros: <span id="total_socios"><?=number_format($total_pesos)?></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
             </div>
         </div>
 
@@ -376,7 +436,7 @@
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
     <div class="modal-content ">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Trabajo</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Comprobante</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: none; background: transparent;">
           <span aria-hidden="true" style="font-size: 25px;">&times;</span>
         </button>
@@ -832,4 +892,159 @@
 	
 </script>
 
+<script>
+    function confirmarsolicitarEstudiante(user_id,id_pendiente_estudiante) {
+			//var respuesta = confirm("Estas seguro de volver a solicitar el comprobante de pago?");
+			const swalWithBootstrapButtons = Swal.mixin({
+				customClass: {
+					confirmButton: 'btn btn-success',
+					cancelButton: 'btn btn-danger'
+				},
+				buttonsStyling: false
+			})
+
+			swalWithBootstrapButtons.fire({
+				title: '¿Está seguro?',
+				text: "Se enviará un correo solicitando enviar nuevamente su comprobante de pago!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Si, Solicitarlo!',
+				cancelButtonText: 'No, cancelar!',
+				reverseButtons: true
+			}).then((result) => {
+				if (result.isConfirmed) {
+					solicitarComprobanteEstudiante(user_id,id_pendiente_estudiante);
+					Swal.fire({
+						position: 'top-end',
+						icon: 'success',
+						title: 'Tu petición ha sido enviada correctamente!',
+						showConfirmButton: false,
+						//timer: 5000
+					})
+
+					window.setTimeout(function() {
+						location.reload();
+					}, 1000);
+
+				} else if (
+					/* Read more about handling dismissals below */
+					result.dismiss === Swal.DismissReason.cancel
+				) {
+					swalWithBootstrapButtons.fire(
+						'Cancelado',
+						'Tu petición ah sido cancelada',
+						'error'
+					)
+				}
+			})
+		}
+
+		function solicitarComprobanteEstudiante(user_id,id_pendiente_estudiante) {
+
+			$.ajax({
+					url: '/Validacion/updateSolicitarEstudiante',
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						user_id: user_id,
+                        id_pendiente_estudiante: id_pendiente_estudiante
+					}
+				})
+				.done(function(json) {
+					if (json == 1) {
+						//borrarregistro(user_id);
+
+						enviarcorreoEstudiante(user_id,id_pendiente_estudiante);
+
+					}
+
+				})
+		}
+
+        function enviarcorreo(user_id,id_pendiente_estudiante) {
+			$.ajax({
+					type: 'POST',
+					url: '/Mailer/mailerEstudiante',
+					data: {
+						user_id: user_id,
+                        id_pendiente_estudiante: id_pendiente_estudiante
+					}
+				})
+				.done(function(r)
+					{
+						// alert("Se ha enviado el correo correctamente");
+						// mensaje.html(r);
+					});
+		}
+
+        function confirmarvalidarEstudiante(id_pendiente_estudiante,user_id) {
+
+			const swalWithBootstrapButtons = Swal.mixin({
+				customClass: {
+					confirmButton: 'btn btn-success',
+					cancelButton: 'btn btn-danger'
+				},
+				buttonsStyling: false
+			})
+
+			swalWithBootstrapButtons.fire({
+				title: '¿Está seguro?',
+				text: "Al liberar el comprobante usted ya no podrá volver a solicitar el comprobante de pagó.",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'OK',
+				cancelButtonText: 'Cancelar',
+				reverseButtons: true
+			}).then((result) => {
+				if (result.isConfirmed) {
+					validarComprobanteEstudiante(id_pendiente_estudiante,user_id);
+
+					Swal.fire({
+						position: 'top-end',
+						icon: 'success',
+						title: 'Comprobante liberado!',
+						showConfirmButton: false,
+						
+					})
+
+					window.setTimeout(function() {
+						location.reload();
+					}, 700);
+
+				} else if (
+					/* Read more about handling dismissals below */
+					result.dismiss === Swal.DismissReason.cancel
+				) {
+					swalWithBootstrapButtons.fire(
+						'Cancelado',
+						'Tu petición ah sido cancelada',
+						'error'
+					)
+				}
+			})
+		}
+
+		function validarComprobanteEstudiante(id_pendiente_estudiante,user_id) {
+			$.ajax({
+					url: '/Validacion/updateComprobanteEstudiante',
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						id_pendiente_estudiante: id_pendiente_estudiante,
+						user_id: user_id,
+					}
+				})
+				.done(function(json) {
+                    console.log(json);
+					if (json == 1) {
+						//alert(json.mensaje);
+						//location.reload();
+					} else {
+						// alert(json.mensaje);
+						//location.reload();
+					}
+				})
+		}
+
+</script>
 <?php echo $footer; ?>

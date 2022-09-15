@@ -185,6 +185,49 @@ $extraFooter =<<<html
         }
     });
 
+    $('#estudiante-list').DataTable({
+      "drawCallback": function(settings) {
+          $('.current').addClass("btn bg-gradient-pink text-white btn-rounded").removeClass("paginate_button");
+          $('.paginate_button').addClass("btn").removeClass("paginate_button");
+          $('.dataTables_length').addClass("m-4");
+          $('.dataTables_info').addClass("mx-4");
+          $('.dataTables_filter').addClass("m-4");
+          $('input').addClass("form-control");
+          $('select').addClass("form-control");
+          $('.previous.disabled').addClass("btn-outline-info opacity-5 btn-rounded mx-2");
+          $('.next.disabled').addClass("btn-outline-info opacity-5 btn-rounded mx-2");
+          $('.previous').addClass("btn-outline-info btn-rounded mx-2");
+          $('.next').addClass("btn-outline-info btn-rounded mx-2");
+          $('a.btn').addClass("btn-rounded");
+      },
+      "language": {
+
+          "sProcessing": "Procesando...",
+          "sLengthMenu": "Mostrar _MENU_ registros",
+          "sZeroRecords": "No se encontraron resultados",
+          "sEmptyTable": "Ningún dato disponible en esta tabla",
+          "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+          "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+          "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+          "sInfoPostFix": "",
+          "sSearch": "Buscar:",
+          "sUrl": "",
+          "sInfoThousands": ",",
+          "sLoadingRecords": "Cargando...",
+          "oPaginate": {
+              "sFirst": "Primero",
+              "sLast": "Último",
+              "sNext": "Siguiente",
+              "sPrevious": "Anterior"
+          },
+          "oAria": {
+              "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+          }
+
+      }
+  });
+
           $("#muestra-cupones").tablesorter();
           var oTable = $('#muestra-cupones').DataTable({
                 "columnDefs": [{
@@ -412,7 +455,7 @@ html;
       }else if($value['url_archivo'] == ''){
         $comprobante .=<<<html
         <br>SIN COMPROBANTE<br>
-        <div data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}">
+        <div>
           <button disabled data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-danger pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
         </div>
 html;
@@ -467,6 +510,85 @@ html;
       $total_pesos = $total_pesos + 1;
     }
 
+    $tabla_estudiante = '';
+    $datos_estudiante = EstadisticasDao::getTodosEstudiantes();
+    $numero_estudiante = 0;
+    $total_pesos = 0;
+    
+    foreach ($datos_estudiante as $key => $value) {
+      $comprobante = '';
+      $acciones = '';
+
+      if($value['url_archivo'] != '' && $value['status'] == 0){
+        $status_pendiente = '<span class="badge badge-success" style="background-color: #03A5E7; color:white "><strong>EN ESPERA</strong></span>';
+      }else if($value['status'] == 0){
+        $status_pendiente = '<span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>PENDIENTE</strong></span>';
+      }else if($value['status'] == 2){
+        $status_pendiente = '<span class="badge badge-success" style="background-color: #9A1622; color:white "><strong>VOLVER A SUBIR</strong></span>';
+      }else{
+        $status_pendiente = '<span class="badge badge-success" style="background-color: #1C6C42; color:white "><strong>ACEPTADO</strong></span>';
+      }
+
+      if($value['url_archivo'] != '' && $value['status'] == 1){
+        $comprobante .=<<<html
+        <br>VER COMPROBANTE<br>
+        <div data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}">
+          <button data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
+        </div>
+html;
+        $acciones .=<<<html
+        <td class="text-center">
+          <span class="badge badge-success" style="background-color: #1C6C42; color:white "><strong>LIBERADO</strong></span>
+        </td>
+html;
+      }else if($value['url_archivo'] == ''){
+        $comprobante .=<<<html
+        <br>SIN COMPROBANTE<br>
+        <div>
+          <button disabled data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-danger pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
+        </div>
+html;
+        $acciones .=<<<html
+        <td class="text-center">
+          <span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>PENDIENTE</strong></span>
+        </td>
+html;
+      }else{
+        $comprobante .=<<<html
+        <br>VER COMPROBANTE<br>
+        <div data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}">
+          <button data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
+        </div>
+html;
+        $acciones .=<<<html
+        <td class="text-center">
+          <button onclick="confirmarsolicitarEstudiante({$value['user_id']},{$value['id_pendiente_estudiante']})" title="Volver a solicitar" class="btn btn-warning" type="button" id="button">
+            <span class="fa fa-undo-alt" style="color:white"></span>
+          </button><br>
+          <button onclick="confirmarvalidarEstudiante({$value['id_pendiente_estudiante']},{$value['user_id']})" type="button" class="btn btn-primary">
+            LIBERAR
+          </button>
+        </td>
+html;
+      }
+
+      $numero_estudiante = $numero_estudiante + 1;
+      $tabla_estudiante.=<<<html
+      <tr>
+        <td>$numero_estudiante</td>
+        <td>{$value['user_id']}</td>
+        <td class="text-center">{$status_pendiente}</td>
+        <td class="text-center">{$value['nombre']}<br>{$value['usuario']}<br>Registro del: {$value['fecha']}</td>
+        <td class="text-center">{$comprobante}</td>
+        {$acciones}
+      </tr>
+html;
+    }
+
+    foreach ($datos_estudiante as $key => $value){
+      $total_pesos = $total_pesos + 1;
+    }
+
     if($_SESSION['perfil'] == 2){
       // View::set('asideMenu',$this->_contenedor->asideMenu());
     }else{
@@ -482,6 +604,7 @@ html;
       View::set('tabla_constancia',$tabla_constancia);
       View::set('tabla_caja',$tabla_caja);
       View::set('tabla_socios',$tabla_socios);
+      View::set('tabla_estudiante',$tabla_estudiante);
       // View::set('num_asistencias',$num_asistencias);
       View::set('header',$this->_contenedor->header($extraHeader));
       View::set('footer',$this->_contenedor->footer($extraFooter));
@@ -503,6 +626,32 @@ html;
 
             // var_dump($documento);
             $id = EstadisticasDao::updateSolicitar($documento);
+
+            if ($id) {
+                echo "1";
+            } else {
+                echo "2";
+                // header("Location: /Home/");
+            }
+        } else {
+            echo 'fail REQUEST';
+        }
+    }
+
+    public function updateSolicitarEstudiante()
+    {
+        $documento = new \stdClass();
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $user_id = $_POST['user_id'];
+            $clave = $_POST['clave'];
+
+            $documento->_user_id = $user_id;
+            $documento->_clave = $clave;
+
+            // var_dump($documento);
+            $id = EstadisticasDao::updateSolicitarEstudiante($documento);
 
             if ($id) {
                 echo "1";
@@ -546,7 +695,32 @@ html;
         }
     }
 
+    public function updateComprobanteEstudiante()
+    {
+        $documento = new \stdClass();
+        $date = new DateTime("now", new DateTimeZone('America/Mexico_City') );
+        $fecha = $date->format('Y-m-d H:i:s');
 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $user_id = $_POST['user_id'];
+            // $id_pendiente_pago = $_POST['id_pendiente_pago'];
+
+            $documento->_user_id = $user_id;
+            $documento->_fecha = $fecha;
+
+            $id = EstadisticasDao::updateComprobanteEstudiante($documento);
+
+            if ($id) {
+                echo "1";
+            } else {
+                echo "fail";
+                // header("Location: /Home/");
+            }
+        } else {
+            echo 'fail REQUEST';
+        }
+    }
     
 
     public function insertarAsignaProducto()
@@ -568,7 +742,10 @@ html;
             $documento->_id_producto = $id_producto;
             $documento->_fecha = $fecha;
 
+
+    
                    $id = EstadisticasDao::insertarAsignaProducto($documento);
+
          
             }
             if ($id) {

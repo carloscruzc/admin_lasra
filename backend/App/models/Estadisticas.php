@@ -77,6 +77,24 @@ sql;
       return $mysqli->update($query, $parametros);
   }
 
+  public static function updateSolicitarEstudiante($data){
+    $mysqli = Database::getInstance(true);
+    $query=<<<sql
+    UPDATE pendiente_estudiante SET url_archivo = '', status = 2
+    WHERE user_id = :user_id;
+sql;
+    $parametros = array(
+      ':user_id'=>$data->_user_id
+    );
+
+    $accion = new \stdClass();
+    $accion->_sql= $query;
+    $accion->_parametros = $parametros;
+    $accion->_id = $data->_administrador_id;
+    // UtileriasLog::addAccion($accion);
+    return $mysqli->update($query, $parametros);
+}
+
 
     public static function updateComprobante($data){
       $mysqli = Database::getInstance(true);
@@ -97,6 +115,25 @@ sql;
       // UtileriasLog::addAccion($accion);
       return $mysqli->update($query, $parametros);
   }
+
+  public static function updateComprobanteEstudiante($data){
+    $mysqli = Database::getInstance(true);
+    $query=<<<sql
+    UPDATE pendiente_estudiante SET status = 1, fecha_liberado = :fecha
+    WHERE user_id = :user_id;
+sql;
+    $parametros = array(
+      ':user_id'=>$data->_user_id,
+      ':fecha'=>$data->_fecha
+    );
+
+    $accion = new \stdClass();
+    $accion->_sql= $query;
+    $accion->_parametros = $parametros;
+    $accion->_id = $data->_administrador_id;
+    // UtileriasLog::addAccion($accion);
+    return $mysqli->update($query, $parametros);
+}
 
 
   public static function insertarAsignaProducto($data){
@@ -160,6 +197,18 @@ sql;
       INNER JOIN productos pr ON pr.id_producto = pp.id_producto
       WHERE pp.url_archivo != 'Registro_Becado'
       GROUP BY pp.clave;
+sql;
+      return $mysqli->queryAll($query);
+        
+    }
+
+    public static function getTodosEstudiantes(){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pe.*,CONCAT(ua.nombre," ",ua.apellidop," ",ua.apellidom) as nombre, ua.usuario
+      FROM pendiente_estudiante pe
+      INNER JOIN utilerias_administradores ua ON ua.user_id = pe.user_id
+      WHERE pe.url_archivo != 'Registro_Becado';
 sql;
       return $mysqli->queryAll($query);
         
