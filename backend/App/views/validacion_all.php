@@ -455,9 +455,7 @@
     $(document).ready(function(){
         $('.iframe').on('click',function(){
             var pdf = $(this).attr('data-pdf');
-            var user_id = $(this).attr('data-user-id');
-            alert(pdf);
-            alert(user_id);
+            var user_id = $(this).attr('data-user-id');   
 
             $('.cont-modal').html('<iframe src="https://registro.lasra-mexico.org/comprobantesPago/'+user_id+'/'+pdf+'" style="width:100%; height:700px;" frameborder="0" ></iframe>');
         })
