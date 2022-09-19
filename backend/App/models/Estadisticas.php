@@ -52,7 +52,7 @@ sql;
       INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
       INNER JOIN productos pr ON pr.id_producto = pp.id_producto
       WHERE pp.url_archivo = '' AND pp.status != 1
-      GROUP BY pp.clave;
+      GROUP BY pp.clave ORDER BY pp.user_id;
 sql;
       return $mysqli->queryAll($query);
         
@@ -166,7 +166,7 @@ sql;
       INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
       INNER JOIN productos pr ON pr.id_producto = pp.id_producto
       WHERE pp.url_archivo != '' AND pp.url_archivo != 'Registro_Becado' AND pp.status != 1
-      GROUP BY pp.clave;
+      GROUP BY pp.clave ORDER BY pp.user_id;
 sql;
       return $mysqli->queryAll($query);
         
@@ -181,7 +181,7 @@ sql;
       INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
       INNER JOIN productos pr ON pr.id_producto = pp.id_producto
       WHERE pp.url_archivo != 'Registro_Becado' AND pp.status = 1 AND pp.url_archivo != ''
-      GROUP BY pp.clave;
+      GROUP BY pp.clave ORDER BY pp.user_id;
 sql;
       return $mysqli->queryAll($query);
          
@@ -196,7 +196,7 @@ sql;
       INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
       INNER JOIN productos pr ON pr.id_producto = pp.id_producto
       WHERE pp.url_archivo != 'Registro_Becado'
-      GROUP BY pp.clave;
+      GROUP BY pp.clave ORDER BY pp.user_id;
 sql;
       return $mysqli->queryAll($query);
         
