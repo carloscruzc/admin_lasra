@@ -443,7 +443,7 @@ html;
       if($value['url_archivo'] != '' && $value['status'] == 1){
         $comprobante .=<<<html
         <br>VER COMPROBANTE<br>
-        <div data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}">
+        <div>
           <button data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
         </div>
 html;
