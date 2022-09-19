@@ -459,7 +459,7 @@
             alert(pdf);
             alert(user_id);
 
-            $('.cont-modal').html('<iframe src="https://registro.lasra-mexico.org/comprobantesPago/'+user_id+"/"+pdf+'" " style="width:100%; height:700px;" frameborder="0" ></iframe>');
+            $('.cont-modal').html('<iframe src="https://registro.lasra-mexico.org/comprobantesPago/'+user_id+'/'+pdf+' style="width:100%; height:700px;" frameborder="0" ></iframe>');
         })
     });
 </script>
