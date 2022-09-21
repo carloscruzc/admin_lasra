@@ -257,6 +257,19 @@ sql;
         
     }
 
+    public static function getSolicitadoEstudiante($user_id,$id_pendiente_estudiante){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT CONCAT(re.nombre," ",re.apellidop," ",re.apellidom) as nombre, re.usuario
+      FROM pendiente_estudiante pp
+      INNER JOIN utilerias_administradores re ON re.user_id = pp.user_id
+      WHERE pp.url_archivo != 'Registro_Becado' AND pp.status != 1
+      AND pp.user_id = $user_id AND pp.id_pendiente_pago = $id_pendiente_estudiante;
+sql;
+      return $mysqli->queryOne($query);
+        
+    }
+
     public static function getChecarSocio($user_id){
       $mysqli = Database::getInstance();
       $query=<<<sql
