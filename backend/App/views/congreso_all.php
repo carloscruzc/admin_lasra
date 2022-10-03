@@ -185,11 +185,8 @@
                                         <table class="align-items-center mb-0 table table-borderless" id="user_list_table">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Usuario</th>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Datos</th>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Impresión</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Usuario</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Impresión Constancia</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -360,8 +357,8 @@
 
         $('#utilerias').removeAttr('hidden');
         $('#utilerias').addClass('show');
-        $('#asistentes a').addClass('active');
-        $('#asistentes .fa-users').addClass('text-white');
+        $('#congreso a').addClass('active');
+        $('#congreso .fa-user-graduate').addClass('text-white');
 
 
         $('#user_list_table').DataTable({

@@ -94,14 +94,43 @@ html;
                       </a>
                   </li>
   
-                  <li id="asistentes" class="nav-item" {$asistentesHidden};>
-                      <a href="/Asistentes/" class="nav-link " aria-controls="applicationsExamples" role="button" aria-expanded="false">
+                  <li id="util" class="nav-item">
+                      <a data-bs-toggle="collapse" onclick="utilerias()" href="#utilerias" class="nav-link " aria-controls="utilerias" role="button" aria-expanded="false">
                           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                              <span class="fa fa-users morado-musa-text"></span>
+                              <span class="fa fa-user-circle-o morado-musa-text"></span>
                           </div>
-                          <span class="nav-link-text ms-1">Asistentes</span>
+                          <span class="nav-link-text ms-1">Usuarios</span>
                       </a>
+                      <div class="collapse " id="utilerias" hidden>
+                          <ul class="nav ms-4 ps-3">
+                              <li id="asistentes" class="nav-item" {$asistentesHidden};>
+                                <a href="/Asistentes/" class="nav-link " aria-controls="applicationsExamples" role="button" aria-expanded="false">
+                                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                                        <span class="fa fa-users morado-musa-text"></span>
+                                    </div>
+                                    <span class="nav-link-text ms-1">Asistentes</span>
+                                </a>
+                              </li>
+                              <li id="congreso" class="nav-item">
+                                <a href="/Congreso/" class="nav-link " aria-controls="applicationsExamples" role="button" aria-expanded="false">
+                                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                                        <span class="fa fa-user-graduate morado-musa-text"></span>
+                                    </div>
+                                    <span class="nav-link-text ms-1">Congreso</span>
+                                </a>
+                              </li>
+                              <li id="cursos" class="nav-item">
+                                <a href="/Cursos/" class="nav-link " aria-controls="applicationsExamples" role="button" aria-expanded="false">
+                                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                                        <span class="fa fa-desktop morado-musa-text"></span>
+                                    </div>
+                                    <span class="nav-link-text ms-1">Cursos</span>
+                                </a>
+                              </li>
+                          </ul>
+                      </div>
                   </li>
+
                   <!--<li id="vuelos" class="nav-item" {$vuelosHidden};>
                       <a href="/Vuelos/" class="nav-link " aria-controls="applicationsExamples" role="button" aria-expanded="false">
                           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">

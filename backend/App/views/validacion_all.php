@@ -415,7 +415,7 @@
                                         </div>
                                     </div>
                                     <div class="cont_total_consta" style="padding: 20px;">
-                                        <span style="font-size: 25px; color:green;">Total Registros: <span id="total_socios"><?=number_format($total_pesos)?></span></span>
+                                        <span style="font-size: 25px; color:green;">Total Registros: <span id="total_socios"><?=number_format($total_estudiantes)?></span></span>
                                     </div>
                                 </div>
                             </div>
