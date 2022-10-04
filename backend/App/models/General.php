@@ -43,6 +43,66 @@ sql;
     return $mysqli->queryAll($query);
   }
 
+  public static function getAllColaboradoresCongreso($search){
+    $mysqli = Database::getInstance();
+    $query =<<<sql
+    SELECT ra.*, pp.monto,pp.tipo_pago,pp.url_archivo,
+    pp.status,ra.usuario as email, pp.id_pendiente_pago, pp.clave,
+    ra.usuario as usuario, ra.clave as ticket_virtual, 
+    ra.apellidop as apellido_paterno,
+    ra.apellidom as apellido_materno, ra.clave, ra.organizacion, pa.pais, es.estado,
+    ra.clave, ra.clave_socio 
+    FROM utilerias_administradores ra 
+    INNER JOIN paises pa ON (ra.id_pais = pa.id_pais) 
+    INNER JOIN estados es ON (ra.id_estado = es.id_estado)
+    INNER JOIN pendiente_pago pp ON pp.user_id = ra.user_id
+    WHERE ra.mostrar = 1 AND pp.id_producto IN (1,23,35)
+    AND CONCAT_WS(' ',ra.usuario,ra.nombre,ra.apellidop,ra.apellidom,ra.user_id, ra.clave, ra.clave_socio)
+    LIKE '%$search%';
+sql;
+
+    return $mysqli->queryAll($query);
+  }
+
+  public static function getAllColaboradoresCursos($search){
+    $mysqli = Database::getInstance();
+    $query =<<<sql
+    SELECT ra.*, pp.monto,pp.tipo_pago,pp.url_archivo,
+    pp.status,ra.usuario as email, pp.id_pendiente_pago, pp.clave,
+    ra.usuario as usuario, ra.clave as ticket_virtual, 
+    ra.apellidop as apellido_paterno,
+    ra.apellidom as apellido_materno, ra.clave, ra.organizacion, pa.pais, es.estado,
+    ra.clave, ra.clave_socio 
+    FROM utilerias_administradores ra 
+    INNER JOIN paises pa ON (ra.id_pais = pa.id_pais) 
+    INNER JOIN estados es ON (ra.id_estado = es.id_estado)
+    INNER JOIN pendiente_pago pp ON pp.user_id = ra.user_id
+    WHERE ra.mostrar = 1 AND pp.id_producto NOT IN (1,2,23,34,35)
+    AND CONCAT_WS(' ',ra.usuario,ra.nombre,ra.apellidop,ra.apellidom,ra.user_id, ra.clave, ra.clave_socio)
+    LIKE '%$search%';
+sql;
+
+    return $mysqli->queryAll($query);
+  }
+
+  public static function getAllColaboradoresImprimir($user_id){
+    $mysqli = Database::getInstance();
+    $query =<<<sql
+    SELECT ra.*, pp.monto,pp.tipo_pago,pp.url_archivo,pp.status,ra.usuario as email,
+    ra.usuario as usuario, ra.clave as ticket_virtual, 
+    ra.apellidop as apellido_paterno,
+    ra.apellidom as apellido_materno, ra.clave, ra.organizacion, pa.pais, es.estado,
+    ra.clave, ra.clave_socio 
+    FROM utilerias_administradores ra 
+    INNER JOIN paises pa ON (ra.id_pais = pa.id_pais) 
+    INNER JOIN estados es ON (ra.id_estado = es.id_estado)
+    INNER JOIN pendiente_pago pp ON pp.user_id = ra.user_id
+    WHERE ra.mostrar = 1 AND pp.id_producto IN (1,23) AND ra.user_id = $user_id AND pp.status = 1
+sql;
+
+    return $mysqli->queryAll($query);
+  }
+
     public static function getBuscarBeca($search){
         $mysqli = Database::getInstance();
         $query =<<<sql
@@ -267,6 +327,67 @@ sql;
 sql;
         return $mysqli->queryAll($query);
     }
+
+    public static function getStatusCompra($user_id){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pp.* FROM pendiente_pago pp
+      INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
+      WHERE pp.user_id = $user_id;
+sql;
+        return $mysqli->queryAll($query);
+    }
+
+    public static function getStatusSolicitar($user_id){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pp.* FROM pendiente_pago pp
+      INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
+      WHERE pp.status = 2 AND pp.user_id = $user_id;
+sql;
+        return $mysqli->queryAll($query);
+    }
+
+    public static function getStatusValidando($user_id){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pp.* FROM pendiente_pago pp
+      INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
+      WHERE pp.status = 0 AND pp.user_id = $user_id;
+sql;
+        return $mysqli->queryAll($query);
+    }
+
+    public static function getStatusValidandoCongreso($user_id){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pp.* FROM pendiente_pago pp
+      INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
+      WHERE pp.status = 0 AND pp.user_id = $user_id AND id_producto IN (1,23);
+sql;
+        return $mysqli->queryAll($query);
+    }
+
+    public static function getStatusValidandoCursos($user_id){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pp.* FROM pendiente_pago pp
+      INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
+      WHERE pp.status = 0 AND pp.user_id = $user_id AND id_producto NOT IN (1,23);
+sql;
+        return $mysqli->queryAll($query);
+    }
+
+    public static function getStatusLiberado($user_id){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pp.* FROM pendiente_pago pp
+      INNER JOIN utilerias_administradores ua ON ua.user_id = pp.user_id
+      WHERE pp.status = 1 AND pp.user_id = $user_id;
+sql;
+        return $mysqli->queryAll($query);
+    }
+
     public static function getAll(){
 	$mysqli = Database::getInstance();
         $query=<<<sql
@@ -323,23 +444,7 @@ sql;
       return $id;
     }
     public static function update($datos){
-        $mysqli = Database::getInstance(true);
-      $query=<<<sql
-UPDATE catalogo_dia_festivo SET nombre = '122', descripcion = '1233', fecha = '2017-08-24', status = 2 WHERE catalogo_dia_festivo.catalogo_dia_festivo_id = :catalogo_dia_festivo_id;
-sql;
-      $parametros = array(
-          ':catalogo_dia_festivo_id'=>$lectores->_catalogo_dia_festivo_id,
-          ':nombre'=>$lectores->_nombre,
-          ':descripcion'=>$lectores->_descripcion,
-          ':fecha'=>$lectores->_fecha,
-          ':status'=>$lectores->_status
-        );
-        $accion = new \stdClass();
-        $accion->_sql= $query;
-        $accion->_parametros = $parametros;
-        $accion->_id = $lectores->_catalogo_dia_festivo_id;
-        UtileriasLog::addAccion($accion);
-        return $mysqli->update($query, $parametros);
+       
     }
     public static function delete($id){
 	$mysqli = Database::getInstance();
@@ -354,18 +459,7 @@ sql;
         UtileriasLog::addAccion($accion);
         return $mysqli->update($query, $parametros);
     }
-    public static function deleteById($id){
-        $mysqli = Database::getInstance();
-        $query=<<<sql
-DELETE FROM catalogo_dia_festivo WHERE catalogo_dia_festivo.catalogo_dia_festivo_id = $id
-sql;
-      $accion = new \stdClass();
-      $accion->_sql= $query;
-      $accion->_parametros = $parametros;
-      $accion->_id = $id;
-      UtileriasLog::addAccion($accion);
-        return $mysqli->queryOne($query);
-    }
+    
     public static function getById($id){
         $mysqli = Database::getInstance();
         $query=<<<sql
@@ -394,143 +488,5 @@ sql;
       SELECT * FROM utilerias_administradores_admin WHERE usuario LIKE '$usuario'   
 sql;
       return $mysqli->queryOne($query);
-    }
-    /*
-        Buscar los colaboradores 
-        @tipo: SEMANAL o QUINCENAL
-    */
-    public static function getColaboradores($tipo, $perfilUsuario, $catalogoDepartamentoId, $catalogoPlantaId, $status, $identificadorNOI, $filtro){
-      //echo "<pre>";print_r($status);echo "</pre>";
-        $mysqli = Database::getInstance();
-        if($perfilUsuario == 1 || $perfilUsuario == 4 || $perfilUsuario == 2){
-            $query=<<<sql
-SELECT 
-cc.catalogo_colaboradores_id, cc.identificador_noi, cc.nombre, cc.apellido_paterno, cc.apellido_materno, cc.numero_identificador, cc.catalogo_departamento_id,
-cc.pago, cc.foto, cd.nombre AS nombre_departamento, cp.nombre AS nombre_puesto, cu.nombre nombre_ubicacion, cc.catalogo_ubicacion_id, ce.nombre AS nombre_empresa, cc.numero_empleado
-FROM catalogo_colaboradores cc 
-INNER JOIN catalogo_departamento cd USING (catalogo_departamento_id)
-INNER JOIN catalogo_puesto cp USING (catalogo_puesto_id)
-INNER JOIN catalogo_ubicacion cu USING (catalogo_ubicacion_id) 
-INNER JOIN catalogo_empresa ce USING (catalogo_empresa_id) 
-sql;
-            if($status == 1){
-                $query.=<<<sql
-WHERE cc.pago = "$tipo" AND cc.status = 1 AND cc.catalogo_ubicacion_id = "$catalogoPlantaId"
-sql;
-            }
-            if($status == 2){
-                $query.=<<<sql
-WHERE cc.pago = "$tipo" AND cc.status = 1 AND cc.catalogo_ubicacion_id = "$catalogoPlantaId" AND cc.catalogo_departamento_id = "$catalogoDepartamentoId"
-sql;
-            }
-            if($status == 3){
-                $query.=<<<sql
-WHERE cc.pago = "$tipo" AND cc.status = 1 AND cc.catalogo_ubicacion_id = "$catalogoPlantaId"
-sql;
-            }
-            if($status == 4){
-                $query.=<<<sql
-WHERE cc.pago = "$tipo" AND cc.status = 1 AND cc.catalogo_departamento_id = "$catalogoDepartamentoId"
-sql;
-            }
-            if($status == 5){ // TODAS LAS PLANTAS
-                $query.=<<<sql
-WHERE cc.status = 1 
-sql;
-            }
-            if($status == 6){ // TODAS LAS PLANTAS
-                $query.=<<<sql
-WHERE cc.pago  = "$tipo" AND cc.status = 1 
-sql;
-            }
-            if($status == 10){
-                $query.=<<<sql
-WHERE cc.pago = "$tipo" AND cc.status = 1 AND cc.identificador_noi = "$identificadorNOI"
-sql;
-            }
-        }
-        // PERFIL PARA 4 "Administrador" y 5 "Personalizado"
-        if($perfilUsuario == 5){
-            $query =<<<sql
-SELECT 
-cc.catalogo_colaboradores_id, cc.identificador_noi, cc.nombre, cc.apellido_paterno, cc.apellido_materno, cc.numero_identificador, cc.catalogo_departamento_id,
-cc.pago, cc.foto, cd.nombre AS nombre_departamento, cp.nombre AS nombre_puesto, cu.nombre nombre_ubicacion, cc.catalogo_ubicacion_id, ce.nombre AS nombre_empresa, cc.numero_empleado
-FROM catalogo_colaboradores cc 
-INNER JOIN catalogo_departamento cd USING (catalogo_departamento_id)
-INNER JOIN catalogo_puesto cp USING (catalogo_puesto_id)
-INNER JOIN catalogo_ubicacion cu USING (catalogo_ubicacion_id)
-INNER JOIN catalogo_empresa ce USING (catalogo_empresa_id)
-WHERE cc.pago = "$tipo" AND cc.status = 1 AND cc.catalogo_departamento_id = "$catalogoDepartamentoId"
-sql;
-        }
-        if($perfilUsuario == 6){
-            $query=<<<sql
-SELECT 
-cc.catalogo_colaboradores_id, cc.identificador_noi, cc.nombre, cc.apellido_paterno, cc.apellido_materno, cc.numero_identificador, cc.catalogo_departamento_id,
-cc.pago, cc.foto, cd.nombre AS nombre_departamento, cp.nombre AS nombre_puesto, cu.nombre nombre_ubicacion, cc.catalogo_ubicacion_id, ce.nombre AS nombre_empresa, cc.numero_empleado
-FROM catalogo_colaboradores cc 
-INNER JOIN catalogo_departamento cd USING (catalogo_departamento_id)
-INNER JOIN catalogo_puesto cp USING (catalogo_puesto_id)
-INNER JOIN catalogo_ubicacion cu USING (catalogo_ubicacion_id) 
-INNER JOIN catalogo_empresa ce USING (catalogo_empresa_id)
-sql;
-            if($status == 1){ // ES DE RH XOCHIMILCO Y PUEDE VER TODO
-                $query.=<<<sql
-                WHERE cc.pago = "$tipo" AND cc.status = 1 
-sql;
-            }
-            if($status == 2){ // ES DE RECUSOS HUMANOS Y PUEDE VER TODOS LOS DEPARTAMENTOS DE SU PLANTA EXCEPTO RH XOCHIMILCO
-                $query.=<<<sql
-                WHERE cc.pago = "$tipo" AND cc.status = 1 AND cc.catalogo_departamento_id = "$catalogoDepartamentoId" 
-sql;
-            }
-             //WHERE cc.pago = "$tipo" AND cc.status = 1 AND cc.catalogo_ubicacion_id = "$catalogoPlantaId" AND cc.catalogo_departamento_id = "$catalogoDepartamentoId"
-            if($status == 3){ // ES DE RH y tiene incentivos propios 
-                $query.=<<<sql
-                WHERE cc.pago = "$tipo" AND cc.status = 1 AND cc.identificador_noi = "$identificadorNOI" 
-sql;
-            }
-            if($status == 4){ // ES DE RH y tiene incentivos propios 
-                $query.=<<<sql
-                WHERE cc.pago = "$tipo" AND cc.status = 1 AND cc.catalogo_ubicacion_id = "$catalogoPlantaId" AND cc.catalogo_departamento_id = "$catalogoDepartamentoId" 
-sql;
-            }
-            if($status == 5){ // ES DE RH y tiene incentivos propios 
-                $query.=<<<sql
-                WHERE cc.pago = "$tipo" AND cc.status = 1 AND cc.catalogo_ubicacion_id = "$catalogoPlantaId"
-sql;
-            }
-        }
-        $nuevoFiltro = "";
-        foreach ($filtro as $key => $value) {
-          if(!empty($value)){
-            if($value == 'vacio' && $key == 'c.identificador_noi') $nuevoFiltro .= " AND " . $key . " = " . "''" . " ";
-            else $nuevoFiltro .= " AND " . $key . " = " . " '$value' " . " ";
-          }
-        }
-        $query.= $nuevoFiltro;
-        //echo $query;
-        return $mysqli->queryAll($query);
-    }
-    public static function getLastPeriodo($tipo){
-      $mysqli = Database::getInstance();
-      $query=<<<sql
-      SELECT * FROM `prorrateo_periodo` WHERE tipo = "$tipo" ORDER BY `prorrateo_periodo`.`fecha_inicio` DESC 
-sql;
-      return $mysqli->queryOne($query);
-    }
-    public static function getSalarioMinimo(){
-      $mysqli = Database::getInstance();
-      $query=<<<sql
-SELECT * FROM `salario_minimo` ORDER BY `salario_minimo`.`id_salario` DESC LIMIT 1 
-sql;
-      return $mysqli->queryOne($query);
-    }
-    public static function insertSalarioMinimo($cantidad){
-      $mysqli = Database::getInstance();
-      $query=<<<sql
-INSERT INTO salario_minimo (id_salario, cantidad) VALUES (NULL, '$cantidad');
-sql;
-      return $mysqli->insert($query);
-    }
+    }    
 }
