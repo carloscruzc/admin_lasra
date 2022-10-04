@@ -740,6 +740,10 @@ html;
             $id_producto = 1;
             $miembro_apm = '';
             $sociote = '';
+            $status1 = '';
+            $status2 = '';
+            $status3 = '';
+            $status4 = '';
 ////////////////////////////////////////////////////////////////////////////////////////////
 //             
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -802,7 +806,9 @@ html;
                 }
 
                 $impreso = GeneralDao::getImpresionGafete($value['user_id']);
-                if($value['id_categoria'] == 1 || $value['clave_socio'] != ''){
+                $imprimir = GeneralDao::getAllColaboradoresImprimir($value['user_id']);
+                
+                if($imprimir){
                     if($impreso >= 1){
                         $gafetes_httml .=<<<html
                 <td style="text-align:center; vertical-align:middle;">
@@ -857,9 +863,6 @@ html;
 html;
 
                     }else{
-
-                    
-
                 
                     $gafetes_httml .=<<<html
                 <td style="text-align:center; vertical-align:middle;">
@@ -878,7 +881,35 @@ html;
 html;
                 }
             }
-                
+
+            $status_compra = GeneralDao::getStatusCompra($value['user_id']);
+            $status_solicitar = GeneralDao::getStatusSolicitar($value['user_id']);
+            $status_pendiente = GeneralDao::getStatusValidando($value['user_id']);
+            $status_liberado = GeneralDao::getStatusLiberado($value['user_id']);
+
+            if(!$status_compra){
+                $status1 .= <<<html
+                <span class="badge badge-success" style="background-image: linear-gradient(0deg, rgba(234, 6, 6, 0.6), #b80505 50%); color:#FFF !important; "><strong>Comprando</strong></span>
+html;
+            }
+
+            if($status_solicitar){
+                $status2 .= <<<html
+                <span class="badge badge-success" style="background: linear-gradient(180deg, rgba(249,255,0,1) 0%, rgba(250,145,7,1) 100%); color:#FFF !important; "><strong>Solicitado</strong></span>
+html;
+            }
+
+            if($status_pendiente){
+                $status3 .= <<<html
+                <span class="badge badge-success" style="background-image: linear-gradient(0deg, #02A7E9, #293A90 70%); color:#FFF !important;"><strong>Validando pagos</strong></span>       
+html;
+            }
+
+            if($status_liberado){
+                $status4 .= <<<html
+                <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>Estatus: Liberado</strong></span>       
+html;
+            }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -908,37 +939,25 @@ html;
                     {$incremento}
                 </td>
                 <td style="text-align:center; vertical-align:middle;">
-                    {$incremento}
+                    <span class="badge badge-success" style="background-color: color:#ea5b9b; font-size: 13px"><strong>{$value['user_id']} </strong></span>
                 </td>
                 <td style="text-align:center; vertical-align:middle;">
-                    {$incremento}
+                    <div class="d-flex flex-column justify-content-center">
+                        <a href="/Asistentes/Detalles/{$value['user_id']}" target="_blank">
+                            <h6 class="mb-0 text-sm text-move text-black">
+                                <span class="fa fa-user-md" style="font-size: 13px"></span> {$nombre_completo} </span>
+                            </h6>
+                        </a>
+                    </div>
                 </td>
                 <td>
                     <div class="d-flex px-3 py-3">
-                        <div>
-                            <div class="d-flex flex-column justify-content-center text-black">
-                                <img src="{$img_user}" class="avatar me-2" alt="image">    
-                                <br>                 
-                            </div>
-                           
-                            <!--<div class="d-flex flex-column justify-content-center text-black">
-                                  <a href="/RegistroAsistencia/abrirpdfGafete/{$value['user_id']}" class="btn bg-pink btn-icon-only morado-musa-text" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
-                            </div>-->
-                            <!--<div class="d-flex flex-column justify-content-center text-black">
-                                 <button class="btn bg-turquoise btn-icon-only text-white" data-toggle="modal" data-target="#modal-constancia-{$value['id_registro_acceso']}" id="btn-etiqueta-{$value['id_registro_acceso']}" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="Imprimir Etiquetas" title="Imprimir Etiquetas"><i class="fas fa-tag"></i></button>
-                            </div>-->
-                        </div>
+                        
                         <div class="d-flex flex-column justify-content-center text-black">
                         <div>
-                            <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>{$value['referencia']}</strong></span><span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>{$value['user_id']} </strong></span> {$sociote}
+                            {$status1}{$status2}{$status3}{$status4}{$sociote}
                         </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <a href="/Asistentes/Detalles/{$value['user_id']}" target="_blank">
-                                    <h6 class="mb-0 text-sm text-move text-black">
-                                        <span class="fa fa-user-md" style="font-size: 13px"></span> {$nombre_completo} </span> {$value['nombre_ejecutivo']} {$tipo_user}{$clave_socio}{$clave_beca}
-                                    </h6>
-                                </a>
-                            </div>
+                            
                             {$clave_beca_2}
                             <div class="d-flex flex-column justify-content-center">
                                 <u><h6 class="mb-0 text-sm text-black"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['usuario']}</h6></u>

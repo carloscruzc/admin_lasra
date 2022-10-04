@@ -490,7 +490,7 @@ html;
         $comprobante .=<<<html
         <br>VER COMPROBANTE<br>
         <div>
-          <button data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
+          <button data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
         </div>
 html;
         $acciones .=<<<html

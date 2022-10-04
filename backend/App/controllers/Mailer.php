@@ -232,7 +232,7 @@ class Mailer
                 </p>
                 <br>
                 <p>
-                Le informamos que su comprobante de estudiante ha sido rechazado ó el archivo en cuestión se encuentra 
+                Le informamos que su comprobante de residente ha sido rechazado ó el archivo en cuestión se encuentra 
                 dañado, le solicitamos que, de favor y de la manera más atenta, suba su comprobante de pago nuevamente
                 a la plataforma, la subida del archivo se encontrará nuevamente disponible en el siguiente enlace,
                 <a href="https://registro.lasra-mexico.org/ComprobanteEstudiante/">
@@ -264,7 +264,7 @@ class Mailer
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'AVISO COMPROBANTE ESTUDIANTE LASRA 2022.';
+            $mail->Subject = 'AVISO COMPROBANTE RESIDENTE LASRA 2022.';
             $mail->Body    = $html;
             $mail->CharSet = 'UTF-8';
 

@@ -207,6 +207,11 @@
                 </div>
             </div>
 
+            <style>
+                table.dataTable tbody tr.even{
+                    background-color: #C5C5C5;
+                }
+            </style>
 
             <footer class="footer pt-3  ">
                 <div class="container-fluid">

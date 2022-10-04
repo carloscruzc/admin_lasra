@@ -1,6 +1,6 @@
 <?php echo $header;?>
 <title>
-    Asistentes - LASRA - GRUPO LAHE    
+    Cursos - LASRA - GRUPO LAHE    
 </title>
 <body class="g-sidenav-show  bg-gray-100">
     <?php echo $asideMenu;?>
@@ -28,7 +28,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item text-sm opacity-5 text-dark"><a href="/Principal/">Principal</a></li>
-                        <li class="breadcrumb-item text-sm opacity-10 text-dark">Asistentes</li>
+                        <li class="breadcrumb-item text-sm opacity-10 text-dark">Cursos</li>
                     </ol>
                 </nav>
                 <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
@@ -84,13 +84,13 @@
                         <div class="col-auto">
                             <div class="bg-gradient-pink avatar avatar-xl position-relative">
                                 <!-- <img src="../../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm"> -->
-                                <span class="fa fa-users" style="font-size: xx-large;"></span>
+                                <span class="fa fa-desktop" style="font-size: xx-large;"></span>
                             </div>
                         </div>
                         <div class="col-auto my-auto">
                             <div class="h-100">
                                 <h5 class="mb-1">
-                                    ASISTENTES LASRA
+                                    CURSOS LASRA
                                 </h5>
                                 <p class="mb-0 font-weight-bold text-sm">
                                 </p>
@@ -160,7 +160,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
                                 <div>
-                                    <form class="form-inline my-2 my-lg-0" action="/Asistentes/Usuario" method="post">
+                                    <form class="form-inline my-2 my-lg-0" action="/Cursos/Usuario" method="post">
                                         <div class="row">
                                             <div class="col-12 col-md-12">
                                                 <input class="form-control mr-sm-2" style="font-size: 35px;" autofocus type="search" id="search" name="search" placeholder="Ej. Adrian Segura Becerra - XaS6cr" aria-label="Search">
@@ -185,8 +185,13 @@
                                         <table class="align-items-center mb-0 table table-borderless" id="user_list_table">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Usuario</th>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Impresión Constancia</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Usuario</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estatus</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Monto</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tipo pago</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -204,6 +209,11 @@
                 </div>
             </div>
 
+            <style>
+                table.dataTable tbody tr.even{
+                    background-color: #C5C5C5;
+                }
+            </style>
 
             <footer class="footer pt-3  ">
                 <div class="container-fluid">
@@ -220,9 +230,7 @@
                     </div>
                 </div>
             </footer>
-
     </main>
-    <?php echo $modal;?>
 <!-- MODAL AGREGAR USUARIO -->
     <div class="modal fade" id="Modal_Add" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -319,41 +327,28 @@
     </div>
 </body>
 
-<?php echo $footer; ?>
-
-<script>
-    if (window.history.replaceState) { // verificamos disponibilidad
-    window.history.replaceState(null, null, window.location.href);
-}
-</script>
-
-<script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js" defer></script>
-<link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" />
+<!-- Modal -->
+<div class="modal fade" id="pdf" role="dialog" aria-labelledby="pdfTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Comprobante</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: none; background: transparent;">
+          <span aria-hidden="true" style="font-size: 25px;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body cont-modal">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
     $(document).ready(function() {
-
-        // $("#categoria").on("change",function(){
-        //     alert($(this).attr('data-costo'));
-        //     alert($(this).val());
-        // })
-
-        $("#form_etiquetas").on("click", function(event) {
-            event.preventDefault();
-            var formData = new FormData(document.getElementById("form_etiquetas"));
-
-            no_habitacion = $("#no_habitacion").val();
-            clave_ra = $("#clave_ra").val();
-            no_etiquetas = $("#no_etiquetas").val();
-
-            console.log(no_habitacion);
-            console.log(clave_ra);
-            console.log(no_etiquetas);
-
-            $("#a_abrir_etiqueta").attr("href", "/Asistentes/abrirpdf/" + clave_ra + "/" + no_etiquetas + "/" + no_habitacion);
-            $("#a_abrir_etiqueta")[0].click();
-
-        });
 
         $('#utilerias').removeAttr('hidden');
         $('#utilerias').addClass('show');
@@ -649,6 +644,8 @@
             });
         });
 
-    
 </script>
 
+<script type="text/javascript" src="/js/validaciones.js"></script>
+
+<?php echo $footer; ?>
