@@ -340,7 +340,7 @@ html;
         foreach ($pendientes_pago as $key => $value) {
 
             // $productos_transaccion .= $value['nombre_producto'] . ' -  $' . $value['precio'] . ',';
-            $productos_transaccion .= 'Cant. '.$value['cantidad'].' - '.$value['nombre_producto'].' - $'.$value['precio'].' - $'.$value['precio_usd'].' USD,';
+            $productos_transaccion .= 'Cant. ' . $value['cantidad'] . ' - ' . $value['nombre_producto'] . ' - $' . $value['precio'] . ' - $' . $value['precio_usd'] . ' USD,';
 
             $existePendiente = CajaDao::pendientesPagoByProductAndUser($user_id, $value['id_product']);
 
@@ -392,7 +392,7 @@ html;
                         if ($insertAsiganProducto) {
 
                             //si paga anualidad se actualiza a socio
-                            if($value['id_product'] == 2 || $value['id_product'] == 35){
+                            if ($value['id_product'] == 2 || $value['id_product'] == 35) {
                                 $updateStatusSocio = CajaDao::updateStatusSocio($user_id);
                             }
 
@@ -459,6 +459,226 @@ html;
 
             echo json_encode($cons);
         }
+    }
+
+    public function getCombo()
+    {
+        // var_dump($_POST);
+
+        $user_id = $_POST['user_id'];
+        $numero_talleres = 0;
+        $nombre_combo = '';
+        $clave = '';
+        $status = false;
+        $data = [];
+
+
+        $getCombo = CajaDao::getCombo($user_id);
+        $dataUser = CajaDao::getDataUser($user_id);
+
+        foreach ($getCombo as $key => $value) {
+            if ($value['id_producto'] == 38 || $value['id_producto'] == 41) {
+                $numero_talleres = 2;
+                $nombre_combo = 'SUPRA Clinical WorkShop 2 hands on';
+                $clave = $value['clave'];
+                $status = true;
+                break;
+            } else if ($value['id_producto'] == 37 || $value['id_producto'] == 40) {
+                $numero_talleres = 3;
+                $nombre_combo = 'SUPRA Clinical WorkShop 3 hands on';
+                $clave = $value['clave'];
+                $status = true;
+                break;
+            } else if ($value['id_producto'] == 36 || $value['id_producto'] == 39) {
+                $numero_talleres = 4;
+                $nombre_combo = 'SUPRA Clinical WorkShop 4 hands on';
+                $clave = $value['clave'];
+                $status = true;
+                break;
+            }
+        }
+
+        $data = [
+            'status' => $status,
+            'numero_talleres' => $numero_talleres,
+            'nombre_combo' => $nombre_combo,
+            'clave' => $clave,
+            'nombre_user' => $dataUser['nombre'] . " " . $dataUser['apellidop'] . " " . $dataUser['apellidom'],
+            'check_talleres' => $dataUser['check_talleres']
+        ];
+
+        echo json_encode($data);
+    }
+
+    public function getTalleres()
+    {
+        $user_id = $_POST['user_id'];
+        $checks = '';
+        $productos_no_comprados = CajaDao::getTalleres($user_id);
+
+        $checks .= <<<html
+
+        <div class="row">
+            <div class="col-md-8">
+                <p>Taller<p/>
+            </div>
+        
+            <div class="col-md-2" style="">
+                <p>Cupo</p>
+            </div>
+
+            <div class="col-md-2" style="display:none;">
+                    
+            </div>
+
+        </div>
+html;
+
+        foreach ($productos_no_comprados as $key => $value) {
+
+            if ($value['socio'] == 1 || $value['socio'] == '1') {
+                $precio = $value['precio_socio'];
+            } else {
+                $precio = $value['precio_publico'];
+            }
+
+
+
+            if ($value['max_compra'] <= 1) {
+                $numero_productos = '<input type="number" id="numero_articulos' . $value['id_producto'] . '" name="numero_articulos" value="' . $value['max_compra'] . '" style="border:none;" readonly>';
+            } else {
+                $numero_productos = '<select class="form-control select_numero_articulos" id="numero_articulos' . $value['id_producto'] . '" name="numero_articulos" data-id-producto="' . $value['id_producto'] . '"  data-precio="' . $precio . '" data-nombre-producto="' . $value['nombre_producto'] . '">';
+                for ($i = 1; $i <= $value['max_compra']; $i++) {
+                    $numero_productos .= '<option value="' . $i . '">' . $i . '</option>';
+                }
+                $numero_productos .= '</select>';
+            }
+
+            $f = $value['fecha_producto'];
+            $fechas = explode(" ", $f);
+            $f1 = $fechas[0];
+
+            if ($value['tipo'] == 'TALLER') {
+                $fecha = $f1;
+            } else {
+                $fecha = '';
+            }
+
+           
+            $checks .= <<<html
+            <div id="cont_check_t{$value['id_producto']}">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-check">
+                            <input class="form-check-input checks_product_t checks_product_no_comprados_t" type="checkbox" value="{$value['id_producto']}" id="check_curso_t_{$value['id_producto']}" name="checks_cursos[]" data-precio="{$precio}" data-precio-usd="{$value['precio_publico_usd']}" data-precio-socio="{$value['precio_socio']}" data-precio-socio-usd="{$value['precio_socio_usd']}" data-nombre-producto="{$value['nombre_producto']}">
+                            <label class="form-check-label" for="check_curso_t_{$value['id_producto']}">
+                            {$value['tipo']} {$value['nombre_producto']} - {$fecha}
+                            </label>
+                        </div>
+                    </div>
+                
+                    <div class="col-md-2" style="">
+                        <span class="cont_cupo" id="cont_cupo_{$value['id_producto']}">{$value['cupo']} <span>
+                    </div>
+
+                    <div class="col-md-2" style="display:none;">
+                            {$numero_productos}
+                    </div>
+
+                </div>
+
+                <hr>
+            </div>
+html;
+
+            $numero_productos = '';
+        }
+
+        echo $checks;
+    }
+
+    public function choseWorkshops()
+    {
+        date_default_timezone_set('America/Mexico_City');
+
+        $bandera = false;
+        $total = 0;
+        $compra_en = $_POST['compra_en'];
+
+
+        // $clave = $this->generateRandomString();
+        $clave = $_POST['clave'];
+        $usuario = $_POST['usuario'];
+        $user_id = $_POST['user_id'];
+        $tipo_pago = $_POST['metodo_pago'];
+        $tipo_moneda = $_POST['tipo_moneda'];
+
+
+        $datos = json_decode($_POST['array'], true);
+
+        $datos_user = CajaDao::getDataUser($user_id);
+
+        $reference = $datos_user['referencia'];
+        // $tipo_pago = $metodo_pago;
+        $fecha =  date("Y-m-d");
+
+
+        foreach ($datos as $key => $value) {
+
+
+            for ($i = 1; $i <= $value['cantidad']; $i++) {
+                $documento = new \stdClass();
+
+                $id_producto = $value['id_product'];
+
+
+
+                $documento->_id_producto = $id_producto;
+                $documento->_user_id = $user_id;
+                $documento->_reference = $reference;
+                $documento->_fecha = $fecha;
+                $documento->_monto = 0;
+                $documento->_tipo_pago = $tipo_pago;
+                $documento->_tipo_moneda = $tipo_moneda;
+                $documento->_clave = $clave;
+
+
+                $documento->_status = 1;
+
+                $existe_pendiente = CajaDao::getProductosPendientesPago($user_id, $id_producto);
+
+                if ($existe_pendiente) {
+                    $bandera = true;
+                } else {
+                    $id = CajaDao::inserPendientePago($documento);
+                }
+
+                if ($id) {
+                    $insert_asigna = CajaDao::insertAsignaProductoT($user_id, $id_producto);
+
+                    $restarStock = CajaDao::restarStock($id_producto);
+
+                    $bandera = true;
+                }
+            }
+        }
+
+        if ($bandera) {
+            $res = [
+                'status' => 'success',
+                'code' => $clave
+
+            ];
+
+            $updateCheckTalleres = CajaDao::updateCheckTalleres($user_id);
+        } else {
+            $res = [
+                'status' => 'fail',
+                'code' => $clave
+
+            ];
+        }
+        echo json_encode($res);
     }
 
 
@@ -534,236 +754,233 @@ html;
 
 
     //user id y clave pendiente clave
-    public function print($user_id,$clave = null)
+    public function print($user_id, $clave = null)
     {
         date_default_timezone_set('America/Mexico_City');
-    
+
         $datos_user = CajaDao::getDataUser($user_id);
         // $user_id = $datos_user['user_id'];       
-    
-    
+
+
         $productos = CajaDao::getLastTransaccionByUser($user_id);
-    
-    
+
+
         $reference = $productos['referencia_transaccion'];
         $fecha = $productos['fecha_transaccion'];
         $tipo_pago = $productos['tipo_pago'];
         $id_transaccion = $productos['id_transaccion_compra'];
         $num_operacion = $productos['num_operacion'];
         $tipo_moneda = $productos['tipo_pago_moneda'];
-    
-    
-        if(strlen($id_transaccion) == 1){
+
+
+        if (strlen($id_transaccion) == 1) {
             $ini_folio = '000';
-        }elseif(strlen($id_transaccion) == 2){
+        } elseif (strlen($id_transaccion) == 2) {
             $ini_folio = '00';
-        }elseif(strlen($id_transaccion) == 3){
+        } elseif (strlen($id_transaccion) == 3) {
             $ini_folio = '0';
-        }else{
+        } else {
             $ini_folio = '';
         }
-        
+
         $nombre_completo = $datos_user['nombre'] . " " . $datos_user['apellidop'] . "\n " . $datos_user['apellidom'];
-    
-    
+
+
         $pdf = new \FPDF($orientation = 'P', $unit = 'mm', $format = 'A4');
         $pdf->AddPage();
         $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
         $pdf->setY(1);
         $pdf->SetFont('Arial', 'B', 16);
         $pdf->Image('plantillas/orden_ori.jpeg', 0, 0, 210, 300);
-    
-    
+
+
         //$pdf->Image('1.png', 1, 0, 190, 190);
         $pdf->SetFont('Arial', 'B', 5);    //Letra Arial, negrita (Bold), tam. 20
-    
-    
+
+
         $espace = 142;
         $total = array();
-        $pro = explode(",",$productos['productos']);
-    
-    
-        foreach($pro as $key => $value){  
-    
+        $pro = explode(",", $productos['productos']);
+
+
+        foreach ($pro as $key => $value) {
+
             // $total_productos = CajaDao::getCountProductos($user_id,2)[0];
-    
+
             // $count_productos = $total_productos['numero_productos'];
-    
-            $pro_precio = explode("-",$value);
+
+            $pro_precio = explode("-", $value);
             $cantidad = $pro_precio[0];
-            $solo_precio = explode("$",$pro_precio[2]); //precio unitario producto
-            $solo_precio_usd = explode("$",$pro_precio[3]); //precio unitario producto usd
-            $cantidad = explode(".",$pro_precio[0]);
+            $solo_precio = explode("$", $pro_precio[2]); //precio unitario producto
+            $solo_precio_usd = explode("$", $pro_precio[3]); //precio unitario producto usd
+            $cantidad = explode(".", $pro_precio[0]);
             $solo_cantidad = $cantidad[1]; //cantidad de compra
-    
+
             // echo number_format($solo_precio[1],2);
 
             $precio_mostrar = 0;
             $total = 0;
 
-            if($tipo_moneda == "MXN"){
+            if ($tipo_moneda == "MXN") {
                 $precio_mostrar = $solo_precio[1];
                 $total = $productos['total_pesos'];
                 $complemeto_total_letras = 'pesos 00/100 M.N.';
-            }else if($tipo_moneda == "USD"){
+            } else if ($tipo_moneda == "USD") {
                 $precio_mostrar = $solo_precio_usd[1];
                 $total = $productos['total_dolares'];
                 $complemeto_total_letras = 'USD.';
             }
-    
+
             //Nombre Curso
             $pdf->SetXY(22, $espace);
-            $pdf->SetFont('Arial', 'B', 8);  
+            $pdf->SetFont('Arial', 'B', 8);
             $pdf->SetTextColor(94, 94, 94);
-            $pdf->Multicell(100, 4, utf8_decode($pro_precio[1]) , 0, 'C');
-    
+            $pdf->Multicell(100, 4, utf8_decode($pro_precio[1]), 0, 'C');
+
             //Costo
             $pdf->SetXY(103, $espace);
-            $pdf->SetFont('Arial', 'B', 8);  
+            $pdf->SetFont('Arial', 'B', 8);
             $pdf->SetTextColor(94, 94, 94);
-            $pdf->Multicell(100, 4, number_format($precio_mostrar,2) ." ".$tipo_moneda, 0, 'C');
-    
+            $pdf->Multicell(100, 4, number_format($precio_mostrar, 2) . " " . $tipo_moneda, 0, 'C');
+
             //Cantidad
             $pdf->SetXY(18, $espace);
-            $pdf->SetFont('Arial', 'B', 8);  
+            $pdf->SetFont('Arial', 'B', 8);
             $pdf->SetTextColor(94, 94, 94);
-            $pdf->Multicell(20, 4, $solo_cantidad , 0, 'C');
-    
+            $pdf->Multicell(20, 4, $solo_cantidad, 0, 'C');
+
             //Total
             $pdf->SetXY(138, $espace);
-            $pdf->SetFont('Arial', 'B', 8);  
+            $pdf->SetFont('Arial', 'B', 8);
             $pdf->SetTextColor(94, 94, 94);
-            $pdf->Multicell(100, 4, number_format(($precio_mostrar*$solo_cantidad),2)." ".$tipo_moneda , 0, 'C');
-    
+            $pdf->Multicell(100, 4, number_format(($precio_mostrar * $solo_cantidad), 2) . " " . $tipo_moneda, 0, 'C');
+
             $espace = $espace + 6;
         }
-    
+
         $tipo_cambio = CajaDao::getTipoCambio()['tipo_cambio'];
-        
-    
-        if(!empty($num_operacion)){
-    
+
+
+        if (!empty($num_operacion)) {
+
             //num operacion
             $pdf->SetXY(100, 60);
-            $pdf->SetFont('Arial', 'B', 13);  
+            $pdf->SetFont('Arial', 'B', 13);
             $pdf->SetTextColor(94, 94, 94);
-            $pdf->Multicell(98, 10, utf8_decode('Número de Transacción : ').$num_operacion, 0, 'C');
+            $pdf->Multicell(98, 10, utf8_decode('Número de Transacción : ') . $num_operacion, 0, 'C');
         }
-        
-    
-         //folio
-         $pdf->SetXY(5, 75);
-         $pdf->SetFont('Arial', 'B', 13);  
-         $pdf->SetTextColor(94, 94, 94);
-         $pdf->Multicell(100, 10, $ini_folio.$id_transaccion, 0, 'C');
-    
-         //fecha
-         $pdf->SetXY(10,110);
-         $pdf->SetFont('Arial', 'B', 13);  
-         $pdf->SetTextColor(94, 94, 94);
-         $pdf->Multicell(100, 10, $fecha, 0, 'C');
-    
-         //Nombre
-         $pdf->SetXY(120,85);
-         $pdf->SetFont('Arial', 'B', 9);  
-         $pdf->SetTextColor(94, 94, 94);
-         $pdf->Multicell(114, 6, utf8_decode($nombre_completo), 0, 'C');
-    
-         //correo
-         $pdf->SetXY(120,95);
-         $pdf->SetFont('Arial', 'B', 10);  
-         $pdf->SetTextColor(94, 94, 94);
-         $pdf->Multicell(114, 10, utf8_decode($datos_user['direccion_fiscal']), 0, 'C');
-    
-         //Nombre empresa
-         $pdf->SetXY(120,100);
-         $pdf->SetFont('Arial', 'B', 10);  
-         $pdf->SetTextColor(94, 94, 94);
-         $pdf->Multicell(114, 10, utf8_decode($datos_user['razon_social']), 0, 'C');
-    
-         //RFC
-         $pdf->SetXY(120,105);
-         $pdf->SetFont('Arial', 'B', 10);  
-         $pdf->SetTextColor(94, 94, 94);
-         $pdf->Multicell(114, 10, utf8_decode($datos_user['rfc']), 0, 'C');
-    
-         //correo
-         $pdf->SetXY(120,110);
-         $pdf->SetFont('Arial', 'B', 10);  
-         $pdf->SetTextColor(94, 94, 94);
-         $pdf->Multicell(114, 10, utf8_decode($datos_user['email_fac']), 0, 'C');
-    
-         //correo
-         $pdf->SetXY(120,115);
-         $pdf->SetFont('Arial', 'B', 10);  
-         $pdf->SetTextColor(94, 94, 94);
-         $pdf->Multicell(114, 10, utf8_decode($datos_user['cp_fiscal']), 0, 'C');
-    
-        
-    
+
+
+        //folio
+        $pdf->SetXY(5, 75);
+        $pdf->SetFont('Arial', 'B', 13);
+        $pdf->SetTextColor(94, 94, 94);
+        $pdf->Multicell(100, 10, $ini_folio . $id_transaccion, 0, 'C');
+
+        //fecha
+        $pdf->SetXY(10, 110);
+        $pdf->SetFont('Arial', 'B', 13);
+        $pdf->SetTextColor(94, 94, 94);
+        $pdf->Multicell(100, 10, $fecha, 0, 'C');
+
+        //Nombre
+        $pdf->SetXY(120, 85);
+        $pdf->SetFont('Arial', 'B', 9);
+        $pdf->SetTextColor(94, 94, 94);
+        $pdf->Multicell(114, 6, utf8_decode($nombre_completo), 0, 'C');
+
+        //correo
+        $pdf->SetXY(120, 95);
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->SetTextColor(94, 94, 94);
+        $pdf->Multicell(114, 10, utf8_decode($datos_user['direccion_fiscal']), 0, 'C');
+
+        //Nombre empresa
+        $pdf->SetXY(120, 100);
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->SetTextColor(94, 94, 94);
+        $pdf->Multicell(114, 10, utf8_decode($datos_user['razon_social']), 0, 'C');
+
+        //RFC
+        $pdf->SetXY(120, 105);
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->SetTextColor(94, 94, 94);
+        $pdf->Multicell(114, 10, utf8_decode($datos_user['rfc']), 0, 'C');
+
+        //correo
+        $pdf->SetXY(120, 110);
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->SetTextColor(94, 94, 94);
+        $pdf->Multicell(114, 10, utf8_decode($datos_user['email_fac']), 0, 'C');
+
+        //correo
+        $pdf->SetXY(120, 115);
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->SetTextColor(94, 94, 94);
+        $pdf->Multicell(114, 10, utf8_decode($datos_user['cp_fiscal']), 0, 'C');
+
+
+
         $letras = new EnLetras();
-        $TotalLetra=$total;
+        $TotalLetra = $total;
         $total_en_letras = $letras->ValorEnLetras($TotalLetra, $complemeto_total_letras);
-    
-    
+
+
         //total 
         $pdf->SetXY(138, 255);
-        $pdf->SetFont('Arial', 'B', 13);  
+        $pdf->SetFont('Arial', 'B', 13);
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(100, 10, '$ '.number_format($total,2).'', 0, 'C');
-    
+        $pdf->Multicell(100, 10, '$ ' . number_format($total, 2) . '', 0, 'C');
+
         //total  letra
         $pdf->SetXY(5, 247);
-        $pdf->SetFont('Arial', 'B', 13);  
+        $pdf->SetFont('Arial', 'B', 13);
         $pdf->SetTextColor(94, 94, 94);
         $pdf->Multicell(120, 5, $total_en_letras, 0, 'C');
-    
-        if($tipo_pago == "Tarjeta_Credito"){
-    
+
+        if ($tipo_pago == "Tarjeta_Credito") {
+
             //tipo pago
             $pdf->SetXY(22, 215);
-            $pdf->SetFont('Arial', 'B', 9);  
+            $pdf->SetFont('Arial', 'B', 9);
             $pdf->SetTextColor(0, 0, 0);
-            $pdf->Multicell(100, 10, '$ '.number_format($total,2).'', 0, 'C');
-    
-    
-          }else if($tipo_pago == "Tarjeta_Debito"){
-    
+            $pdf->Multicell(100, 10, '$ ' . number_format($total, 2) . '', 0, 'C');
+        } else if ($tipo_pago == "Tarjeta_Debito") {
+
             //tipo pago
             $pdf->SetXY(26, 218.5);
-            $pdf->SetFont('Arial', 'B', 9);  
+            $pdf->SetFont('Arial', 'B', 9);
             $pdf->SetTextColor(0, 0, 0);
-            $pdf->Multicell(100, 10, '$ '.number_format($total,2).'', 0, 'C');
-    
-          }else if($tipo_pago == "Efectivo"){
-    
+            $pdf->Multicell(100, 10, '$ ' . number_format($total, 2) . '', 0, 'C');
+        } else if ($tipo_pago == "Efectivo") {
+
             //tipo pago
             $pdf->SetXY(12, 208);
-            $pdf->SetFont('Arial', 'B', 9);  
+            $pdf->SetFont('Arial', 'B', 9);
             $pdf->SetTextColor(0, 0, 0);
             // $pdf->Multicell(100, 10, '$ '.number_format($total,2).'', 0, 'C');
-          }else if($tipo_pago == "Transferencia"){
-    
+        } else if ($tipo_pago == "Transferencia") {
+
             //tipo pago
             $pdf->SetXY(19.5, 211.75);
-            $pdf->SetFont('Arial', 'B', 9);  
+            $pdf->SetFont('Arial', 'B', 9);
             $pdf->SetTextColor(0, 0, 0);
-            $pdf->Multicell(100, 10, '$ '.number_format($total,2).'', 0, 'C');
-          }
-    
+            $pdf->Multicell(100, 10, '$ ' . number_format($total, 2) . '', 0, 'C');
+        }
+
         //tipo pago
         // $pdf->SetXY(125, 265);
         // $pdf->SetFont('Arial', 'B', 13);  
         // $pdf->SetTextColor(0, 0, 0);
         // $pdf->Multicell(100, 10, $tipo_pago, 0, 'C');
-    
+
         //imagen Qr
         // $pdf->Image('qrs/'.$clave.'.png' , 152 ,245, 35 , 38,'PNG');
-    
-    
+
+
         $pdf->Output();
         // $pdf->Output('F','constancias/'.$clave.$id_curso.'.pdf');
-    
+
         // $pdf->Output('F', 'C:/pases_abordar/'. $clave.'.pdf');
     }
 

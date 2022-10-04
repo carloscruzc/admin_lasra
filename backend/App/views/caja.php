@@ -66,7 +66,7 @@
                                     </h5>
                                     <h6><b><?php echo $nombre; ?></b></h6>
                                     <p class="mb-0 font-weight-bold text-sm">
-                                        
+
                                     </p>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                                             <datalist id="list_concidencias">
 
                                                             </datalist>
-
+                                                            <!-- user_id -->
                                                             <input style="font-size: 35px" type="hidden" id="codigo_qr_venta_hidden" name="codigo_qr_venta_hidden" class="form-control form-control-lg text-center" minlength="11" maxlength="11" autocomplete="off" autocapitalize="off" autofocus>
 
                                                         </div>
@@ -253,7 +253,9 @@
                                                         <div style="display:flex; justify-content:end;">
 
                                                             <button id="btn_pagar" class="btn btn-primary" disabled>Pagar</button>
-
+                                                            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_talleres">
+                                                                Launch demo modal
+                                                            </button> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -326,6 +328,113 @@
         </div>
     </div>
 
+    <!-- modal seleccionar talleres -->
+    <div class="modal fade" id="modal_talleres" role="dialog" aria-labelledby="" aria-hidden="" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <!-- <div class="modal fade" id="modal_talleres" role="dialog" aria-labelledby="" aria-hidden="" aria-hidden="true"> -->
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_talleresLabel">
+                        Talleres
+                    </h5>
+                    <p id="nombre_user"></p>
+                </div>
+                <center>
+                    <div class="modal-body">
+                        <div class="container-fluid py-0">
+                            <div class="card col-lg-12 mt-lg-4 mt-1">
+                                <div class="card-header pb-0 p-3">
+                                    <p style="font-size: 14px">Compro el paquete <b><span id="nombre_paquete"></span></b> (Seleccione a continuación los <b><span id="numero_talleres"></span></b> Talleres para crear su paquete)</p>
+
+                                    <input type="hidden" name="clave_combo" id="clave_combo" value="">
+                                </div>
+                                <div class="card-body px-5 pb-5">
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div id="cont-checks">
+
+
+
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+
+                                                    <div id="buttons">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <p>Productos agregados: <span id="productos_agregados"></span></p>
+
+                                                            </div>
+
+                                                            <div class="col-md-6">
+
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+
+                                                    <div id="buttons">
+
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+
+                                                            </div>
+
+                                                            <div class="col-md-6" style="display: flex; justify-content: end;">
+
+
+
+                                                                <button class="btn bg-gradient-info" id="btn_pago">Elegir Talleres</button>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                    <br>
+                                    <!-- <div class="row">
+                                        <div class="col-md-8">
+
+                                            <div id="buttons">
+
+                                            </div>
+                                        </div>
+                                    </div>
+ -->
+
+                                    <br>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </center>
+            </div>
+        </div>
+    </div>
+
 
     <!--   Core JS Files   -->
     <script src="../../assets/js/core/popper.min.js"></script>
@@ -344,7 +453,6 @@
         function focus_input() {
             $("#codigo_qr_venta").focus();
         }
-
 
 
         function borrarRegister(dato) {
@@ -382,6 +490,71 @@
 
 
         $(document).ready(function() {
+
+            // getCombo(625);
+
+            function seleccionarTalleres(user_id) {
+                getCombo(user_id);
+            }
+
+            function getCombo(user_id) {
+
+
+                $.ajax({
+                    url: "/Caja/getCombo",
+                    type: "POST",
+                    data: {
+                        user_id
+                    },
+                    dataType: 'json',
+                    beforeSend: function() {
+                        console.log("Procesando....");
+                    },
+                    success: function(respuesta) {
+                        console.log(respuesta);
+                        if (respuesta.status == true && respuesta.check_talleres == 0) {
+                            $('#modal_talleres').modal('show');
+                            $("#nombre_paquete").text(respuesta.nombre_combo);
+                            $("#numero_talleres").text(respuesta.numero_talleres);
+                            $("#nombre_user").text(respuesta.nombre_user);
+                            $("#clave_combo").val(respuesta.clave);
+                            getTalleres(user_id);
+                        }
+
+                    },
+                    error: function(respuesta) {
+
+                    }
+
+                });
+            }
+
+            function getTalleres(user_id) {
+                $.ajax({
+                    url: "/Caja/getTalleres",
+                    type: "POST",
+                    data: {
+                        user_id
+                    },
+                    // dataType: 'json',
+                    beforeSend: function() {
+                        console.log("Procesando....");
+                    },
+                    success: function(respuesta) {
+
+                        $("#cont-checks").html(respuesta);
+
+                    },
+                    error: function(respuesta) {
+
+                    }
+
+                });
+            }
+
+
+
+
 
             $("#update_fiscal_data").on("submit", function(event) {
                 event.preventDefault();
@@ -421,9 +594,7 @@
                 });
             });
 
-            // let codigo = '';
-            // var link_a = $(location).attr('href');
-            // var clave_a = link_a.substr(link_a.indexOf('codigo/') + 7, link_a.length);
+
 
             // var precios=<?php //echo json_encode($array_precios); 
                             ?>;
@@ -445,7 +616,7 @@
                     $(".cont_cambio_dolares").hide();
                 } else {
 
-                    if (tipo_moneda == "MXN") {                       
+                    if (tipo_moneda == "MXN") {
                         $(".cont_cambio_pesos").show();
                     } else if (tipo_moneda == "USD") {
                         $(".cont_cambio_dolares").show();
@@ -463,7 +634,7 @@
                 var descripcion = $("#txt_descripcion").val();
                 console.log(user_id);
 
-                
+
 
                 if (metodo_pago != '') {
                     Swal.fire({
@@ -498,6 +669,7 @@
 
                                     if (respuesta == 'success') {
 
+                                        getCombo(user_id);
                                         $('#imprimir_comprobante')[0].click();
                                         Swal.fire('Pago generado correctamente.', '', 'success').then(() => {
                                             // $('#generar_gafete')[0].click();
@@ -795,12 +967,12 @@
                     $(".cont-totales-pesos").css('display', 'inline-block');
                     $(".cont-totales-dolares").css('display', 'none');
                     $("#txt_pago").val("");
-                    $("#btn_pagar").attr("disabled","disabled");
+                    $("#btn_pagar").attr("disabled", "disabled");
                 } else {
                     $(".cont-totales-pesos").css('display', 'none');
                     $(".cont-totales-dolares").css('display', 'inline-block');
                     $("#txt_pago").val("");
-                    $("#btn_pagar").attr("disabled","disabled");
+                    $("#btn_pagar").attr("disabled", "disabled");
                 }
             });
 
@@ -1241,6 +1413,334 @@
             }
 
 
+            var preciosT = [];
+            var productosT = [];
+
+            function sumarProductosT(productosT) {
+                console.log(productosT);
+                var nombreProductos = '';
+
+                productosT.forEach(function(producto, index) {
+
+                    console.log("precio " + index + " | id_product: " + producto.id_product + " precio: " + parseInt(producto.precio) + " cantidad: " + parseInt(producto.cantidad) + " producto: " + producto.nombre_producto)
+
+                    nombreProductos += producto.nombre_producto + ',';
+                });
+
+                console.log(nombreProductos);
+
+
+            }
+
+            function sumarPreciosT(preciosT) {
+
+
+                var sumaPrecios = 0;
+                var sumaPreciosUsd = 0;
+                var sumaArticulos = 0;
+
+                preciosT.forEach(function(precio, index) {
+
+                    // console.log("precio " + index + " | id_product: " + precio.id_product + " precio: " + parseInt(precio.precio) + " cantidad: " + parseInt(precio.cantidad))
+
+                    sumaPrecios += parseInt(precio.precio * precio.cantidad);
+                    sumaArticulos += parseInt(precio.cantidad);
+
+                    sumaPreciosUsd += parseInt(precio.precio_usd * precio.cantidad);
+
+
+                });
+
+
+                $("#total").html(sumaPrecios);
+
+
+                console.log("Suma Articulos " + sumaArticulos);
+
+                $("#productos_agregados").html(sumaArticulos);
+
+            }
+
+            $("#btn_pago").on("click", function(event) {
+                event.preventDefault();
+                // var metodo_pago = $("#metodo_pago").val();
+                var clave = $("#clave_combo").val();
+                var user_id = $("#user_id").val();
+                var usuario = $("#correo_user").text();
+                var metodo_pago = 'combo';
+                var tipo_moneda = '-';
+                var compra_en = 'sitio';
+
+                // console.log("precios ------");
+                // console.log(precios);
+
+                // console.log("clave " + clave);
+                // console.log("------");
+                // console.log("user_id " + user_id);
+                // console.log("------");
+                // console.log("usuario " + usuario);
+                // console.log("------");
+                // console.log("metodo_pago " + metodo_pago);
+                // console.log("------");
+                // console.log("tipo_moneda " + tipo_moneda);
+                // console.log("------");
+                // console.log("compra_en " + compra_en);
+
+
+                if (preciosT.length < $("#numero_talleres").text()) {
+                    var resta = $("#numero_talleres").text() - preciosT.length;
+                    if (resta == 1) {
+                        var text = "producto";
+                    } else {
+                        var text = "productos";
+                    }
+                    Swal.fire("¡Alerta!", "Tienes que seleccionar " + resta + " " + text + " más", "warning");
+                } else if (preciosT.length > $("#numero_talleres").text()) {
+                    Swal.fire("¡Alerta!", "Solo puedes seleccionar " + $("#numero_talleres").text() + " productos", "warning");
+                } else {
+                    var plantilla_productos = '';
+
+                    plantilla_productos += `<ul>`;
+
+
+                    $.each(productosT, function(key, value) {
+                        console.log("funcioina");
+                        console.log(value);
+                        plantilla_productos += `<li style="text-align: justify; font-size:14px;">
+                                                ${value.nombre_producto} 
+                                            </li>`;
+                    });
+
+                    plantilla_productos += `</ul>`;
+
+
+
+                    Swal.fire({
+                        title: 'Se han seleccionado los siguientes productos',
+                        text: '',
+                        html: plantilla_productos,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: 'Cancelar',
+                        confirmButtonText: 'Confirmar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $(this).attr('disabled', 'disabled')
+
+                            console.log($("#total_mx").text());
+
+                            var enviar_email = 1;
+                            $.ajax({
+                                url: "/Caja/choseWorkshops",
+                                type: "POST",
+                                data: {
+                                    'array': JSON.stringify(preciosT),
+                                    clave,
+                                    usuario,
+                                    user_id,
+                                    metodo_pago,
+                                    enviar_email,
+                                    tipo_moneda
+                                },
+                                cache: false,
+                                dataType: "json",
+                                // contentType: false,
+                                // processData: false,
+                                beforeSend: function() {
+                                    console.log("Procesando....");
+
+                                },
+                                success: function(respuesta) {
+
+                                    console.log(respuesta);
+
+                                    if (respuesta.status == 'success') {
+
+                                        Swal.fire("¡Se agregaron sus talleres correctamente!", "", "success").
+                                        then((value) => {
+                                            // $(".form_compra").submit();
+                                            // if (metodo_pago == 'Transferencia') {
+                                            setTimeout(function() {
+                                                location.href = '/Caja';
+                                            }, 1000);
+
+                                            // }
+                                        });
+                                    }
+
+                                },
+                                error: function(respuesta) {
+                                    console.log(respuesta);
+                                }
+
+                            });
+
+                        }
+                    })
+                }
+            });
+
+            $('#cont-checks').on("change", "input[type=checkbox].checks_product_t", function(event) {
+
+                var id_product = $(this).val();
+                var precio = $(this).attr('data-precio');
+                var precio_socio = $(this).attr('data-precio-socio');
+                var precio_usd = $(this).attr('data-precio-usd');
+                var precio_socio_usd = $(this).attr('data-precio-socio-usd');
+                var cantidad = $("#numero_articulos" + id_product).val();
+                var nombre_producto = $(this).attr('data-nombre-producto');
+
+
+                if (this.checked) {
+
+
+                    //validaciones para los talleres simultaneos 
+
+                    if (nombre_producto == 'INDISPENSABLE BLOQUEOS BASICOS MIEMBRO SUPERIOR') {
+                        $("#check_curso_t_27").attr('disabled', 'disabled');
+
+                    }
+
+                    if (nombre_producto == 'PERFUSIONES INTRAVENOSAS PARA SEDACIÓN DE LO MANUAL A TCI') {
+                        $("#check_curso_t_24").attr('disabled', 'disabled');
+                    }
+
+                    if (nombre_producto == 'INDISPENSABLE BLOQUEOS BASICOS MIEMBRO INFERIOR') {
+                        $("#check_curso_t_29").attr('disabled', 'disabled');
+                    }
+
+                    if (nombre_producto == 'ULTRASONIDO EN BLOQUEOS PARA DOLOR CRONICO') {
+                        $("#check_curso_t_25").attr('disabled', 'disabled');
+                    }
+
+                    if (nombre_producto == 'BLOQUEOS AVANZADOS: NEUROMONITOREO, MIEMBRO SUPERIOR Y MIEMBO INFERIOR') {
+                        $("#check_curso_t_43").attr('disabled', 'disabled');
+                    }
+
+                    if (nombre_producto == 'RECAT/ECO CRITICA') {
+                        $("#check_curso_t_32").attr('disabled', 'disabled');
+                    }
+
+                    if (nombre_producto == 'ACCESOS VASCULARES PRAVE') {
+                        $("#check_curso_t_30").attr('disabled', 'disabled');
+                        $("#check_curso_t_28").attr('disabled', 'disabled');
+                    }
+
+                    if (nombre_producto == 'BLOQUEOS AVANZADOS :TORAX Y ABDOMEN') {
+                        $("#check_curso_t_31").attr('disabled', 'disabled');
+                        $("#check_curso_t_28").attr('disabled', 'disabled');
+                    }
+
+                    if (nombre_producto == 'SIMULADORES ESCANEA Y PRACTICA CON MODELO EN SIMULACION') {
+                        $("#check_curso_t_31").attr('disabled', 'disabled');
+                        $("#check_curso_t_30").attr('disabled', 'disabled');
+                    }
+
+
+                    //fin de validaciones para talleres simultaneos
+
+
+
+
+                    preciosT.push({
+                        'id_product': id_product,
+                        'precio': '0',
+                        'precio_usd': '0',
+                        'cantidad': cantidad
+                    });
+
+
+                    productosT.push({
+                        'id_product': id_product,
+                        'precio': '0',
+                        'precio_usd': '0',
+                        'cantidad': cantidad,
+                        'nombre_producto': nombre_producto
+                    });
+
+                    sumarPreciosT(preciosT);
+                    sumarProductosT(productosT);
+
+
+                } else if (!this.checked) {
+
+
+
+                    //validaciones para los talleres simultaneos 
+
+                    if (nombre_producto == 'INDISPENSABLE BLOQUEOS BASICOS MIEMBRO SUPERIOR') {
+                        $("#check_curso_t_27").removeAttr('disabled');
+
+                    }
+
+                    if (nombre_producto == 'PERFUSIONES INTRAVENOSAS PARA SEDACIÓN DE LO MANUAL A TCI') {
+                        $("#check_curso_t_24").removeAttr('disabled');
+                    }
+
+                    if (nombre_producto == 'INDISPENSABLE BLOQUEOS BASICOS MIEMBRO INFERIOR') {
+                        $("#check_curso_t_29").removeAttr('disabled');
+                    }
+
+                    if (nombre_producto == 'ULTRASONIDO EN BLOQUEOS PARA DOLOR CRONICO') {
+                        $("#check_curso_t_25").removeAttr('disabled');
+                    }
+
+                    if (nombre_producto == 'BLOQUEOS AVANZADOS: NEUROMONITOREO, MIEMBRO SUPERIOR Y MIEMBO INFERIOR') {
+                        $("#check_curso_t_43").removeAttr('disabled');
+                    }
+
+                    if (nombre_producto == 'RECAT/ECO CRITICA') {
+                        $("#check_curso_t_32").removeAttr('disabled');
+                    }
+
+                    if (nombre_producto == 'ACCESOS VASCULARES PRAVE') {
+                        $("#check_curso_t_30").removeAttr('disabled');
+                        $("#check_curso_t_28").removeAttr('disabled');
+                    }
+
+                    if (nombre_producto == 'BLOQUEOS AVANZADOS :TORAX Y ABDOMEN') {
+                        $("#check_curso_t_31").removeAttr('disabled');
+                        $("#check_curso_t_28").removeAttr('disabled');
+                    }
+
+                    if (nombre_producto == 'SIMULADORES ESCANEA Y PRACTICA CON MODELO EN SIMULACION') {
+                        $("#check_curso_t_31").removeAttr('disabled');
+                        $("#check_curso_t_30").removeAttr('disabled');
+                    }
+
+
+
+                    //fin de validaciones para talleres simultaneos
+
+
+                    for (var i = 0; i < preciosT.length; i++) {
+
+                        if (preciosT[i].id_product === id_product) {
+                            // console.log("remover");
+                            preciosT.splice(i, 1);
+
+                            productosT.splice(i, 1);
+                            sumarPreciosT(preciosT);
+                            sumarProductosT(productosT);
+                        } else if (preciosT[i].id_product === id_product && preciosT[i].cantidad === cantidad) {
+                            preciosT.splice(i, 1);
+
+                            productosT.splice(i, 1);
+                            sumarPreciosT(preciosT);
+                            sumarProductosT(productosT);
+
+                        }
+                    }
+
+
+                }
+
+
+            });
+
+
 
 
         });
@@ -1250,6 +1750,13 @@
                 event.preventDefault();
             }
         }, false);
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+
+        });
     </script>
 
 </body>
