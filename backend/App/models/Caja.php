@@ -95,16 +95,17 @@ sql;
 
         $mysqli = Database::getInstance();
         $query = <<<sql
-        INSERT INTO transaccion_compra (user_id,referencia_transaccion,productos,total_pesos,tipo_pago,fecha_transaccion,descripcion,utilerias_administradores_id) VALUES(:user_id,:referencia_transaccion,:productos,:total_pesos,:tipo_pago,NOW(),:descripcion,:utilerias_administradores_id)                        
+        INSERT INTO transaccion_compra (user_id,referencia_transaccion,productos,total_dolares,total_pesos,tipo_pago_moneda,tipo_pago,fecha_transaccion,descripcion,utilerias_administradores_id) VALUES(:user_id,:referencia_transaccion,:productos,:total_dolares,:total_pesos,:tipo_pago_moneda,:tipo_pago,NOW(),:descripcion,:utilerias_administradores_id)                        
 sql;
   
         $parametros = array(
             ':user_id' => $data->_user_id,
             ':referencia_transaccion' => $data->_referencia_transaccion,
             ':productos' => $data->_productos,
-        //     ':total_dolares' => $data->_total_dolares,
+            ':total_dolares' => $data->_total_dolares,
             ':total_pesos' => $data->_total_pesos,
             ':tipo_pago' => $data->_tipo_pago,
+            ':tipo_pago_moneda' => $data->_tipo_moneda,
             ':descripcion' => $data->_descripcion,
             ':utilerias_administradores_id' => $data->_utilerias_administradores_id 
         );
@@ -583,7 +584,7 @@ sql;
 public static function getProductosPendComprados($id){
         $mysqli = Database::getInstance();
         $query=<<<sql
-        SELECT pp.id_producto,pp.clave, pp.comprado_en,pp.status,ua.nombre,ua.clave_socio,aspro.status as estatus_compra,ua.monto_congreso as amout_due,pro.nombre as nombre_producto, pro.precio_publico, pro.precio_socio, pro.tipo_moneda, pro.max_compra, pro.es_congreso, pro.es_servicio, pro.es_curso
+        SELECT pp.id_producto,pp.clave, pp.comprado_en,pp.status,pp.monto,ua.nombre,ua.clave_socio,aspro.status as estatus_compra,ua.monto_congreso as amout_due,pro.nombre as nombre_producto, pro.precio_publico, pro.precio_socio, pro.tipo_moneda, pro.max_compra, pro.es_congreso, pro.es_servicio, pro.es_curso
         FROM pendiente_pago pp
         INNER JOIN utilerias_administradores ua ON(ua.user_id = pp.user_id)
         INNER JOIN productos pro ON (pp.id_producto = pro.id_producto)
@@ -596,10 +597,11 @@ sql;
       public static function getProductosNoComprados($id){
         $mysqli = Database::getInstance();
         $query=<<<sql
-        SELECT p.id_producto, p.nombre as nombre_producto, p.precio_publico, p.precio_socio, p.tipo_moneda, p.max_compra, p.es_congreso, p.es_servicio, p.es_curso, ua.clave_socio, ua.monto_congreso as amout_due 
+        SELECT p.id_producto, p.nombre as nombre_producto, p.precio_publico, p.precio_socio, p.precio_publico_usd, p.precio_socio_usd,p.tipo_moneda,p.precio_publico_usd, p.precio_socio_usd, p.tipo_moneda_usd, p.max_compra, p.es_congreso, p.es_servicio, p.es_curso, p.tipo,p.fecha_producto,ua.clave_socio, ua.monto_congreso as amout_due, ua.socio 
         FROM productos p
         INNER JOIN utilerias_administradores ua
-        WHERE id_producto NOT IN (SELECT id_producto FROM pendiente_pago WHERE user_id = $id) AND ua.user_id = $id;
+        INNER JOIN costos_productos cp ON (cp.id_producto = p.id_producto and cp.id_categoria = ua.id_categoria)
+        WHERE p.id_producto NOT IN (SELECT id_producto FROM pendiente_pago WHERE user_id = $id) AND ua.user_id = $id  and p.status = 1 and tipo != "TALLER" ORDER BY p.nombre;
 sql;
         return $mysqli->queryAll($query);
       }
@@ -649,5 +651,13 @@ sql;
 
         return $mysqli->update($query,$params);
       
+      }
+
+      public static function updateStatusSocio($user_id){
+        $mysqli = Database::getInstance();
+        $query=<<<sql
+        UPDATE utilerias_administradores SET socio = 1  WHERE user_id = $user_id
+sql;
+        return $mysqli->update($query);
       }
 }
