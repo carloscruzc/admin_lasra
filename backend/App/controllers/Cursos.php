@@ -17,7 +17,7 @@ use \App\models\Caja as CajaDao;
 
 use Generator;
 
-class Asistentes extends Controller
+class Cursos extends Controller
 {
 
     private $_contenedor;
@@ -61,7 +61,7 @@ html;
         View::set('optionCate', $optionCate);
         // View::set('tabla_faltantes', $this->getAsistentesFaltantes());
         // View::set('tabla', $this->getAllColaboradoresAsignados());
-        View::render("asistentes_all");
+        View::render("cursos_all");
     }
 
     public function getEstadoPais(){
@@ -153,7 +153,7 @@ html;
         View::set('modal',$modal);    
         View::set('tabla', $this->getAllColaboradoresAsignadosByName($search));
         View::set('asideMenu',$this->_contenedor->asideMenu());    
-        View::render("asistentes_all");
+        View::render("cursos_all");
     }
 
     public function setTicketVirtual($asistentes){
@@ -726,30 +726,191 @@ html;
     public function getAllColaboradoresAsignadosByName($name){
 
         $html = "";
-        $incremento = 0;
         
         foreach (GeneralDao::getAllColaboradoresByName($name) as $key => $value) {
-            $incremento++;
+            $industria = '';
             $clave_socio = '';
             $clave_beca = '';
             $clave_beca_2 = '';
             $tipo_user = '';
             $permiso_impresion = '';
             $modalidad = '';
+            $curso_1 = '';
+            $curso_2 = '';
+            $curso_3 = '';
+            $curso_4 = '';
+            $curso_5 = '';
+            $curso_6 = '';
+            $curso_7 = '';
+            $curso_8 = '';
+            $curso_9 = '';
+            $color_curso_pago = '';
+            $tipo_pago = '';
             $gafetes_httml = '';
             $id_producto = 1;
             $miembro_apm = '';
             $sociote = '';
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//             if($value['scholarship'] != '')//si la beca es diferente de vacio entonces
+//             {
+//                 if($value['amout_due'] == '')//preguntar si no tiene registrado algun costo es becado
+//                 {
+//                     $permiso_impresion .= <<<html
+//                     <div>
+//                         <span class="badge badge-success" style="background-color: #033901; color:white "><strong>OK - HABILITADO PARA IMPRESIÓN DE GAFETE </strong></span>  
+//                     </div>
+// html;
+//                 }
+//                 else
+//                 {
+//                     foreach (GeneralDao::getBuscarBeca($value['usuario'] ) as $key => $value_busca_beca) { //IR A BUSCAR EL ESTATUS DE PAGO
+//                         if($value_busca_beca['status'] == 1 && $value_busca_beca['fecha_liberado'] != '')//Si ya esta validado se muestra
+//                         {
+//                             $permiso_impresion .= <<<html
+//                             <div>
+//                                 <span class="badge badge-success" style="background-color: #033901; color:white "><strong>OK - HABILITADO PARA IMPRESIÓN DE GAFETE </strong></span>  
+//                             </div>
+// html;
+//                         }
+//                         else
+//                         {
+//                             if($value_busca_beca['url_archivo'] == '')//Si no ha subido comproabnte decir que no ha subido
+//                             {
+//                                 $permiso_impresion .= <<<html
+//                         <span class="badge badge-success" style="background-color: #ff1d1d; color:white "><strong>NO - BECADO al 50 %, NO HA SUBIDO COMPROBANTE DE PAGO DIRIGIR A CAJA A PAGAR</strong></span>  
+// html;
+//                             }
+//                             else
+//                             {
+//                                 if($value_busca_beca['url_archivo'] != '' && $value_busca_beca['status'] == 0) //Si ya subio comprobante de pago poner que se tiene que pedir la validacio a apm
+//                                 {
+//                                     $permiso_impresion .= <<<html
+//                                     <span class="badge badge-success" style="background-color: #ff1d1d; color:white "><strong>NO - PREGUNTAR A APM DE VALIDACIÓN DE PAGO </strong></span>  
+// html;
+//                                 }
+//                             }
+//                         }
+//                     }
+
+//                 }
+//             }
+//             else
+//             {
+//                 if($value['amout_due'] != '' && $value['scholarship'] == '' )//Si el colaborador tiene amout_due y no tiene beca es una compra
+//                 {
+//                     foreach (GeneralDao::getBuscarEstatusCompraEmail($value['usuario'] ) as $key => $value_busca_compra) { //IR A BUSCAR EL ESTATUS DE PAGO
+
+//                         if($value_busca_compra['status'] == 3 && $value_busca_compra['url_archivo'] == '')//Se pregunta si esta vacia, significa que solo se registro y no ha pagadp
+//                         {
+//                             $permiso_impresion .= <<<html
+//                             <div>
+//                                 <span class="badge badge-success" style="background-color: #d2aaf3; color:black "><strong>REGISTRO P/PAGO</strong></span>  
+//                                 <span class="badge badge-success" style="background-color: #ff1d1d; color:white "><strong>NO IMPRIMIR - DIRIGIR A CAJA A PAGAR</strong></span>
+                                
+//                             </div>
+//                             <div>
+//                                  <span class="badge badge-success" style="background-color: #FE0BF3; color:white "><strong>EL USUARIO NO REGISTRO PAGO EN CAJA NI EN SITIO</strong></span>
+//                             </div>
+// html;
+//                         }
+//                         else
+//                         {
+//                             if($value_busca_compra['url_archivo'] == '' && $value_busca_compra['status'] == 0)//Si no ha subido comproabnte decir que no ha subido
+//                             {
+//                                 if($value_busca_compra['url_archivo'] == '' && $value_busca_compra['status'] == 0 && $value_busca_compra['comprado_en'] == 1)//Si no ha subido comproabnte decir que no ha subido
+//                                 {
+//                                     $permiso_impresion .= <<<html
+//                                         <div>
+//                                             <span class="badge badge-success" style="background-color: #0ae9ff; color:white "><strong>REGISTRO P/PAGO</strong></span>  
+//                                             <span class="badge badge-success" style="background-color: #ff1d1d; color:white "><strong>NO IMPRIMIR - NO HA SUBIDO COMPROBANTE DE PAGO DIRIGIR A CAJA A PAGAR</strong></span> 
+//                                         </div>
+// html;
+//                                 }
+//                                 else
+//                                 {
+//                                     if($value_busca_compra['url_archivo'] == '' && $value_busca_compra['status'] == 2 && $value_busca_compra['comprado_en'] == 1)//Si no ha subido comproabnte decir que no ha subido
+//                                     {
+//                                         $permiso_impresion .= <<<html
+//                                         <div>
+//                                             <span class="badge badge-success" style="background-color: #0ae9ff; color:white "><strong>REGISTRO P/PAGO</strong></span>  
+//                                             <span class="badge badge-success" style="background-color: #ff1d1d; color:white "><strong>NO IMPRIMIR - SUBIO MAL SU COMPROBANTE Y SE VOLVIO A SOLICITAR</strong></span> 
+//                                         </div>
+// html;
+//                                     }
+//                                     else
+//                                     {
+//                                         if($value_busca_compra['url_archivo'] == '' && $value_busca_compra['status'] == 1 && $value_busca_compra['comprado_en'] == 2)//Si no ha subido comproabnte decir que no ha subido
+//                                         {
+//                                             $permiso_impresion .= <<<html
+//                                         <div>
+//                                             <span class="badge badge-success" style="background-color: #0ae9ff; color:white "><strong>REGISTRO P/PAGO</strong></span>  
+//                                             <span class="badge badge-success" style="background-color: #0c6300; color:white "><strong>OK IMPRIMIR - SE PAGO EN CAJA</strong></span> 
+//                                         </div>********
+// html;
+//                                         }
+//                                     }
+//                                 }
+//                             }
+//                             else
+//                             {
+//                                 if($value_busca_compra['url_archivo'] != '' && $value_busca_compra['status'] == 1) //yA SUBIO cOMPROBANTE DE PAGO CORRECTO
+//                                 {
+//                                     $permiso_impresion .= <<<html
+//                                     <div>
+//                                         <span class="badge badge-success" style="background-color: #d2aaf3; color:black "><strong>REGISTRO P/PAGO</strong></span>  
+//                                      </div>
+//                                      <div>   
+//                                         <span class="badge badge-success" style="background-color:  #033901; color:white "><strong>OK - HABILITADO PARA IMPRESIÓN DE GAFETE - PAGADO Y VALIDADO POR APM </strong></span>
+//                                     </div>
+// html;
+//                                 }
+//                                 else
+//                                 {
+//                                     if($value_busca_compra['url_archivo'] == '' && $value_busca_compra['status'] == 2) //Si ya subio comprobante pero se volvio a solicitar
+//                                     {
+//                                         $permiso_impresion .= <<<html
+//                                     <div>
+//                                         <span class="badge badge-success" style="background-color: #d2aaf3; color:black "><strong>REGISTRO P/PAGO</strong></span>  
+//                                         <span class="badge badge-success" style="background-color: #ff1d1d; color:white "><strong>NO IMPRIMIR - SUBIO COMPROBANTE DE PAGO ERRONEO, PEDIR COMPROBANTE VALIDO Y DIRIGIR A EVELYN </strong></span>
+//                                     </div>
+// html;
+//                                     }
+//                                     else
+//                                     {
+//                                         if($value_busca_compra['url_archivo'] == '' && $value_busca_compra['status'] == 1) //Si ya subio comprobante pero se volvio a solicitar
+//                                         {
+//                                             $permiso_impresion .= <<<html
+//                                     <div>
+//                                         <span class="badge badge-success" style="background-color: #d2aaf3; color:black "><strong>REGISTRO P/PAGO</strong></span>  
+//                                         <span class="badge badge-success" style="background-color: #033901; color:white "><strong>OK IMPRIMIR - PAGO EN CAJA REGISTRO (SITIO) </strong></span>
+//                                     </div>
+// html;
+//                                         }
+//                                     }
+//                                 }
+//                             }
+//                         }
+//                     }
+
+//                 }
+//                 else
+//                 {
+//                     $permiso_impresion .= <<<html
+//                         <div>
+//                             <span class="badge badge-success" style="background-color: #d2aaf3; color:white "><strong>REGISTRO P/PAGO</strong></span>  
+//                             <span class="badge badge-success" style="background-color: #ff1d1d; color:white "><strong>NO IMPRIMIR - DIRIGIR A CAJA A PAGAR CASO 2 ***</strong></span>
+//                         </div>
+// html;
+//                 }
+//             }
 ////////////////////////////////////////////////////////////////////////////////////////////
-//             
-////////////////////////////////////////////////////////////////////////////////////////////
-        if($value['clave_socio'] == 'socio' || $value['socio'] == 1){
+        if($value['clave_socio'] == 'SOCIO'){
             $sociote .= <<<html
-            <span class="badge" style="background-image: linear-gradient(0deg, #02A7E9, #293A90 70%); color:#FFF !important; ">SOCIO</strong></span>
+            <span class="badge" style="background-image: linear-gradient(0deg, #02A7E9, #293A90 70%); color:#FFF !important; "><strong>{$value['clave_socio']}</strong></span>
 html;
         }else{
             $sociote .= <<<html
-            <span class="badge" style="background-image: linear-gradient(0deg, rgba(234, 6, 6, 0.6), #b80505 50%); color:#FFF !important; "><strong>{$value['clave_socio']}NO ES SOCIO</strong></span>
+            <span class="badge" style="background-image: linear-gradient(0deg, rgba(234, 6, 6, 0.6), #b80505 50%); color:#FFF !important; "><strong>{$value['clave_socio']}</strong></span>
 html;
         }
         
@@ -882,6 +1043,221 @@ html;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+//             foreach (GeneralDao::getBuscarCursos($value['user_id'] ) as $key => $value_cursos_pagados) { //IR A BUSCAR EL ESTATUS DE PAGO DE TODOS LOS PRODUCTOS APM SELECCIONADOS POR EL USUARIO
+                
+
+//                 if($value_cursos_pagados['estatus_compra'] == 'CON ACCESO')
+//                 {
+//                     $color_curso_pago = <<<html
+//                         <span class="badge badge-success"><strong> {$value_cursos_pagados['estatus_compra']} </strong></span>  
+                   
+// html;
+//                 }
+//                 else
+//                 {
+//                     $color_curso_pago = <<<html
+//                           <span class="badge badge-danger"><strong> {$value_cursos_pagados['estatus_compra']} - NO FINALIZO COMPRA</strong></span>  
+
+// html;
+//                 }
+
+//                 if($value_cursos_pagados['tipo_pago'] == '' && $value_cursos_pagados['estatus_pendiente_pago'] == 'PENDIENTE' )
+//                 {
+//                     $tipo_pago =  'En espera de pago';
+//                 }
+//                 else
+//                 {
+//                     $tipo_pago = $value_cursos_pagados['tipo_pago'];
+//                 }
+
+
+//                 if($value_cursos_pagados['id_producto'] == 1)//Si ya esta validado se muestra
+//                 {
+//                     $curso_1 .= <<<html
+//                     <div>
+//                           <span class="badge badge-success" style="background-color: #08D3C0; color:white "><strong>VI CONGRESO MUNDIAL</strong></span>
+//                           <span class="badge badge-success" style="background-color: #eed543; color:black "><strong>{$tipo_pago} </strong></span> 
+//                           {$color_curso_pago}
+
+//                           <!--<button data-toggle="modal" data-target="#modal-constancia-{$value['id_registro_acceso']}" id="btn-constancia-{$value['id_registro_acceso']}" data-id-producto="{$value_cursos_pagados['id_producto']}"
+//                            class="btn bg-pink btn-icon-only morado-musa-text" title="Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Impresa" target="_blank"><i class="fas fa-print"> </i></button>
+
+//                            <button data-toggle="modal" data-target="#modal-constancia-{$value['id_registro_acceso']}" id="btn-constancia-digit-{$value['id_registro_acceso']}" data-id-producto="{$value_cursos_pagados['id_producto']}"
+//                            class="btn bg-turquoise btn-icon-only morado-musa-text" title="Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Digital" target="_blank"><i class="fas fa-print"> </i></button>-->
+
+//                            <a href="/Constancias/abrirConstancia/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-pink btn-icon-only morado-musa-text" title="Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Impresa" target="_blank"><i class="fas fa-print"> </i></a>
+//                            <a href="/Constancias/abrirConstanciaDigital/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-turquoise btn-icon-only morado-musa-text" title="Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Digital" target="_blank"><i class="fas fa-print"> </i></a>
+                        
+                        
+// html;
+//                 }
+
+//                 if($value_cursos_pagados['id_producto'] == 2)//NEUROBIOLOGIA DE LAS ADDCIONES
+//                 {
+//                     $curso_2 .= <<<html
+//                     <div>
+//                           <span class="badge badge-success" style="background-color: #0d6c57; color:white "><strong>I NEURO ADICCION</strong></span>
+//                           <span class="badge badge-success" style="background-color: #eed543; color:black "><strong>{$tipo_pago} </strong></span> 
+//                           {$color_curso_pago}
+//                           <a href="/Constancias/abrirConstancia/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-pink btn-icon-only morado-musa-text" title="Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Impresa" target="_blank"><i class="fas fa-print"> </i></a>
+                          
+//                           <a href="/Constancias/abrirConstanciaDigital/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-turquoise btn-icon-only morado-musa-text" title="Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Digital" target="_blank"><i class="fas fa-print"> </i></a>
+//                     </div>
+// html;
+//                 }
+
+//                 if($value_cursos_pagados['id_producto'] == 3)//SUEÑO Y SUSTANCIAS
+//                 {
+//                     $curso_3 .= <<<html
+//                     <div>
+//                           <span class="badge badge-success" style="background-color: #0d6c57; color:white "><strong>II SUEÑO Y SUSTANCIAS</strong></span>
+//                           <span class="badge badge-success" style="background-color: #eed543; color:black "><strong>{$tipo_pago} </strong></span> 
+//                           {$color_curso_pago}
+
+//                           <a href="/Constancias/abrirConstancia/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-pink btn-icon-only morado-musa-text" title="Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Impresa" target="_blank"><i class="fas fa-print"> </i></a>
+                          
+//                           <a href="/Constancias/abrirConstanciaDigital/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-turquoise btn-icon-only morado-musa-text" title="Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Digital" target="_blank"><i class="fas fa-print"> </i></a>
+//                     </div>
+// html;
+//                 }
+
+//                 if($value_cursos_pagados['id_producto'] == 4)//CACTERIZACION DE LOS ENDOFENOTIPOS
+//                 {
+//                     $curso_4 .= <<<html
+//                     <div>
+//                           <span class="badge badge-success" style="background-color: #0d6c57; color:white "><strong>III CARACTE ENDOFENOTIP</strong></span>
+//                           <span class="badge badge-success" style="background-color: #eed543; color:black "><strong>{$tipo_pago} </strong></span> 
+//                           {$color_curso_pago}
+
+//                           <a href="/Constancias/abrirConstancia/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-pink btn-icon-only morado-musa-text" title="Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Impresa" target="_blank"><i class="fas fa-print"> </i></a>
+                          
+//                           <a href="/Constancias/abrirConstanciaDigital/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-turquoise btn-icon-only morado-musa-text" title="Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Digital" target="_blank"><i class="fas fa-print"> </i></a>
+//                     </div>
+// html;
+//                 }
+
+//                 if($value_cursos_pagados['id_producto'] == 5)//TRASTORNO POR CONSUMO
+//                 {
+//                     $curso_5 .= <<<html
+//                     <div>
+//                           <span class="badge badge-success" style="background-color: #0d6c57; color:white "><strong>IV TRSTORN POR CONSUMO</strong></span>
+//                           <span class="badge badge-success" style="background-color: #eed543; color:black "><strong>{$tipo_pago} </strong></span> 
+//                           {$color_curso_pago}
+
+//                           <a href="/Constancias/abrirConstancia/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-pink btn-icon-only morado-musa-text" title="Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Impresa" target="_blank"><i class="fas fa-print"> </i></a>
+                          
+//                           <a href="/Constancias/abrirConstanciaDigital/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-turquoise btn-icon-only morado-musa-text" title="Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Digital" target="_blank"><i class="fas fa-print"> </i></a>
+//                     </div>
+// html;
+//                 }
+
+//                 if($value_cursos_pagados['id_producto'] == 6)//CONUSMO DE SUSTANCIAS POR SECUELAS EFECTIVAs
+//                 {
+//                     $curso_6 .= <<<html
+//                     <div>
+//                           <span class="badge badge-success" style="background-color: #0d6c57; color:white "><strong>V CONSUMO DE SUSTANCIAS</strong></span>
+//                           <span class="badge badge-success" style="background-color: #eed543; color:black "><strong>{$tipo_pago} </strong></span> 
+//                           {$color_curso_pago}
+
+//                           <a href="/Constancias/abrirConstancia/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-pink btn-icon-only morado-musa-text" title="Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Impresa" target="_blank"><i class="fas fa-print"> </i></a>
+                          
+//                           <a href="/Constancias/abrirConstanciaDigital/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-turquoise btn-icon-only morado-musa-text" title="Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Digital" target="_blank"><i class="fas fa-print"> </i></a>
+//                     </div>
+// html;
+//                 }
+
+//                 if($value_cursos_pagados['id_producto'] == 7)//VIOLENCIA DE GENERO Y PATOLOGIA DUAL
+//                 {
+//                     $curso_7 .= <<<html
+//                     <div>
+//                           <span class="badge badge-success" style="background-color: #0d6c57; color:white "><strong>VI VIOLENCIA DE GENERO</strong></span>
+//                           <span class="badge badge-success" style="background-color: #eed543; color:black "><strong>{$tipo_pago} </strong></span> 
+//                           {$color_curso_pago}
+
+//                           <a href="/Constancias/abrirConstancia/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-pink btn-icon-only morado-musa-text" title="Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Impresa" target="_blank"><i class="fas fa-print"> </i></a>
+                          
+//                           <a href="/Constancias/abrirConstanciaDigital/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-turquoise btn-icon-only morado-musa-text" title="Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Digital" target="_blank"><i class="fas fa-print"> </i></a>
+//                     </div>
+// html;
+//                 }
+
+//                 if($value_cursos_pagados['id_producto'] == 8)//ADICCIONES EN PSICOGERIATRIA
+//                 {
+//                     $curso_8 .= <<<html
+//                     <div>
+//                           <span class="badge badge-success" style="background-color: #0d6c57; color:white "><strong>VII ADICCIONES PSICOGERIATRÍA</strong></span>
+//                           <span class="badge badge-success" style="background-color: #eed543; color:black "><strong>{$tipo_pago} </strong></span> 
+//                           {$color_curso_pago}
+
+//                           <a href="/Constancias/abrirConstancia/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-pink btn-icon-only morado-musa-text" title="Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Impresa" target="_blank"><i class="fas fa-print"> </i></a>
+                          
+//                           <a href="/Constancias/abrirConstanciaDigital/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-turquoise btn-icon-only morado-musa-text" title="Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Digital" target="_blank"><i class="fas fa-print"> </i></a>
+//                     </div>
+// html;
+//                 }
+
+//                 if($value_cursos_pagados['id_producto'] == 9)//CLARO OBSCURO DEL USO DE LA MARIHUANA
+//                 {
+//                     $curso_9 .= <<<html
+//                     <div>
+//                           <span class="badge badge-success" style="background-color: #0d6c57; color:white "><strong>VIII CLARO/OBSCURO</strong></span>
+//                           <span class="badge badge-success" style="background-color: #eed543; color:black "><strong>{$tipo_pago} </strong></span> 
+//                           {$color_curso_pago}
+
+//                           <a href="/Constancias/abrirConstancia/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-pink btn-icon-only morado-musa-text" title="Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Impresa" target="_blank"><i class="fas fa-print"> </i></a>
+                          
+//                           <a href="/Constancias/abrirConstanciaDigital/{$value['clave']}/{$value_cursos_pagados['id_producto']}" class="btn bg-turquoise btn-icon-only morado-musa-text" title="Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Digital" target="_blank"><i class="fas fa-print"> </i></a>
+//                     </div>
+// html;
+//                 }
+
+
+//             }
+
+
+//             if($value['scholarship'] != '')
+//             {
+//                 if($value['clave_socio'] != '')
+//                 {
+//                     $tipo_user .= <<<html
+//                     <span class="badge badge-success" style="background-color:  #149777; color:white "><strong>Beca #{$value['scholarship']} </strong></span> 
+//                     <span class="badge badge-success" style="background-color:  #1F86E9; color:white "><strong>Es Socio APM </strong></span>  
+// html;
+//                 }
+//                 else
+//                 {
+//                     $tipo_user .= <<<html
+//                     <span class="badge badge-success" style="background-color:  #149777; color:white "><strong>Beca #{$value['scholarship']} </strong></span> 
+//                     <span class="badge badge-success" style="background-color:  #B49C21; color:white "><strong>No Socio APM </strong></span>  
+// html;
+//                 }
+
+//                 foreach (GeneralDao::getBecas($value['scholarship']) as $key => $value_beca) {
+
+//                     if($value_beca['nombrecompleto'] != '')
+//                     {
+//                         $industria .= <<<html
+//                     <h6 class="mb-0 text-sm text-black"><span class="fas fa-building" style="font-size: 13px"></span> Becado por: {$value_beca['nombrecompleto']} </h6>   
+// html;
+//                     }
+//                 }
+//             }
+//             else
+//             {
+//                 if($value['clave_socio'] != '')
+//                 {
+//                     $tipo_user .= <<<html
+//                     <span class="badge badge-success" style="background-color:  #1F86E9; color:white "><strong>Es Socio APM </strong></span>  
+// html;
+//                 }
+//                 else
+//                 {
+//                     $tipo_user .= <<<html
+//                     <span class="badge badge-success" style="background-color:  #B49C21; color:white "><strong>No Socio APM </strong></span>  
+// html;
+//                 }
+//             }
+
 
             if (empty($value['img']) || $value['img'] == null) {
                 $img_user = "/img/user.png";
@@ -904,15 +1280,6 @@ html;
            
             $html .= <<<html
             <tr>
-                <td style="text-align:center; vertical-align:middle;">
-                    {$incremento}
-                </td>
-                <td style="text-align:center; vertical-align:middle;">
-                    {$incremento}
-                </td>
-                <td style="text-align:center; vertical-align:middle;">
-                    {$incremento}
-                </td>
                 <td>
                     <div class="d-flex px-3 py-3">
                         <div>
@@ -935,7 +1302,8 @@ html;
                             <div class="d-flex flex-column justify-content-center">
                                 <a href="/Asistentes/Detalles/{$value['user_id']}" target="_blank">
                                     <h6 class="mb-0 text-sm text-move text-black">
-                                        <span class="fa fa-user-md" style="font-size: 13px"></span> {$nombre_completo} </span> {$value['nombre_ejecutivo']} {$tipo_user}{$clave_socio}{$clave_beca}
+                                        <span class="fa fa-user-md" style="font-size: 13px"></span> {$nombre_completo} </span> {$value['nombre_ejecutivo']} {$tipo_user}{$clave_socio}{$clave_beca}                  
+                                        {$industria}
                                     </h6>
                                 </a>
                             </div>
@@ -959,6 +1327,43 @@ html;
                     </div>
                 </td>
                 {$gafetes_httml}
+                <!--<td>
+                    <div class="d-flex px-1 py-1">
+                        <div class="d-flex flex-column justify-content-center text-black">
+                            <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm text-black"><span class="fas fa-dollar-sign" style="font-size: 13px"></span> {$value['amout_due']} DLRS </h6>
+                            <hr>
+                            <div>
+                                {$curso_1}
+                            </div>
+                            <div>
+                                {$curso_2}
+                            </div>
+                            <div>
+                                {$curso_3}
+                            </div>
+                            <div>
+                                {$curso_4}
+                            </div>
+                            <div>
+                                {$curso_5}
+                            </div>
+                            <div>
+                                {$curso_6}
+                            </div>
+                            <div>
+                                {$curso_7}
+                            </div>
+                            <div>
+                                {$curso_8}
+                            </div>
+                            <div>
+                                {$curso_9}
+                            </div>
+                            
+                        </div>
+                    </div>
+                </td>-->
             </tr>
 html;
         }

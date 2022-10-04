@@ -457,6 +457,9 @@ html;
  
 html;
     }
+    foreach ($datos_socios as $key => $value){
+      $total_socios = $total_socios + 1;
+    }
 
     $tabla_caja = '';
     $datos_caja = EstadisticasDao::getTodos();
@@ -556,7 +559,7 @@ html;
     $tabla_estudiante = '';
     $datos_estudiante = EstadisticasDao::getTodosEstudiantes();
     $numero_estudiante = 0;
-    $total_pesos = 0;
+    $total_estudiantes = 0;
     
     foreach ($datos_estudiante as $key => $value) {
       $comprobante = '';
@@ -629,7 +632,7 @@ html;
     }
 
     foreach ($datos_estudiante as $key => $value){
-      $total_pesos = $total_pesos + 1;
+      $total_estudiantes = $total_estudiantes + 1;
     }
 
     if($_SESSION['perfil'] == 2){
@@ -638,6 +641,7 @@ html;
       View::set('asideMenu',$this->_contenedor->asideMenu());
     }
       View::set('total_pesos',$total_pesos);
+      View::set('total_estudiantes',$total_estudiantes);
       View::set('total_consta',$total_consta);
       View::set('total_gafetes',$total_gafetes);
       View::set('numero_caja',$numero_caja);
@@ -849,28 +853,4 @@ html;
 
       echo json_encode($data);
     }
-
-    public function getCajaAll(){
-      
-      $total = 0;
-      $getData = EstadisticasDao::getDataCajaAll();
-
-      if(count($getData) > 0){
-        foreach($getData as $key => $value){
-          $total += $value['total_pesos'];
-        }
-      }else{
-        $total = 0;
-      }
-
-      $data  = [
-        'data' => $getData,
-        'count' => count($getData),
-        'total' => number_format($total,2)
-      ];
-
-      echo json_encode($data);
-    }
-
-
 }
