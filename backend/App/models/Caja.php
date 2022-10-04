@@ -175,6 +175,14 @@ sql;
         return $mysqli->queryOne($query);
       }
 
+      public static function getTransaccion($id_transaccion){
+        $mysqli = Database::getInstance(true);
+        $query=<<<sql
+        SELECT * FROM transaccion_compra WHERE id_transaccion_compra = $id_transaccion
+sql;
+        return $mysqli->queryOne($query);
+      }
+
     public static function getByIdDirectivos($id){
         $mysqli = Database::getInstance();
         $query=<<<sql

@@ -59,15 +59,20 @@
 
                                 </div>
                             </div>
-                            <div class="col-auto my-auto">
+                            <div class="col-md-6 my-auto">
                                 <div class="h-100">
                                     <h5 class="mb-0">
                                         CAJA
                                     </h5>
                                     <h6><b><?php echo $nombre; ?></b></h6>
                                     <p class="mb-0 font-weight-bold text-sm">
+                                        
                                     </p>
                                 </div>
+                            </div>
+
+                            <div class="col-md-4 d-flex justify-content-end">
+                                <a href="/ComprobantesCaja/comprobantes" target="blank_" class="btn bg-gradient-pink" style="color: white;"> Ver comprobantes</a>
                             </div>
 
 
