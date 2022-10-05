@@ -638,9 +638,9 @@
                 var total_dolares = $("#total_dolares").text();
                 var total_pesos = $("#total_pesos").text();
                 var descripcion = $("#txt_descripcion").val();
-                console.log(user_id);
+                console.log(tipo_moneda);
 
-
+                
 
                 if (metodo_pago != '') {
                     Swal.fire({
@@ -1390,7 +1390,7 @@
                 var total_pagar = $("#txt_pago").val();
                 var cambio = 0;
                 if (total_pagar >= sumaPrecios) {
-                    $("#btn_pagar").removeAttr('disabled');
+                    // $("#btn_pagar").removeAttr('disabled');
                     cambio = total_pagar - sumaPrecios;
                     $("#total_cambio").html(cambio);
                     $("#total_cambio_formato").html(format2(cambio, ''));

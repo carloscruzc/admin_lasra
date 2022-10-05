@@ -374,6 +374,7 @@ html;
                     $data_pendiente->_user_id = $user_id;
                     $data_pendiente->_id_producto = $value['id_product'];
                     $data_pendiente->_reference = $referencia;
+                    $data_pendiente->_tipo_moneda = $tipo_moneda;
                     $data_pendiente->_clave = $clave;
                     $data_pendiente->_monto = $value['precio'];
                     $data_pendiente->_tipo_pago = $metodo_pago;
