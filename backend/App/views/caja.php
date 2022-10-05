@@ -330,7 +330,7 @@
 
     <!-- modal seleccionar talleres -->
     <div class="modal fade" id="modal_talleres" role="dialog" aria-labelledby="" aria-hidden="" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <!-- <div class="modal fade" id="modal_talleres" role="dialog" aria-labelledby="" aria-hidden="" aria-hidden="true"> -->
+        <!-- <div class="modal fade" id="modal_talleres" role="dialog" aria-labelledby="" aria-hidden="" aria-hidden="true"> -->
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -455,6 +455,8 @@
         }
 
 
+
+
         function borrarRegister(dato) {
             // alert(dato);
             $.ajax({
@@ -493,6 +495,8 @@
 
             // getCombo(625);
 
+
+
             function seleccionarTalleres(user_id) {
                 getCombo(user_id);
             }
@@ -519,6 +523,8 @@
                             $("#nombre_user").text(respuesta.nombre_user);
                             $("#clave_combo").val(respuesta.clave);
                             getTalleres(user_id);
+                        } else {
+                            location.reload();
                         }
 
                     },
@@ -669,14 +675,21 @@
 
                                     if (respuesta == 'success') {
 
-                                        getCombo(user_id);
                                         $('#imprimir_comprobante')[0].click();
-                                        Swal.fire('Pago generado correctamente.', '', 'success').then(() => {
+
+                                        Swal.fire({
+                                            icon: "success",
+                                            title: "Info",
+                                            text: "Pago generado correctamente.",
+                                            closeOnClickOutside: false,
+                                            closeOnEsc: false,
+                                            allowOutsideClick: false
+                                        }).then(() => {
                                             // $('#generar_gafete')[0].click();
-                                            setTimeout(function() {
-                                                // location.reload();
-                                            }, 1000);
+                                            getCombo(user_id);
+
                                         });
+                                       
 
                                     }
                                 },
@@ -866,7 +879,7 @@
                         }
                     },
                     error: function(respuesta) {
-                        Swal.fire('No se encontro ningun registro para este codigo', '', 'error');
+                        Swal.fire('No se encontro ningun registro', '', 'info');
                         // setTimeout(function(){
                         //     location.reload();
                         // },1000)
