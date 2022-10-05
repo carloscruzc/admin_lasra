@@ -122,79 +122,98 @@ html;
         $array_precios = [];
         $array_productos = [];
 
-        $productos_pendientes_comprados = CajaDao::getProductosPendComprados($user_id);
+        //         $productos_pendientes_comprados = CajaDao::getProductosPendComprados($user_id);
 
-        foreach ($productos_pendientes_comprados as $key => $value) {
-            $disabled = '';
-            $checked = '';
-            $pend_validar = '';
+        //         foreach ($productos_pendientes_comprados as $key => $value) {
+        //             $disabled = '';
+        //             $checked = '';
+        //             $pend_validar = '';
 
-            $precio = $value['monto'];
+        //             $precio = $value['monto'];
 
-            $count_producto = CajaDao::getCountProductos($user_id, $value['id_producto'])[0];
-
-
-
-            if ($value['estatus_compra'] == 1) {
-                $disabled = 'disabled';
-                $checked = 'checked';
-                $pend_validar = 'Pagado y validado por AMH';
-                // $btn_imp = '';
-                // $productos_pendientes_comprados[0]['clave'].'" target="blank_">Imprimir Formato de Pago</a>';
-                // $ocultar = 'display:none;';
-
-            } else if ($value['estatus_compra'] == null) {
-                $pend_validar = 'Pendiente de Pagar';
-                // $btn_imp = '<a class="btn btn-primary" href="/Home/print/'.$productos_pendientes_comprados[0]['clave'].'" target="blank_">Imprimir Formato de Pago</a>';
-                // $ocultar = '';
-                // $disabled = 'disabled';
-                $checked = 'checked';
-                $total_productos += $count_producto['numero_productos'];
-                $total_pago += $count_producto['numero_productos'] * $precio;
-                array_push($array_precios, ['id_product' => $value['id_producto'], 'precio' => $precio, 'cantidad' => $count_producto['numero_productos']]);
-                array_push($array_productos, ['id_product' => $value['id_producto'], 'precio' => $precio, 'cantidad' => $count_producto['numero_productos'], 'nombre_producto' => $value['nombre_producto']]);
-
-                if ($value['max_compra'] <= 1) {
-                    $numero_productos = '<input type="number" id="numero_articulos' . $value['id_producto'] . '" name="numero_articulos" value="' . $value['max_compra'] . '" style="border:none;" readonly>';
-                } else {
-                    $numero_productos = '<select class="form-control select_numero_articulos" id="numero_articulos' . $value['id_producto'] . '" name="numero_articulos" data-id-producto="' . $value['id_producto'] . '" data-precio="' . $precio . '" data-nombre-producto="' . $value['nombre_producto'] . '" ' . $disabled . '>';
-                    for ($i = 1; $i <= $value['max_compra']; $i++) {
-                        $numero_productos .= '<option value="' . $i . '">' . $i . '</option>';
-                    }
-                    $numero_productos .= '</select>';
-                }
+        //             $count_producto = CajaDao::getCountProductos($user_id, $value['id_producto'])[0];
 
 
-                $checks .= <<<html
-    
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="form-check">
-                            <input class="form-check-input checks_product" type="checkbox" value="{$value['id_producto']}" id="check_curso_{$value['id_producto']}" name="checks_cursos[]" {$disabled} {$checked} data-precio="{$precio}" data-nombre-producto="{$value['nombre_producto']}">
-                            <label class="form-check-label" for="check_curso_{$value['id_producto']}">
-                                {$value['nombre_producto']} <span style="font-size: 13px; text-decoration: underline; color: green;">{$pend_validar}</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-2">
-                    <button class="btn btn-sm btn-primary btn_desbloquear_precio" id="btn_desbloquear_precio{$value['id_producto']}" data-id-producto = {$value['id_producto']}>desbloquear precio</button>
 
-                    <input type="number" class="precio_articulo" id="precio_articulo{$value['id_producto']}" name="precio_articulo[]" value="{$precio}" style="border:none;" readonly data-id-producto="{$value['id_producto']}"  data-precio="{$precio}" data-nombre-producto="{$value['nombre_producto']}"> - {$value['tipo_moneda']}
-                        
-                    </div>
-    
-                    <div class="col-md-2">
-                        {$numero_productos}
-                    </div>
-                </div>
-    
-                <hr>
-html;
-                $numero_productos = '';
+        //             if ($value['estatus_compra'] == 1) {
+        //                 $disabled = 'disabled';
+        //                 $checked = 'checked';
+        //                 $pend_validar = 'Pagado y validado por LASRA';
+        //                 // $btn_imp = '';
+        //                 // $productos_pendientes_comprados[0]['clave'].'" target="blank_">Imprimir Formato de Pago</a>';
+        //                 // $ocultar = 'display:none;';
+
+        //             } else if ($value['estatus_compra'] == null) {
+        //                 $pend_validar = 'Pendiente de Pagar';
+        //                 // $btn_imp = '<a class="btn btn-primary" href="/Home/print/'.$productos_pendientes_comprados[0]['clave'].'" target="blank_">Imprimir Formato de Pago</a>';
+        //                 // $ocultar = '';
+        //                 // $disabled = 'disabled';
+        //                 $checked = 'checked';
+        //                 $total_productos += $count_producto['numero_productos'];
+        //                 $total_pago += $count_producto['numero_productos'] * $precio;
+        //                 array_push($array_precios, ['id_product' => $value['id_producto'], 'precio' => $precio, 'cantidad' => $count_producto['numero_productos']]);
+        //                 array_push($array_productos, ['id_product' => $value['id_producto'], 'precio' => $precio, 'cantidad' => $count_producto['numero_productos'], 'nombre_producto' => $value['nombre_producto']]);
+
+        //                 if ($value['max_compra'] <= 1) {
+        //                     $numero_productos = '<input type="number" id="numero_articulos' . $value['id_producto'] . '" name="numero_articulos" value="' . $value['max_compra'] . '" style="border:none;" readonly>';
+        //                 } else {
+        //                     $numero_productos = '<select class="form-control select_numero_articulos" id="numero_articulos' . $value['id_producto'] . '" name="numero_articulos" data-id-producto="' . $value['id_producto'] . '" data-precio="' . $precio . '" data-nombre-producto="' . $value['nombre_producto'] . '" ' . $disabled . '>';
+        //                     for ($i = 1; $i <= $value['max_compra']; $i++) {
+        //                         $numero_productos .= '<option value="' . $i . '">' . $i . '</option>';
+        //                     }
+        //                     $numero_productos .= '</select>';
+        //                 }
+
+
+        //                 $checks .= <<<html
+
+        //                 <div class="row">
+        //                     <div class="col-md-8">
+        //                         <div class="form-check">
+        //                             <input class="form-check-input checks_product" type="checkbox" value="{$value['id_producto']}" id="check_curso_{$value['id_producto']}" name="checks_cursos[]" {$disabled} {$checked} data-precio="{$precio}" data-nombre-producto="{$value['nombre_producto']}">
+        //                             <label class="form-check-label" for="check_curso_{$value['id_producto']}">
+        //                                 {$value['nombre_producto']} <span style="font-size: 13px; text-decoration: underline; color: green;">{$pend_validar}</span>
+        //                             </label>
+        //                         </div>
+        //                     </div>
+
+        //                     <div class="col-md-2">
+        //                     <button class="btn btn-sm btn-primary btn_desbloquear_precio" id="btn_desbloquear_precio{$value['id_producto']}" data-id-producto = {$value['id_producto']}>desbloquear precio</button>
+
+        //                     <input type="number" class="precio_articulo" id="precio_articulo{$value['id_producto']}" name="precio_articulo[]" value="{$precio}" style="border:none;" readonly data-id-producto="{$value['id_producto']}"  data-precio="{$precio}" data-nombre-producto="{$value['nombre_producto']}"> - {$value['tipo_moneda']}
+
+        //                     </div>
+
+        //                     <div class="col-md-2">
+        //                         {$numero_productos}
+        //                     </div>
+        //                 </div>
+
+        //                 <hr>
+        // html;
+        //                 $numero_productos = '';
+        //             }
+        //         }
+
+        $getCombo = CajaDao::getCombo($user_id);
+        $hay_combo = '';
+        // $dataUser = CajaDao::getDataUser($user_id);
+
+        foreach ($getCombo as $key => $value) {
+            if ($value['id_producto'] == 38 || $value['id_producto'] == 41) {                
+                $hay_combo = true;
+                break;
+            } else if ($value['id_producto'] == 37 || $value['id_producto'] == 40) {
+                $hay_combo = true;
+                break;
+            } else if ($value['id_producto'] == 36 || $value['id_producto'] == 39) {
+                $hay_combo = true;
+                break;
             }
         }
 
+
+        //productos que no se han comprado
         $productos_no_comprados = CajaDao::getProductosNoComprados($user_id);
 
 
@@ -218,6 +237,12 @@ html;
                 $numero_productos .= '</select>';
             }
 
+            if($value['tipo'] == "COMBO" && $hay_combo){
+                $check_disabled = 'disabled';
+            }else{
+                $check_disabled = '';
+            }
+
 
             $checks .= <<<html
 
@@ -232,9 +257,9 @@ html;
                  </div>
                
                  <div class="col-md-2">
-                 <button class="btn btn-sm btn-primary btn_desbloquear_precio" id="btn_desbloquear_precio{$value['id_producto']}" data-id-producto = {$value['id_producto']}>desbloquear precio</button>
+                 <button class="btn btn-sm btn-primary btn_desbloquear_precio" id="btn_desbloquear_precio{$value['id_producto']}" data-id-producto = {$value['id_producto']} {$check_disabled}>desbloquear precio</button>
 
-                 <input type="number" class="precio_articulo precio_articulo_general" id="precio_articulo{$value['id_producto']}" name="precio_articulo[]" value="{$precio}" style="border:none;"  data-id-producto="{$value['id_producto']}"  data-precio="{$precio}" data-precio-usd="{$value['precio_publico_usd']}" data-precio-socio="{$value['precio_socio']}" data-precio-socio-usd="{$value['precio_socio_usd']}" data-nombre-producto="{$value['nombre_producto']}"> - {$value['tipo_moneda']}
+                 <input type="number" class="precio_articulo precio_articulo_general" id="precio_articulo{$value['id_producto']}" name="precio_articulo[]" value="{$precio}" style="border:none;"  data-id-producto="{$value['id_producto']}"  data-precio="{$precio}" data-precio-usd="{$value['precio_publico_usd']}" data-precio-socio="{$value['precio_socio']}" data-precio-socio-usd="{$value['precio_socio_usd']}" data-nombre-producto="{$value['nombre_producto']}" {$check_disabled}> - {$value['tipo_moneda']}
                  </div>
 
                  <div class="col-md-2">
@@ -565,7 +590,7 @@ html;
                 $fecha = '';
             }
 
-           
+
             $checks .= <<<html
             <div id="cont_check_t{$value['id_producto']}">
                 <div class="row">
