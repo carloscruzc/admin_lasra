@@ -257,6 +257,21 @@ sql;
         
     }
 
+    public static function getInfoSolicitado($user_id,$clave){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT pp.id_pendiente_pago,pp.user_id, CONCAT(re.nombre," ",re.apellidop," ",re.apellidom) as nombre, 
+      re.usuario, pr.nombre as nombre_producto, pp.id_producto,pp.tipo_pago, pp.fecha
+      FROM pendiente_pago pp
+      INNER JOIN utilerias_administradores re ON re.user_id = pp.user_id
+      INNER JOIN productos pr ON pr.id_producto = pp.id_producto
+      WHERE pp.url_archivo != 'Registro_Becado' AND pp.status != 1
+      AND pp.user_id = '$user_id' AND pp.clave = '$clave'
+sql;
+      return $mysqli->queryOne($query);
+        
+    }
+
     public static function getSolicitadoEstudiante($user_id,$id_pendiente_estudiante){
       $mysqli = Database::getInstance();
       $query=<<<sql
@@ -264,7 +279,7 @@ sql;
       FROM pendiente_estudiante pp
       INNER JOIN utilerias_administradores re ON re.user_id = pp.user_id
       WHERE pp.url_archivo != 'Registro_Becado' AND pp.status != 1
-      AND pp.user_id = $user_id AND pp.id_pendiente_pago = $id_pendiente_estudiante;
+      AND pp.user_id = $user_id AND pp.id_pendiente_estudiante = $id_pendiente_estudiante;
 sql;
       return $mysqli->queryOne($query);
         

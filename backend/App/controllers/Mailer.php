@@ -147,6 +147,121 @@ class Mailer
         }
     }
 
+    public function mailerConfirmacionPago($user_id,$clave)
+    {
+        $mail = new PHPMailer(true);
+        // $user_id = $_POST['user_id'];
+        // $id_pendiente_pago = $_POST['id_pendiente_pago'];
+
+        $msg = EstadisticasDao::getInfoSolicitado($user_id,$clave);
+
+
+        try {
+            //Server settings
+            $mail->SMTPDebug = 0;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'congresolasra2022@gmail.com';                     //SMTP username contacto@convencionasofarma2022.mx
+            $mail->Password   = 'sdmjrudqybyyctdq';                               //SMTP password
+            // $mail->Password   = '/*/*xx05yrL07';                               //SMTP password
+            $mail->SMTPSecure = 'ssl';
+            $mail->SMTPAutoTLS = false;            //Enable implicit TLS encryption
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+            //Recipients
+            $mail->setFrom($msg['usuario'], 'LASRA 2022');
+            $mail->addAddress($msg['usuario'], $msg['nombre']);     //Add a recipient
+
+
+            $html = '     
+    <!DOCTYPE html>
+        <html lang="es">
+
+        <!-- Define Charset -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- Responsive Meta Tag -->
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+        
+        <link rel="apple-touch-icon" sizes="76x76" href="../../../assets/img/aso_icon.png">
+        <link rel="icon" type="image/vnd.microsoft.icon" href="../../../assets/img/aso_icon.png">
+
+        <title>Email Template</title>
+
+        <!-- Responsive and Valid Styles -->
+        <style type="text/css">
+            body {
+                width: 100%;
+                background-color: #FFF;
+                margin: 0;
+                padding: 0;
+                -webkit-font-smoothing: antialiased;
+                font-family: arial;
+            }
+
+            html {
+                width: 100%;
+            }
+            .container{
+                width: 80%;
+                padding: 20px;
+                margin: 0 auto;
+                
+            }
+
+            img{
+                width: 100%;
+            }
+
+            .code-v{
+                background: yellow;
+            }
+
+        
+        </style>
+
+        </head>
+
+        <body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
+            
+            <div class="container">
+                <!--<img src="https://registro.foromusa.com/img/musa-01.png" alt="">-->
+                <br>
+                <p>
+                    Hola, <b>'.$msg['nombre'].'</b>
+                </p>
+                <br>
+                <p>
+                Le informamos que su comprobante de pago ha sido aceptado, para corroborar la información favor de ingresar a la plataforma en el siguiente enlace,
+                <a href="https://registro.lasra-mexico.org">
+                https://registro.lasra-mexico.org
+                </a>
+                </p>                
+               
+                <!--<img src="#" alt="firma">-->
+                
+            </div>
+            
+                
+        </body>
+
+</html>';
+
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = 'AVISO, COMPROBANTE LASRA 2022.';
+            $mail->Body    = $html;
+            $mail->CharSet = 'UTF-8';
+
+            $mail->send();
+           //echo 'El mensaje ha sido enviado';
+        } catch (Exception $e) {
+           //echo "No se pudo enviar el email: {$mail->ErrorInfo}";
+        }
+    }
+
     public function mailerEstudiante()
     {
         $mail = new PHPMailer(true);
@@ -251,6 +366,124 @@ class Mailer
                 que tenga un excelente día, estamos a sus ordenes.
                 </p>
                 <!--<img src="https://registro.foromusa.com/img/musa-01.png" alt="firma">-->
+
+                    
+                
+            </div>
+            
+                
+        </body>
+
+</html>';
+
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = 'AVISO COMPROBANTE RESIDENTE LASRA 2022.';
+            $mail->Body    = $html;
+            $mail->CharSet = 'UTF-8';
+
+            $mail->send();
+           //echo 'El mensaje ha sido enviado';
+        } catch (Exception $e) {
+           //echo "No se pudo enviar el email: {$mail->ErrorInfo}";
+        }
+    }
+
+    public function mailerEstudianteLiberacion($user_id,$id_pendiente_estudiante)
+    {
+        $mail = new PHPMailer(true);
+        // $user_id = $_POST['user_id'];
+        // $id_pendiente_estudiante = $_POST['id_pendiente_estudiante'];
+
+        $msg = EstadisticasDao::getSolicitadoEstudiante($user_id,$id_pendiente_estudiante);
+
+
+        try {
+            //Server settings
+            $mail->SMTPDebug = 0;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'congresolasra2022@gmail.com';                     //SMTP username contacto@convencionasofarma2022.mx
+            $mail->Password   = 'sdmjrudqybyyctdq';                               //SMTP password
+            // $mail->Password   = '/*/*xx05yrL07';                               //SMTP password
+            $mail->SMTPSecure = 'ssl';
+            $mail->SMTPAutoTLS = false;            //Enable implicit TLS encryption
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+            //Recipients
+            $mail->setFrom($msg['usuario'], 'LASRA 2022');
+            $mail->addAddress($msg['usuario'], $msg['nombre']);     //Add a recipient
+
+
+            $html = '     
+    <!DOCTYPE html>
+        <html lang="es">
+
+        <!-- Define Charset -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- Responsive Meta Tag -->
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+        
+        <link rel="apple-touch-icon" sizes="76x76" href="../../../assets/img/aso_icon.png">
+        <link rel="icon" type="image/vnd.microsoft.icon" href="../../../assets/img/aso_icon.png">
+
+        <title>Email Template</title>
+
+        <!-- Responsive and Valid Styles -->
+        <style type="text/css">
+            body {
+                width: 100%;
+                background-color: #FFF;
+                margin: 0;
+                padding: 0;
+                -webkit-font-smoothing: antialiased;
+                font-family: arial;
+            }
+
+            html {
+                width: 100%;
+            }
+            .container{
+                width: 80%;
+                padding: 20px;
+                margin: 0 auto;
+                
+            }
+
+            img{
+                width: 100%;
+            }
+
+            .code-v{
+                background: yellow;
+            }
+
+        
+        </style>
+
+        </head>
+
+        <body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
+            
+            <div class="container">
+                <!--<img src="https://registro.foromusa.com/img/musa-01.png" alt="">-->
+                <br>
+                <p>
+                    Hola, <b>'.$msg['nombre'].'</b>
+                </p>
+                <br>
+                <p>
+                Le informamos que su comprobante de residente ha sido aceptado, para corroborar la información favor de ingresar a la plataforma en el siguiente enlace,
+                <a href="https://registro.lasra-mexico.org">
+                https://registro.lasra-mexico.org
+                </a>
+                </p>
+               
+                
+                <!--<img src="#" alt="firma">-->
 
                     
                 

@@ -52,7 +52,7 @@ html;
     // $configuracionHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_configuracion", 1) == 0) ? "style=\"display:none;\"" : "";
     // $utileriasHidden = (Controller::getPermisosUsuario($this->__usuario, "seccion_utilerias", 1) == 0) ? "style=\"display:none;\"" : "";
 
-$extraFooter =<<<html
+    $extraFooter = <<<html
       <script>
         $(document).ready(function(){
 
@@ -335,31 +335,31 @@ html;
     $datos = EstadisticasDao::getPendientes();
     $numero_gafete = 0;
     $total_gafetes = 0;
-    
+
     foreach ($datos as $key => $value) {
 
-      if($value['tipo_pago'] != ''){
+      if ($value['tipo_pago'] != '') {
         $tipo_pago = '';
-      }else{
+      } else {
         $tipo_pago = '<span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>SIN SELECCIONAR</strong></span>';
       }
 
-      if($value['status'] == 0){
+      if ($value['status'] == 0) {
         $status_pendiente = '<span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>PENDIENTE</strong></span>';
-      }else{
+      } else {
         $status_pendiente = '<span class="badge badge-success" style="background-color: #9A1622; color:white "><strong>VOLVER A SUBIR</strong></span>';
       }
 
-      
+
       $productos = EstadisticasDao::getNombreProductos($value['clave']);
       $todos = '';
-      foreach ($productos as $key => $all_productos){
+      foreach ($productos as $key => $all_productos) {
         $variable = $all_productos['nombre_producto'];
-        $todos .= $variable.('<br>');
+        $todos .= $variable . ('<br>');
       }
       $numero_gafete = $numero_gafete + 1;
 
-      $tabla.=<<<html
+      $tabla .= <<<html
       <tr>
         <td>$numero_gafete</td>
         <td>{$value['user_id']}</td>
@@ -372,7 +372,7 @@ html;
  
 html;
     }
-    foreach ($datos as $key => $value){
+    foreach ($datos as $key => $value) {
       $total_gafetes = $total_gafetes + 1;
     }
 
@@ -381,19 +381,19 @@ html;
     $datos_consta = EstadisticasDao::getProcesados();
     $numero_constancia = 0;
     $total_consta = 0;
-    
+
     foreach ($datos_consta as $key => $value) {
 
       $productos = EstadisticasDao::getNombreProductos($value['clave']);
       $todos = '';
-      foreach ($productos as $key => $all_productos){
-        $variable = $all_productos['nombre_producto'];  
-        $todos .= $variable.('<br>');
+      foreach ($productos as $key => $all_productos) {
+        $variable = $all_productos['nombre_producto'];
+        $todos .= $variable . ('<br>');
       }
-      
+
       $numero_constancia = $numero_constancia + 1;
 
-      $tabla_constancia.=<<<html
+      $tabla_constancia .= <<<html
       <tr>
         <td>$numero_constancia</td>
         <td>{$value['user_id']}</td>
@@ -410,7 +410,7 @@ html;
             <span class="fa fa-undo-alt" style="color:white"></span>
           </button><br>
           <button onclick="confirmarvalidar({$value['id_pendiente_pago']},{$value['user_id']},{$value['id_producto']},'{$value['clave']}')" type="button" class="btn btn-primary">
-            LIBERAR
+            LIBERAR d
           </button>
         </td>
         
@@ -419,7 +419,7 @@ html;
 html;
     }
 
-    foreach ($datos_consta as $key => $value){
+    foreach ($datos_consta as $key => $value) {
       $total_consta = $total_consta + 1;
     }
 
@@ -428,19 +428,19 @@ html;
     $datos_socios = EstadisticasDao::getLiberados();
     $numero_socios = 0;
     $total_socios = 0;
-    
+
     foreach ($datos_socios as $key => $value) {
 
 
       $productos = EstadisticasDao::getNombreProductos($value['clave']);
       $todos = '';
-      foreach ($productos as $key => $all_productos){
+      foreach ($productos as $key => $all_productos) {
         $variable = $all_productos['nombre_producto'];
-        $todos .= $variable.('<br>');
+        $todos .= $variable . ('<br>');
       }
       $numero_socios = $numero_socios + 1;
 
-      $tabla_socios.=<<<html
+      $tabla_socios .= <<<html
       <tr>
         <td>$numero_socios</td>
         <td>{$value['user_id']}</td>
@@ -457,7 +457,7 @@ html;
  
 html;
     }
-    foreach ($datos_socios as $key => $value){
+    foreach ($datos_socios as $key => $value) {
       $total_socios = $total_socios + 1;
     }
 
@@ -465,59 +465,59 @@ html;
     $datos_caja = EstadisticasDao::getTodos();
     $numero_caja = 0;
     $total_pesos = 0;
-    
+
     foreach ($datos_caja as $key => $value) {
       $comprobante = '';
       $acciones = '';
 
-      if($value['tipo_pago'] != ''){
+      if ($value['tipo_pago'] != '') {
         $tipo_pago = '';
-      }else{
+      } else {
         $tipo_pago = '<span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>SIN SELECCIONAR</strong></span>';
       }
 
-      if($value['url_archivo'] != '' && $value['status'] == 0){
+      if ($value['url_archivo'] != '' && $value['status'] == 0) {
         $status_pendiente = '<span class="badge badge-success" style="background-color: #03A5E7; color:white "><strong>EN ESPERA</strong></span>';
-      }else if($value['status'] == 0){
+      } else if ($value['status'] == 0) {
         $status_pendiente = '<span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>PENDIENTE</strong></span>';
-      }else if($value['status'] == 2){
+      } else if ($value['status'] == 2) {
         $status_pendiente = '<span class="badge badge-success" style="background-color: #9A1622; color:white "><strong>VOLVER A SUBIR</strong></span>';
-      }else{
+      } else {
         $status_pendiente = '<span class="badge badge-success" style="background-color: #1C6C42; color:white "><strong>ACEPTADO</strong></span>';
       }
 
-      if($value['url_archivo'] != '' && $value['status'] == 1){
-        $comprobante .=<<<html
+      if ($value['url_archivo'] != '' && $value['status'] == 1) {
+        $comprobante .= <<<html
         <br>VER COMPROBANTE<br>
         <div>
           <button data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
         </div>
 html;
-        $acciones .=<<<html
+        $acciones .= <<<html
         <td class="text-center">
           <span class="badge badge-success" style="background-color: #1C6C42; color:white "><strong>LIBERADO</strong></span>
         </td>
 html;
-      }else if($value['url_archivo'] == ''){
-        $comprobante .=<<<html
+      } else if ($value['url_archivo'] == '') {
+        $comprobante .= <<<html
         <br>SIN COMPROBANTE<br>
         <div>
           <button disabled data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-danger pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
         </div>
 html;
-        $acciones .=<<<html
+        $acciones .= <<<html
         <td class="text-center">
           <span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>PENDIENTE</strong></span>
         </td>
 html;
-      }else{
-        $comprobante .=<<<html
+      } else {
+        $comprobante .= <<<html
         <br>VER COMPROBANTE<br>
         <div>
           <button data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
         </div>
 html;
-        $acciones .=<<<html
+        $acciones .= <<<html
         <td class="text-center">
           <button onclick="confirmarsolicitar('{$value['clave']}',{$value['user_id']},{$value['id_pendiente_pago']})" title="Volver a solicitar" class="btn btn-warning" type="button" id="button">
             <span class="fa fa-undo-alt" style="color:white"></span>
@@ -531,12 +531,12 @@ html;
 
       $productos = EstadisticasDao::getNombreProductos($value['clave']);
       $todos = '';
-      foreach ($productos as $key => $all_productos){
+      foreach ($productos as $key => $all_productos) {
         $variable = $all_productos['nombre_producto'];
-        $todos .= $variable.('<br>');
+        $todos .= $variable . ('<br>');
       }
       $numero_caja = $numero_caja + 1;
-      $tabla_caja.=<<<html
+      $tabla_caja .= <<<html
       <tr>
         <td>$numero_caja</td>
         <td>{$value['user_id']}</td>
@@ -552,7 +552,7 @@ html;
 html;
     }
 
-    foreach ($datos_caja as $key => $value){
+    foreach ($datos_caja as $key => $value) {
       $total_pesos = $total_pesos + 1;
     }
 
@@ -560,53 +560,53 @@ html;
     $datos_estudiante = EstadisticasDao::getTodosEstudiantes();
     $numero_estudiante = 0;
     $total_estudiantes = 0;
-    
+
     foreach ($datos_estudiante as $key => $value) {
       $comprobante = '';
       $acciones = '';
 
-      if($value['url_archivo'] != '' && $value['status'] == 0){
+      if ($value['url_archivo'] != '' && $value['status'] == 0) {
         $status_pendiente = '<span class="badge badge-success" style="background-color: #03A5E7; color:white "><strong>EN ESPERA</strong></span>';
-      }else if($value['status'] == 0){
+      } else if ($value['status'] == 0) {
         $status_pendiente = '<span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>PENDIENTE</strong></span>';
-      }else if($value['status'] == 2){
+      } else if ($value['status'] == 2) {
         $status_pendiente = '<span class="badge badge-success" style="background-color: #9A1622; color:white "><strong>VOLVER A SUBIR</strong></span>';
-      }else{
+      } else {
         $status_pendiente = '<span class="badge badge-success" style="background-color: #1C6C42; color:white "><strong>ACEPTADO</strong></span>';
       }
 
-      if($value['url_archivo'] != '' && $value['status'] == 1){
-        $comprobante .=<<<html
+      if ($value['url_archivo'] != '' && $value['status'] == 1) {
+        $comprobante .= <<<html
         <br>VER COMPROBANTE<br>
         <div>
           <button data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
         </div>
 html;
-        $acciones .=<<<html
+        $acciones .= <<<html
         <td class="text-center">
           <span class="badge badge-success" style="background-color: #1C6C42; color:white "><strong>LIBERADO</strong></span>
         </td>
 html;
-      }else if($value['url_archivo'] == ''){
-        $comprobante .=<<<html
+      } else if ($value['url_archivo'] == '') {
+        $comprobante .= <<<html
         <br>SIN COMPROBANTE<br>
         <div>
           <button disabled data-toggle="modal" data-target="#pdf" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-danger pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
         </div>
 html;
-        $acciones .=<<<html
+        $acciones .= <<<html
         <td class="text-center">
           <span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>PENDIENTE</strong></span>
         </td>
 html;
-      }else{
-        $comprobante .=<<<html
+      } else {
+        $comprobante .= <<<html
         <br>VER COMPROBANTE<br>
         <div>
           <button data-toggle="modal" data-target="#pdf" data-user-id="{$value['user_id']}" data-pdf="{$value['url_archivo']}" type="button" class="btn btn-success pdf iframe" value="{$value['url_archivo']}"><span class="fa fa-eye" style="color:white"></span></button>
         </div>
 html;
-        $acciones .=<<<html
+        $acciones .= <<<html
         <td class="text-center">
           <button onclick="confirmarsolicitarEstudiante({$value['user_id']},{$value['id_pendiente_estudiante']})" title="Volver a solicitar" class="btn btn-warning" type="button" id="button">
             <span class="fa fa-undo-alt" style="color:white"></span>
@@ -619,7 +619,7 @@ html;
       }
 
       $numero_estudiante = $numero_estudiante + 1;
-      $tabla_estudiante.=<<<html
+      $tabla_estudiante .= <<<html
       <tr>
         <td>$numero_estudiante</td>
         <td>{$value['user_id']}</td>
@@ -631,226 +631,242 @@ html;
 html;
     }
 
-    foreach ($datos_estudiante as $key => $value){
+    foreach ($datos_estudiante as $key => $value) {
       $total_estudiantes = $total_estudiantes + 1;
     }
 
-    if($_SESSION['perfil'] == 2){
+    if ($_SESSION['perfil'] == 2) {
       // View::set('asideMenu',$this->_contenedor->asideMenu());
-    }else{
-      View::set('asideMenu',$this->_contenedor->asideMenu());
+    } else {
+      View::set('asideMenu', $this->_contenedor->asideMenu());
     }
-      View::set('total_pesos',$total_pesos);
-      View::set('total_estudiantes',$total_estudiantes);
-      View::set('total_consta',$total_consta);
-      View::set('total_gafetes',$total_gafetes);
-      View::set('numero_caja',$numero_caja);
-      View::set('total_socios',$total_socios);
-      View::set('ventas_totales',count($datos_caja));
-      View::set('tabla',$tabla);
-      View::set('tabla_constancia',$tabla_constancia);
-      View::set('tabla_caja',$tabla_caja);
-      View::set('tabla_socios',$tabla_socios);
-      View::set('tabla_estudiante',$tabla_estudiante);
-      // View::set('num_asistencias',$num_asistencias);
-      View::set('header',$this->_contenedor->header($extraHeader));
-      View::set('footer',$this->_contenedor->footer($extraFooter));
-      // View::set('productos',$productos);
-      View::render("validacion_all");
-    }
+    View::set('total_pesos', $total_pesos);
+    View::set('total_estudiantes', $total_estudiantes);
+    View::set('total_consta', $total_consta);
+    View::set('total_gafetes', $total_gafetes);
+    View::set('numero_caja', $numero_caja);
+    View::set('total_socios', $total_socios);
+    View::set('ventas_totales', count($datos_caja));
+    View::set('tabla', $tabla);
+    View::set('tabla_constancia', $tabla_constancia);
+    View::set('tabla_caja', $tabla_caja);
+    View::set('tabla_socios', $tabla_socios);
+    View::set('tabla_estudiante', $tabla_estudiante);
+    // View::set('num_asistencias',$num_asistencias);
+    View::set('header', $this->_contenedor->header($extraHeader));
+    View::set('footer', $this->_contenedor->footer($extraFooter));
+    // View::set('productos',$productos);
+    View::render("validacion_all");
+  }
 
-    public function updateSolicitar()
-    {
-        $documento = new \stdClass();
+  public function updateSolicitar()
+  {
+    $documento = new \stdClass();
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $user_id = $_POST['user_id'];
-            $clave = $_POST['clave'];
+      $user_id = $_POST['user_id'];
+      $clave = $_POST['clave'];
 
-            $documento->_user_id = $user_id;
-            $documento->_clave = $clave;
+      $documento->_user_id = $user_id;
+      $documento->_clave = $clave;
 
-            // var_dump($documento);
-            $id = EstadisticasDao::updateSolicitar($documento);
+      // var_dump($documento);
+      $id = EstadisticasDao::updateSolicitar($documento);
 
-            if ($id) {
-                echo "1";
-            } else {
-                echo "2";
-                // header("Location: /Home/");
-            }
-        } else {
-            echo 'fail REQUEST';
-        }
-    }
-
-    public function updateSolicitarEstudiante()
-    {
-        $documento = new \stdClass();
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            $user_id = $_POST['user_id'];
-            $clave = $_POST['clave'];
-
-            $documento->_user_id = $user_id;
-            $documento->_clave = $clave;
-
-            // var_dump($documento);
-            $id = EstadisticasDao::updateSolicitarEstudiante($documento);
-
-            if ($id) {
-                echo "1";
-            } else {
-                echo "2";
-                // header("Location: /Home/");
-            }
-        } else {
-            echo 'fail REQUEST';
-        }
-    }
-
-    public function updateComprobante()
-    {
-        $documento = new \stdClass();
-        $date = new DateTime("now", new DateTimeZone('America/Mexico_City') );
-        $fecha = $date->format('Y-m-d H:i:s');
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            $user_id = $_POST['user_id'];
-            // $id_pendiente_pago = $_POST['id_pendiente_pago'];
-            $id_producto = $_POST['id_producto'];
-            $clave = $_POST['clave'];
-
-            $documento->_user_id = $user_id;
-            $documento->_clave = $clave;
-            $documento->_id_producto = $id_producto;
-            $documento->_fecha = $fecha;
-
-            $id = EstadisticasDao::updateComprobante($documento);
-
-            if ($id) {
-                echo "1";
-            } else {
-                echo "fail";
-                // header("Location: /Home/");
-            }
-        } else {
-            echo 'fail REQUEST';
-        }
-    }
-
-    public function updateComprobanteEstudiante()
-    {
-        $documento = new \stdClass();
-        $date = new DateTime("now", new DateTimeZone('America/Mexico_City') );
-        $fecha = $date->format('Y-m-d H:i:s');
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            $user_id = $_POST['user_id'];
-            // $id_pendiente_pago = $_POST['id_pendiente_pago'];
-
-            $documento->_user_id = $user_id;
-            $documento->_fecha = $fecha;
-
-            $id = EstadisticasDao::updateComprobanteEstudiante($documento);
-
-            if ($id) {
-                echo "1";
-            } else {
-                echo "fail";
-                // header("Location: /Home/");
-            }
-        } else {
-            echo 'fail REQUEST';
-        }
-    }
-    
-
-    public function insertarAsignaProducto()
-    {
-        $documento = new \stdClass();
-        $date = new DateTime("now", new DateTimeZone('America/Mexico_City') );
-        $fecha = $date->format('Y-m-d H:i:s');
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-          $user_id = $_POST['user_id'];
-          $clave = $_POST['clave'];
-
-          $productos = EstadisticasDao::getNombreProductos($clave);
-          foreach($productos as $key => $value){
-
-            $id_producto = $value['id_producto'];
-
-            $documento->_user_id = $user_id;
-            $documento->_id_producto = $id_producto;
-            $documento->_fecha = $fecha;
-
-
-    
-                   $id = EstadisticasDao::insertarAsignaProducto($documento);
-
-         
-            }
-            if ($id) {
-                echo "1";
-            } else {
-                echo "2";
-                // header("Location: /Home/");
-            }
-        } else {
-            echo 'fail REQUEST';
-        }
-    }
-
-    public function updateSocio()
-    {
-        $documento = new \stdClass();
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            $user_id = $_POST['user_id'];
-            $documento->_user_id = $user_id;
-
-            $checarSocio = EstadisticasDao::getChecarSocio($user_id);
-            if($checarSocio){
-            $id = EstadisticasDao::updateSocio($documento);
-            if ($id) {
-                echo "1";
-            } else {
-                echo "2";
-                // header("Location: /Home/");
-            }
-          }else{
-
-            }
-        } else {
-            echo 'fail REQUEST';
-        }
-    }
-
-    public function getCaja(){
-      $fecha = $_POST['fecha'];
-      $total = 0;
-      $getData = EstadisticasDao::getDataCajaByFecha($fecha);
-
-      if(count($getData) > 0){
-        foreach($getData as $key => $value){
-          $total += $value['total_pesos'];
-        }
-      }else{
-        $total = 0;
+      if ($id) {
+        echo "1";
+      } else {
+        echo "2";
+        // header("Location: /Home/");
       }
-
-      $data  = [
-        'data' => $getData,
-        'count' => count($getData),
-        'total' => number_format($total,2)
-      ];
-
-      echo json_encode($data);
+    } else {
+      echo 'fail REQUEST';
     }
+  }
+
+  public function updateSolicitarEstudiante()
+  {
+    $documento = new \stdClass();
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+      $user_id = $_POST['user_id'];
+      $clave = $_POST['clave'];
+
+      $documento->_user_id = $user_id;
+      $documento->_clave = $clave;
+
+      // var_dump($documento);
+      $id = EstadisticasDao::updateSolicitarEstudiante($documento);
+
+      if ($id) {
+        echo "1";
+      } else {
+        echo "2";
+        // header("Location: /Home/");
+      }
+    } else {
+      echo 'fail REQUEST';
+    }
+  }
+
+  public function updateComprobante()
+  {
+    $documento = new \stdClass();
+    $date = new DateTime("now", new DateTimeZone('America/Mexico_City'));
+    $fecha = $date->format('Y-m-d H:i:s');
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+      $user_id = $_POST['user_id'];
+      // $id_pendiente_pago = $_POST['id_pendiente_pago'];
+      $id_producto = $_POST['id_producto'];
+      $clave = $_POST['clave'];
+
+      $documento->_user_id = $user_id;
+      $documento->_clave = $clave;
+      $documento->_id_producto = $id_producto;
+      $documento->_fecha = $fecha;
+
+      $mailer = new Mailer();
+      $mailer->mailerConfirmacionPago($user_id, $clave);
+
+      // echo "para aqui";
+
+      // exit;
+
+      $id = EstadisticasDao::updateComprobante($documento);
+
+      if ($id) {
+        
+        echo "1";
+      } else {
+        echo "fail";
+        // header("Location: /Home/");
+      }
+    } else {
+      echo 'fail REQUEST';
+    }
+  }
+
+  public function updateComprobanteEstudiante()
+  {
+    $documento = new \stdClass();
+    $date = new DateTime("now", new DateTimeZone('America/Mexico_City'));
+    $fecha = $date->format('Y-m-d H:i:s');
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+      $user_id = $_POST['user_id'];
+      $id_pendiente_estudiante = $_POST['id_pendiente_estudiante'];
+
+
+      // echo "user_id ".$user_id;
+      // echo "id_pendiente_estudiante ".$id_pendiente_estudiante;
+
+      // exit;
+
+      $documento->_user_id = $user_id;
+      $documento->_fecha = $fecha;
+
+      $mailer = new Mailer();
+      $mailer->mailerEstudianteLiberacion($user_id, $id_pendiente_estudiante);
+
+      $id = EstadisticasDao::updateComprobanteEstudiante($documento);
+
+      if ($id) {
+
+        echo "1";
+      } else {
+        echo "fail";
+        // header("Location: /Home/");
+      }
+    } else {
+      echo 'fail REQUEST';
+    }
+  }
+
+
+  public function insertarAsignaProducto()
+  {
+    $documento = new \stdClass();
+    $date = new DateTime("now", new DateTimeZone('America/Mexico_City'));
+    $fecha = $date->format('Y-m-d H:i:s');
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $user_id = $_POST['user_id'];
+      $clave = $_POST['clave'];
+
+      $productos = EstadisticasDao::getNombreProductos($clave);
+      foreach ($productos as $key => $value) {
+
+        $id_producto = $value['id_producto'];
+
+        $documento->_user_id = $user_id;
+        $documento->_id_producto = $id_producto;
+        $documento->_fecha = $fecha;
+
+
+
+        $id = EstadisticasDao::insertarAsignaProducto($documento);
+      }
+      if ($id) {
+        echo "1";
+      } else {
+        echo "2";
+        // header("Location: /Home/");
+      }
+    } else {
+      echo 'fail REQUEST';
+    }
+  }
+
+  public function updateSocio()
+  {
+    $documento = new \stdClass();
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+      $user_id = $_POST['user_id'];
+      $documento->_user_id = $user_id;
+
+      $checarSocio = EstadisticasDao::getChecarSocio($user_id);
+      if ($checarSocio) {
+        $id = EstadisticasDao::updateSocio($documento);
+        if ($id) {
+          echo "1";
+        } else {
+          echo "2";
+          // header("Location: /Home/");
+        }
+      } else {
+      }
+    } else {
+      echo 'fail REQUEST';
+    }
+  }
+
+  public function getCaja()
+  {
+    $fecha = $_POST['fecha'];
+    $total = 0;
+    $getData = EstadisticasDao::getDataCajaByFecha($fecha);
+
+    if (count($getData) > 0) {
+      foreach ($getData as $key => $value) {
+        $total += $value['total_pesos'];
+      }
+    } else {
+      $total = 0;
+    }
+
+    $data  = [
+      'data' => $getData,
+      'count' => count($getData),
+      'total' => number_format($total, 2)
+    ];
+
+    echo json_encode($data);
+  }
 }
