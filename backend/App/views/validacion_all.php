@@ -157,9 +157,7 @@
                             </div>
                             <div class="ps-4">
                                 <div class="panel-body" <?php echo $visible; ?>></div>
-                                <a style="background: #1C6C42; color: #ffffff;" href="#" type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3"><i class="fa fa-file-excel" aria-hidden="true"></i></a>
-                                <a style="background: #9A1622; color: #ffffff;" href="#" type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3"><i class="fa fa-file-pdf" aria-hidden="true"></i></a>
-                                <button type="button" class="btn bg-gradient-secondary btn-icon-only mb-0 mt-3" data-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Puedes descargar los reportes en archivos PDF o EXCEL.">
+                                <button type="button" class="btn bg-gradient-secondary btn-icon-only mb-0 mt-3" data-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Puedes copiar, imprimir y/o descargar los reportes en archivos PDF o EXCEL.">
                                     <span class="fa fa-info"></span>
                                 </button>
                             </div>
@@ -212,9 +210,7 @@
                             </div>
                             <div class="ps-4">
                                 <div class="panel-body" <?php echo $visible; ?>></div>
-                                <a style="background: #1C6C42; color: #ffffff;" href="#" type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3"><i class="fa fa-file-excel" aria-hidden="true"></i></a>
-                                <a style="background: #9A1622; color: #ffffff;" href="#" type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3"><i class="fa fa-file-pdf" aria-hidden="true"></i></a>
-                                <button type="button" class="btn bg-gradient-secondary btn-icon-only mb-0 mt-3" data-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Puedes descargar los reportes en archivos PDF o EXCEL.">
+                                <button type="button" class="btn bg-gradient-secondary btn-icon-only mb-0 mt-3" data-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Puedes copiar, imprimir y/o descargar los reportes en archivos PDF o EXCEL.">
                                     <span class="fa fa-info"></span>
                                 </button>
                             </div>
@@ -266,9 +262,7 @@
                             </div>
                             <div class="ps-4">
                                 <div class="panel-body" <?php echo $visible; ?>></div>
-                                <a style="background: #1C6C42; color: #ffffff;" href="#" type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3"><i class="fa fa-file-excel" aria-hidden="true"></i></a>
-                                <a style="background: #9A1622; color: #ffffff;" href="#" type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3"><i class="fa fa-file-pdf" aria-hidden="true"></i></a>
-                                <button type="button" class="btn bg-gradient-secondary btn-icon-only mb-0 mt-3" data-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Puedes descargar los reportes en archivos PDF o EXCEL.">
+                                <button type="button" class="btn bg-gradient-secondary btn-icon-only mb-0 mt-3" data-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Puedes copiar, imprimir y/o descargar los reportes en archivos PDF o EXCEL.">
                                     <span class="fa fa-info"></span>
                                 </button>
                             </div>
@@ -320,9 +314,7 @@
                             </div>
                             <div class="ps-4">
                                 <div class="panel-body" <?php echo $visible; ?>></div>
-                                <a style="background: #1C6C42; color: #ffffff;" href="#" type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3"><i class="fa fa-file-excel" aria-hidden="true"></i></a>
-                                <a style="background: #9A1622; color: #ffffff;" href="#" type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3"><i class="fa fa-file-pdf" aria-hidden="true"></i></a>
-                                <button type="button" class="btn bg-gradient-secondary btn-icon-only mb-0 mt-3" data-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Puedes descargar los reportes en archivos PDF o EXCEL.">
+                                <button type="button" class="btn bg-gradient-secondary btn-icon-only mb-0 mt-3" data-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Puedes copiar, imprimir y/o descargar los reportes en archivos PDF o EXCEL.">
                                     <span class="fa fa-info"></span>
                                 </button>
                             </div>
@@ -376,9 +368,7 @@
                             </div>
                             <div class="ps-4">
                                 <div class="panel-body" <?php echo $visible; ?>></div>
-                                <a style="background: #1C6C42; color: #ffffff;" href="#" type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3"><i class="fa fa-file-excel" aria-hidden="true"></i></a>
-                                <a style="background: #9A1622; color: #ffffff;" href="#" type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3"><i class="fa fa-file-pdf" aria-hidden="true"></i></a>
-                                <button type="button" class="btn bg-gradient-secondary btn-icon-only mb-0 mt-3" data-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Puedes descargar los reportes en archivos PDF o EXCEL.">
+                                <button type="button" class="btn bg-gradient-secondary btn-icon-only mb-0 mt-3" data-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Puedes copiar, imprimir y/o descargar los reportes en archivos PDF o EXCEL.">
                                     <span class="fa fa-info"></span>
                                 </button>
                             </div>
@@ -608,7 +598,23 @@
         });
     })
 </script>
-
 <script type="text/javascript" src="/js/validaciones.js"></script>
-
 <?php echo $footer; ?>
+
+<style>
+    .dt-buttons{
+        margin-left: 10px;
+    }
+    .dt-buttons button{
+        color: #FFF;
+        background-image: linear-gradient(0deg, #02A7E9, #293A90 70%);
+        border-radius: 8px;
+        transition-duration: 0.2s;
+    }
+
+    .dt-buttons button:hover{
+        transform: translate(0px, 3px);
+        transition-duration: 0.2s;
+        background-image: linear-gradient(0deg, #02A7E9, #293A90 70%) !important;
+    }
+</style>
