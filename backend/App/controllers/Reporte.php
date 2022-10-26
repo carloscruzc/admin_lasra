@@ -22,19 +22,16 @@ class Reporte extends Controller
 
     private $_contenedor;
 
-    function __construct()
-    {
-        parent::__construct();
-        $this->_contenedor = new Contenedor;
-        View::set('header', $this->_contenedor->header());
-        View::set('footer', $this->_contenedor->footer());
-        // if (Controller::getPermisosUsuario($this->__usuario, "seccion_asistentes", 1) == 0)
-        //     header('Location: /Principal/');
-    }
+  function __construct()
+  {
+    parent::__construct();
+    $this->_contenedor = new Contenedor;
+    // if (Controller::getPermisosUsuario($this->__usuario, "seccion_asistencias", 1) == 0)
+    //   header('Location: /Principal/');
+  }
 
     public function index()
     {
-
         $paises = AsistentesDao::getPais();
         $optionPais = '';
         foreach($paises as $key => $value){
@@ -119,11 +116,7 @@ html;
 
     //Metodo para reaslizar busqueda de usuarios, sin este metodo no podemos obtener informacion en la vista
     public function Usuario() {
-        $search = $_POST['search'];       
-
-        // $all_ra = AsistentesDao::getAllRegistrosAcceso();
-        // $this->setTicketVirtual($all_ra);
-        // $this->setClaveRA($all_ra);
+        $search = $_POST['search'];
 
         $paises = AsistentesDao::getPais();
         $optionPais = '';
@@ -698,12 +691,16 @@ html;
             $congreso = '';
             if($value['congreso'] == 'No'){
                 $congreso .= <<<html
+                <span>No <br>
                 <i style="font-size:18px;" class="text-danger fa-solid fa-circle-xmark"></i>
+                </span>
 html;
                 $sort1 = 2;
             }else{           
                 $congreso .= <<<html
+                <span>Sí <br>
                 <i style="font-size:18px;" class="text-success fa-solid fa-circle-check"></i>
+                </span>
 html;
                 $sort1 = 1;
             }
@@ -711,12 +708,16 @@ html;
             $supra2 = '';
             if($value['supra2'] == 'No'){
                 $supra2 .= <<<html
+                <span>No <br>
                 <i style="font-size:18px;" class="text-danger fa-solid fa-circle-xmark"></i>
+                </span>
 html;
                 $sort2 = 2;
             }else{           
                 $supra2 .= <<<html
+                <span>Sí <br>
                 <i style="font-size:18px;" class="text-success fa-solid fa-circle-check"></i>
+                </span>
 html;
                 $sort2 = 1;
             }
@@ -724,12 +725,16 @@ html;
             $supra3 = '';
             if($value['supra3'] == 'No'){
                 $supra3 .= <<<html
+                <span>No <br>
                 <i style="font-size:18px;" class="text-danger fa-solid fa-circle-xmark"></i>
+                </span>
 html;
                 $sort3 = 2;
             }else{           
                 $supra3 .= <<<html
+                <span>Sí <br>
                 <i style="font-size:18px;" class="text-success fa-solid fa-circle-check"></i>
+                </span>
 html;
                 $sort3 = 1;
             }
@@ -737,12 +742,16 @@ html;
             $supra4 = '';
             if($value['supra4'] == 'No'){
                 $supra4 .= <<<html
+                <span>No <br>
                 <i style="font-size:18px;" class="text-danger fa-solid fa-circle-xmark"></i>
+                </span>
 html;
                 $sort4 = 2;
             }else{           
                 $supra4 .= <<<html
+                <span>Sí <br>
                 <i style="font-size:18px;" class="text-success fa-solid fa-circle-check"></i>
+                </span>
 html;
                 $sort4 = 1;
             }
@@ -750,12 +759,16 @@ html;
             $transferencia = '';
             if($value['transferencia'] == 'No'){
                 $transferencia .= <<<html
+                <span>No <br>
                 <i style="font-size:18px;" class="text-danger fa-solid fa-circle-xmark"></i>
+                </span>
 html;
                 $sort5 = 2;
             }else{           
                 $transferencia .= <<<html
+                <span>Sí <br>
                 <i style="font-size:18px;" class="text-success fa-solid fa-circle-check"></i>
+                </span>
 html;
                 $sort5 = 1;
             }
@@ -763,12 +776,16 @@ html;
             $paypal = '';
             if($value['paypal'] == 'No'){
                 $paypal .= <<<html
+                <span>No <br>
                 <i style="font-size:18px;" class="text-danger fa-solid fa-circle-xmark"></i>
+                </span>
 html;
                 $sort6 = 2;
             }else{           
                 $paypal .= <<<html
+                <span>Sí <br>
                 <i style="font-size:18px;" class="text-success fa-solid fa-circle-check"></i>
+                </span>
 html;
                 $sort6 = 1;
             }
@@ -793,11 +810,23 @@ html;
                     <div class="d-flex flex-column justify-content-center">
                         <a href="/Asistentes/Detalles/{$value['user_id']}" target="_blank">
                             <h6 class="mb-0 text-sm text-move text-black">
-                                <span class="fa fa-user-md" style="font-size: 13px"></span> {$nombre_completo}</span>
-                                <u><h6 class="mb-0 text-sm text-black"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['usuario']}</h6></u>
-                                <span class="fa fa-flag" style="font-size: 13px"></span>{$value['pais']}</span>    
+                                <span class="fa fa-user-md" style="font-size: 13px"></span> {$nombre_completo}</span>    
                             </h6>
                         </a>
+                    </div>
+                </td>
+                <td style="text-align:center; vertical-align:middle;">
+                    <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm text-black">
+                            <u><h6 class="mb-0 text-sm text-black"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['usuario']}</h6></u> 
+                        </h6>
+                    </div>
+                </td>
+                <td style="text-align:center; vertical-align:middle;">
+                    <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm text-black">
+                            <span class="fa fa-flag" style="font-size: 13px"></span>{$value['pais']}</span>    
+                        </h6>
                     </div>
                 </td>
                 <td style="text-align:center; vertical-align:middle;">
