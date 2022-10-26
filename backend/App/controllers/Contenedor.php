@@ -127,6 +127,14 @@ html;
                                     <span class="nav-link-text ms-1">Cursos</span>
                                 </a>
                               </li>
+                              <li id="reporte" class="nav-item">
+                                <a href="/Reporte/" class="nav-link " aria-controls="applicationsExamples" role="button" aria-expanded="false">
+                                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                                        <span class="fa fa-file-invoice-dollar morado-musa-text"></span>
+                                    </div>
+                                    <span class="nav-link-text ms-1">Reporte</span>
+                                </a>
+                              </li>
                           </ul>
                       </div>
                   </li>
@@ -332,6 +340,7 @@ html;
             <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />
             <!-- Font Awesome Icons -->
             <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet"/>
             <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />
             <!-- CSS Files -->
             <link id="pagestyle" href="../../assets/css/soft-ui-dashboard.css?v=1.0.5" rel="stylesheet" />

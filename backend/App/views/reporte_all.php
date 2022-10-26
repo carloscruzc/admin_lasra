@@ -1,6 +1,6 @@
 <?php echo $header;?>
 <title>
-    Asistentes - LASRA - GRUPO LAHE    
+    Reporte - LASRA - GRUPO LAHE    
 </title>
 <body class="g-sidenav-show  bg-gray-100">
     <?php echo $asideMenu;?>
@@ -28,7 +28,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item text-sm opacity-5 text-dark"><a href="/Principal/">Principal</a></li>
-                        <li class="breadcrumb-item text-sm opacity-10 text-dark">Asistentes</li>
+                        <li class="breadcrumb-item text-sm opacity-10 text-dark">Reporte</li>
                     </ol>
                 </nav>
                 <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
@@ -84,13 +84,13 @@
                         <div class="col-auto">
                             <div class="bg-gradient-pink avatar avatar-xl position-relative">
                                 <!-- <img src="../../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm"> -->
-                                <span class="fa fa-users" style="font-size: xx-large;"></span>
+                                <span class="fa fa-file-invoice-dollar" style="font-size: xx-large;"></span>
                             </div>
                         </div>
                         <div class="col-auto my-auto">
                             <div class="h-100">
                                 <h5 class="mb-1">
-                                    ASISTENTES LASRA
+                                    REPORTE LASRA
                                 </h5>
                                 <p class="mb-0 font-weight-bold text-sm">
                                 </p>
@@ -160,7 +160,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
                                 <div>
-                                    <form class="form-inline my-2 my-lg-0" action="/Asistentes/Usuario" method="post">
+                                    <form class="form-inline my-2 my-lg-0" action="/Reporte/Usuario" method="post">
                                         <div class="row">
                                             <div class="col-12 col-md-12">
                                                 <input class="form-control mr-sm-2" style="font-size: 35px;" autofocus type="search" id="search" name="search" placeholder="Ej. Adrian Segura Becerra - XaS6cr" aria-label="Search">
@@ -185,11 +185,18 @@
                                         <table class="align-items-center mb-0 table table-borderless" id="user_list_table">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Usuario</th>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Datos</th>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Impresión</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">#</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">ID</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Datos</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Categoría</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Especialidad</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Estatus Compra</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Congreso</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Supra 2</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Supra 3</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Supra 4</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Transferencia</th>
+                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Paypal</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -228,9 +235,7 @@
                     </div>
                 </div>
             </footer>
-
     </main>
-    <?php echo $modal;?>
 <!-- MODAL AGREGAR USUARIO -->
     <div class="modal fade" id="Modal_Add" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -327,46 +332,33 @@
     </div>
 </body>
 
-<?php echo $footer; ?>
-
-<script>
-    if (window.history.replaceState) { // verificamos disponibilidad
-    window.history.replaceState(null, null, window.location.href);
-}
-</script>
-
-<script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js" defer></script>
-<link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" />
+<!-- Modal -->
+<div class="modal fade" id="pdf" role="dialog" aria-labelledby="pdfTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Comprobante</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: none; background: transparent;">
+          <span aria-hidden="true" style="font-size: 25px;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body cont-modal">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
     $(document).ready(function() {
 
-        // $("#categoria").on("change",function(){
-        //     alert($(this).attr('data-costo'));
-        //     alert($(this).val());
-        // })
-
-        $("#form_etiquetas").on("click", function(event) {
-            event.preventDefault();
-            var formData = new FormData(document.getElementById("form_etiquetas"));
-
-            no_habitacion = $("#no_habitacion").val();
-            clave_ra = $("#clave_ra").val();
-            no_etiquetas = $("#no_etiquetas").val();
-
-            console.log(no_habitacion);
-            console.log(clave_ra);
-            console.log(no_etiquetas);
-
-            $("#a_abrir_etiqueta").attr("href", "/Asistentes/abrirpdf/" + clave_ra + "/" + no_etiquetas + "/" + no_habitacion);
-            $("#a_abrir_etiqueta")[0].click();
-
-        });
-
         $('#utilerias').removeAttr('hidden');
         $('#utilerias').addClass('show');
-        $('#asistentes a').addClass('active');
-        $('#asistentes .fa-users').addClass('text-white');
+        $('#reporte a').addClass('active');
+        $('#reporte .fa-file-invoice-dollar').addClass('text-white');
 
 
         $('#user_list_table').DataTable({
@@ -657,6 +649,8 @@
             });
         });
 
-    
 </script>
 
+<script type="text/javascript" src="/js/validaciones.js"></script>
+
+<?php echo $footer; ?>

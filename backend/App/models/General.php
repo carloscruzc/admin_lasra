@@ -64,6 +64,34 @@ sql;
     return $mysqli->queryAll($query);
   }
 
+  public static function getReportQuery($search){
+    $mysqli = Database::getInstance();
+    $query =<<<sql
+    SELECT ua.user_id,concat(ua.nombre," ", ua.apellidop," ", ua.apellidom) as nombrecompleto,
+    ua.usuario, ua.clave, ua.clave_socio,c.categoria,
+    e.nombre as especialidad,
+    pa.pais,
+    (case when (SELECT COUNT(*) FROM asigna_producto ap WHERE ap.user_id = ua.user_id) > 0 then 'Productos Pagados' else 'Solo Registro' end) as estatuscompra,
+    (case when (SELECT COUNT(*) FROM asigna_producto ap WHERE ap.id_producto in (1,23,34) AND ap.user_id = ua.user_id) > 0 then 'Si' else 'No' end) as congreso,
+    (case when (SELECT COUNT(*) FROM asigna_producto ap WHERE ap.id_producto in (38,41) AND ap.user_id = ua.user_id) > 0 then 'Si' else 'No' end) as supra2,
+    (case when (SELECT COUNT(*) FROM asigna_producto ap WHERE ap.id_producto in (37,40) AND ap.user_id = ua.user_id) > 0 then 'Si' else 'No' end) as supra3,
+    (case when (SELECT COUNT(*) FROM asigna_producto ap WHERE ap.id_producto in (36,39) AND ap.user_id = ua.user_id) > 0 then 'Si' else 'No' end) as supra4,
+    (case when (SELECT COUNT(pp.tipo_pago) FROM pendiente_pago pp WHERE pp.id_producto in (1,23,34,38,41,37,40,36,39) AND pp.tipo_pago = 'Transferencia' AND pp.url_archivo != '' AND pp.user_id = ua.user_id) = 0 then 'No' else 'Si' end) as transferencia,
+    (case when (SELECT COUNT(pp.tipo_pago) FROM pendiente_pago pp WHERE pp.id_producto in (1,23,34,38,41,37,40,36,39) AND pp.tipo_pago = 'Paypal' AND pp.status = 1 AND pp.user_id = ua.user_id) = 0 then 'No' else 'Si' end) as paypal
+    FROM utilerias_administradores ua
+    INNER JOIN categorias c
+    ON c.id_categoria = ua.id_categoria
+    INNER JOIN especialidades e
+    ON e.id_especialidad = ua.especialidades
+    INNER JOIN paises pa
+    ON pa.id_pais = ua.id_pais
+    WHERE CONCAT_WS(' ',ua.usuario,ua.nombre,ua.apellidop,ua.apellidom,ua.user_id, ua.clave, ua.clave_socio)
+    LIKE '%$search%';
+sql;
+
+    return $mysqli->queryAll($query);
+  }
+
   public static function getAllColaboradoresCursos($search){
     $mysqli = Database::getInstance();
     $query =<<<sql

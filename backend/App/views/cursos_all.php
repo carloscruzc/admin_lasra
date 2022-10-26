@@ -211,7 +211,7 @@
 
             <style>
                 table.dataTable tbody tr.even{
-                    background-color: #C5C5C5;
+                    background-color: #DEDDDF;
                 }
             </style>
 
