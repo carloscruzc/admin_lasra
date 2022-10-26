@@ -700,10 +700,12 @@ html;
                 $congreso .= <<<html
                 <i style="font-size:18px;" class="text-danger fa-solid fa-circle-xmark"></i>
 html;
+                $sort1 = 2;
             }else{           
                 $congreso .= <<<html
                 <i style="font-size:18px;" class="text-success fa-solid fa-circle-check"></i>
 html;
+                $sort1 = 1;
             }
 
             $supra2 = '';
@@ -711,10 +713,12 @@ html;
                 $supra2 .= <<<html
                 <i style="font-size:18px;" class="text-danger fa-solid fa-circle-xmark"></i>
 html;
+                $sort2 = 2;
             }else{           
                 $supra2 .= <<<html
                 <i style="font-size:18px;" class="text-success fa-solid fa-circle-check"></i>
 html;
+                $sort2 = 1;
             }
 
             $supra3 = '';
@@ -722,10 +726,12 @@ html;
                 $supra3 .= <<<html
                 <i style="font-size:18px;" class="text-danger fa-solid fa-circle-xmark"></i>
 html;
+                $sort3 = 2;
             }else{           
                 $supra3 .= <<<html
                 <i style="font-size:18px;" class="text-success fa-solid fa-circle-check"></i>
 html;
+                $sort3 = 1;
             }
 
             $supra4 = '';
@@ -733,10 +739,12 @@ html;
                 $supra4 .= <<<html
                 <i style="font-size:18px;" class="text-danger fa-solid fa-circle-xmark"></i>
 html;
+                $sort4 = 2;
             }else{           
                 $supra4 .= <<<html
                 <i style="font-size:18px;" class="text-success fa-solid fa-circle-check"></i>
 html;
+                $sort4 = 1;
             }
 
             $transferencia = '';
@@ -744,10 +752,12 @@ html;
                 $transferencia .= <<<html
                 <i style="font-size:18px;" class="text-danger fa-solid fa-circle-xmark"></i>
 html;
+                $sort5 = 2;
             }else{           
                 $transferencia .= <<<html
                 <i style="font-size:18px;" class="text-success fa-solid fa-circle-check"></i>
 html;
+                $sort5 = 1;
             }
 
             $paypal = '';
@@ -755,10 +765,12 @@ html;
                 $paypal .= <<<html
                 <i style="font-size:18px;" class="text-danger fa-solid fa-circle-xmark"></i>
 html;
+                $sort6 = 2;
             }else{           
                 $paypal .= <<<html
                 <i style="font-size:18px;" class="text-success fa-solid fa-circle-check"></i>
 html;
+                $sort6 = 1;
             }
 ////////////////////////////////////////////////////////////////////////////////////////////
 //             
@@ -809,42 +821,42 @@ html;
                         </h6>
                     </div>
                 </td>
-                <td style="text-align:center; vertical-align:middle;">
+                <td data-sort={$sort1} style="text-align:center; vertical-align:middle;">
                     <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-0 text-sm text-black">
                             <span style="font-size: 13px"></span>{$congreso}</span>
                         </h6>
                     </div>
                 </td>
-                <td style="text-align:center; vertical-align:middle;">
+                <td data-sort={$sort2} style="text-align:center; vertical-align:middle;">
                     <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-0 text-sm text-black">
                             <span style="font-size: 13px"></span>{$supra2}</span>
                         </h6>
                     </div>
                 </td>
-                <td style="text-align:center; vertical-align:middle;">
+                <td data-sort={$sort3} style="text-align:center; vertical-align:middle;">
                     <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-0 text-sm text-black">
                             <span style="font-size: 13px"></span>{$supra3}</span>
                         </h6>
                     </div>
                 </td>
-                <td style="text-align:center; vertical-align:middle;">
+                <td data-sort={$sort4} style="text-align:center; vertical-align:middle;">
                     <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-0 text-sm text-black">
                             <span style="font-size: 13px"></span>{$supra4}</span>
                         </h6>
                     </div>
                 </td>
-                <td style="text-align:center; vertical-align:middle;">
+                <td data-sort={$sort5} style="text-align:center; vertical-align:middle;">
                     <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-0 text-sm text-black">
                             <span style="font-size: 13px"></span>{$transferencia}</span>
                         </h6>
                     </div>
                 </td>
-                <td style="text-align:center; vertical-align:middle;">
+                <td data-sort={$sort6} style="text-align:center; vertical-align:middle;">
                     <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-0 text-sm text-black">
                             <span style="font-size: 13px"></span>{$paypal}</span>
