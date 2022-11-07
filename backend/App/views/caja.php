@@ -51,32 +51,27 @@
             <div class="col-11 m-auto">
                 <div class="mt-7 m-auto">
                     <div class="card card-body mt-n6 overflow-hidden m-5">
-                        <div class="row mb-0">
-                            <div class="col-auto">
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="bg-gradient-pink avatar avatar-xl ">
-                                    <!-- <img src="../../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm"> -->
+
                                     <span class="fas fa-cash-register" style="font-size: xx-large;"></span>
 
                                 </div>
-                            </div>
-                            <div class="col-md-6 my-auto">
-                                <div class="h-100">
-                                    <h5 class="mb-0">
-                                        CAJA
-                                    </h5>
-                                    <h6><b><?php echo $nombre; ?></b></h6>
-                                    <p class="mb-0 font-weight-bold text-sm">
-
-                                    </p>
-                                </div>
+                                <span style="font-size: 30px; font-weight: 500; color: #000;">Caja</span>
                             </div>
 
-                            <div class="col-md-4 d-flex justify-content-end">
+                            <div class="col-md-6 d-flex justify-content-end">
+                                <button type="button" class="btn bg-gradient-success" data-bs-toggle="modal" data-bs-target="#addNewUser" style="margin-right: 10px;">
+                                    Agregar Usuario
+                                </button>
                                 <a href="/ComprobantesCaja/comprobantes" target="blank_" class="btn bg-gradient-pink" style="color: white;"> Ver comprobantes</a>
+
                             </div>
-
-
                         </div>
+
+
+
                     </div>
                 </div>
             </div>
@@ -330,14 +325,14 @@
 
     <!-- modal seleccionar talleres -->
     <div class="modal fade" id="modal_talleres" role="dialog" aria-labelledby="" aria-hidden="" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <!-- <div class="modal fade" id="modal_talleres" role="dialog" aria-labelledby="" aria-hidden="" aria-hidden="true"> -->
+
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modal_talleresLabel">
                         Talleres
                     </h5>
-                    <p id="nombre_user"></p>
+                    <p id="nombre_user_text"></p>
                 </div>
                 <center>
                     <div class="modal-body">
@@ -412,25 +407,206 @@
                                     </div>
 
                                     <br>
-                                    <!-- <div class="row">
-                                        <div class="col-md-8">
-
-                                            <div id="buttons">
-
-                                            </div>
-                                        </div>
-                                    </div>
- -->
-
-                                    <br>
-
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </center>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal crear nuevo usuario -->
+    <div class="modal fade" id="addNewUser" tabindex="-1" role="dialog" aria-labelledby="addNewUserLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewUserLabel">Crear Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="form-horizontal" id="addUser" action="" method="POST">
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-12 col-sm-2">
+                                <label>Prefijo *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="title" id="title" required>
+                                    <option value="Dr.">Dr.</option>
+                                    <option value="Dra.">Dra.</option>
+                                    <option value="Sr.">Sr.</option>
+                                    <option value="Sra.">Sra.</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-5">
+                                <label>Nombre *</label>
+                                <input class="multisteps-form__input form-control" type="text" id="nombre_user" name="nombre_user" placeholder="" maxlength="100" style="text-transform:uppercase;" required>
+                            </div>
+                            <div class="col-12 col-sm-5">
+                                <label>Apellido Paterno *</label>
+                                <input class="multisteps-form__input form-control" type="text" id="apellidop_user" name="apellidop_user" placeholder="" style="text-transform:uppercase;" maxlength="100">
+                            </div>
+
+                            <div class="col-12 col-sm-5">
+                                <label>Apellido Materno *</label>
+                                <input class="multisteps-form__input form-control" type="text" id="apellidom_user" name="apellidom_user" placeholder="" style="text-transform:uppercase;" maxlength="100">
+                            </div>
+
+                            <div class="col-12 col-sm-7">
+                                <label>Email *</label>
+                                <input class="multisteps-form__input form-control" type="text" id="email_user" name="email_user" placeholder="" maxlength="100">
+                                <span id="msg_email_user" style="color:#FF3B11;font-size: 12px;"></span>
+                            </div>
+
+                            <div class="col-12 col-sm-4">
+                                <label>Teléfono</label>
+                                <input class="multisteps-form__input form-control" type="number" id="telephone" name="telephone" maxlength="10" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="ej. (555) 555-1234" autocomplete="no" value="">
+                            </div>
+
+                            <div class="col-12 col-sm-4" id="cont-categoria">
+
+                                <label>Nivel *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="categorias" id="categorias" required>
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+                                    <?php echo $categorias ?>
+                                </select>
+
+                            </div>
+
+
+
+                            <!-- <div class="col-12 col-sm-4" id="cont-ano-residente" style="display: none;">
+
+                                <label>Año de Residencia *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="ano_residencia" id="ano_residencia">
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+
+                                </select>
+
+                            </div> -->
+
+                            <div class="col-12 col-sm-4" id="cont-archivo-residente" style="display: none;">
+                                <label>Archivo *</label>
+                                <input type="file" accept="image/*,.pdf" class="form-control" id="archivo_residente" name="archivo_residente" style="width: auto; margin: 0 auto;" onfocus="focused(this)" onfocusout="defocused(this)">
+                            </div>
+
+
+                            <!-- <div class="col-12 col-sm-4 mt-3" id="cont-clave-socio" style="display: none;">
+                                <label id="label-clave-socio">Clave Socio *</label>
+                                <input type="text" class="form-control" name="clave_socio" id="clave_socio" value="<?= $data['clave_socio'] ?>">
+                            </div> -->
+
+                            <div class="col-12 col-sm-4" id="cont-especialidades">
+
+                                <label id="label-especialidades">Especialidades *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="especialidades" id="especialidades" required>
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+
+                                    <?= $especialidades ?>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-12 col-sm-4" id="cont-especialidad-text" style="display: none;">
+
+                                <label id="label-especialidades">Especialidad (Especifique) *</label>
+                                <input type="text" class="form-control" id="txt_especialidad" name="txt_especialidad">
+
+                            </div>
+
+
+
+
+                            <div class="col-12 col-sm-4">
+                                <label>País *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="nationality" id="nationality" onchange="actualizaEdos();" required>
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+                                    <option value="156">Mexico</option>
+                                    <?php echo $idCountry; ?>
+                                </select>
+                            </div>
+
+
+                            <div class="col-12 col-sm-4  ">
+                                <label>Estado *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="state" id="state" required>
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <br>
+
+
+                        <h5 class="modal-title" id="">Datos de Facturación</h5>
+
+                        <hr>
+
+                        <!-- <input type="hidden" name="modal_user_id" id="modal_user_id"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-4">
+                                <label>Razón Social </label>
+                                <input class="multisteps-form__input form-control" type="text" id="business_name_iva_user" name="business_name_iva_user" style="text-transform: uppercase;" placeholder="eg. Christopher Prior Jones" maxlength="100">
+                            </div>
+                            <div class="col-12 col-sm-4 mt-1 mt-sm-0">
+                                <label>RFC </label>
+                                <input class="multisteps-form__input form-control" type="text" id="code_iva_user" name="code_iva_user" placeholder="eg. CPJ41250AS" maxlength="13" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                            </div>
+
+
+                            <div class="col-md-4 col-sm-12">
+                                <label>Correo Electrónico facturación </label>
+                                <input class="multisteps-form__input form-control" type="text" id="email_receipt_iva_user" name="email_receipt_iva_user" placeholder="eg. user@domain.com">
+                                <span class="mb-0 text-sm" id="error_email_send" style="display:none;color:red;">Correo electrónico incorrecto</span>
+                            </div>
+
+
+                            <div class="col-md-4 col-sm-12">
+                                <label>CP</label>
+                                <input class="multisteps-form__input form-control" id="postal_code_iva_user" name="postal_code_iva_user" type="number" min="1" maxlength="5" placeholder="Código postal" class="form-control ameg-shadow-box-two" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            </div>
+
+                            <div class="col-md-4 col-sm-12">
+                                <label>CFDI * </label>
+                                <select class="multisteps-form__select form-control all_input_select" name="cfdi" id="cfdi">
+                                    <option value="">Selecciona una opción</option>
+                                    <?= $usoCfdi ?>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-4 col-sm-12">
+                                <label>Régimen Fiscal * </label>
+                                <select class="multisteps-form__select form-control all_input_select" name="regimen_fiscal" id="regimen_fiscal">
+                                    <option value="">Selecciona una opción</option>
+                                    <?= $remigenFiscal ?>
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-12 col-sm-12">
+                                <label>Dirección Fiscal </label>
+                                <textarea class="multisteps-form__input form-control" name="direccion_user" id="direccion_user" cols="30" rows="3"></textarea>
+                                <!-- <input class="multisteps-form__input form-control" type="text" id="direccion_user" name="direccion_user" placeholder=""> -->
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="reset" id="reset_form_addUser" data-bs-dismiss="modal" class="d-none">
+                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" id="cerrar_modal">Cerrar</button>
+                        <button type="submit" class="btn bg-gradient-primary" id="btn_save_user">Guardar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -452,6 +628,27 @@
     <script>
         function focus_input() {
             $("#codigo_qr_venta").focus();
+        }
+
+        function actualizaEdos(pais = null) {
+            var pais = $('#nationality').val();
+            $.ajax({
+                    url: '/Caja/ObtenerEstado',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        pais: pais
+                    },
+
+                })
+                .done(function(json) {
+                    if (json.success) {
+                        $("#state").html(json.html);
+                    }
+                })
+                .fail(function() {
+                    //   alert("Ocurrio un error al actualizar el estado intenta de nuevo");
+                })
         }
 
 
@@ -495,6 +692,168 @@
 
             // getCombo(625);
 
+            $("#addUser").on("submit", function(event) {
+                event.preventDefault();
+
+                var formData = new FormData(document.getElementById("addUser"));
+                for (var value of formData.values()) {
+                    console.log(value);
+                }
+
+                $.ajax({
+                    url: "/Caja/addNewUser",
+                    type: "POST",
+                    data: formData,
+                    dataType: 'json',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        console.log("Procesando....");
+                    },
+                    success: function(respuesta) {
+                        console.log(respuesta);
+
+                        if (respuesta.status == 'success') {
+                            // swal("¡Se actualizaron los Datos Correctamente!", "", "success")
+                            // $('#cerrar_modal').click();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Alerta',
+                                text: 'Usuario registrado correctamente.'
+                            }).then((value) => {
+                                $("#search_item").focus();
+                            });
+                            // $("#addNewUser").modal('hide');
+                            $("#reset_form_addUser").click();
+                            getSell(respuesta.user_id);
+                            $("#codigo_qr_venta_hidden").val(respuesta.user_id);
+                            // $("#search_item").focus();
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Alerta',
+                                text: 'Hubo un error al registrar el usuario.'
+
+                            })
+                            // $("#addNewUser").modal('hide');
+                            $("#reset_form_addUser").click();
+                            // swal("¡Hubo un error al actualizar!", "Contacte a soporte", "error")
+                            // $('#cerrar_modal').modal();
+                        }
+
+
+                    },
+                    error: function(respuesta) {
+                        console.log(respuesta);
+                    }
+
+                });
+            });
+
+            $("#nombre_user").on("keyup", function() {
+                var nombre = $(this).val();
+                var apellidop = $("#apellidop_user").val();
+                var apellidom = $("#apellidom_user").val();
+                $("#business_name_iva_user").val(nombre + " " + apellidop + " " + apellidom);
+            })
+
+            $("#apellidop_user").on("keyup", function() {
+                var nombre = $("#nombre_user").val();
+                var apellidop = $(this).val();
+                var apellidom = $("#apellidom_user").val();
+                $("#business_name_iva_user").val(nombre + " " + apellidop + " " + apellidom);
+            })
+
+            $("#apellidom_user").on("keyup", function() {
+                var nombre = $("#nombre_user").val();
+                var apellidop = $("#apellidop_user").val();
+                var apellidom = $(this).val();
+                $("#business_name_iva_user").val(nombre + " " + apellidop + " " + apellidom);
+            })
+
+
+            $("#email_user").on("keyup", function() {
+                var email = $(this).val();
+                $("#email_receipt_iva_user").val(email);
+
+                console.log(email);
+
+                $.ajax({
+                    url: "/Caja/searchEmail",
+                    type: "POST",
+                    data: {
+                        email
+                    },
+                    dataType: 'json',
+                    beforeSend: function() {
+                        console.log("Procesando....");
+
+                    },
+                    success: function(respuesta) {
+                        // console.log(respuesta);
+                        // console.log(respuesta.length);
+                        if (respuesta.length > 0) {
+                            $("#msg_email_user").html("Este correo ya esta registrado.");
+                            $("#btn_save_user").attr('disabled', 'disabled');
+                        } else {
+                            $("#msg_email_user").html("");
+                            $("#btn_save_user").removeAttr('disabled');
+                        }
+
+                    },
+                    error: function(respuesta) {
+
+                    }
+
+                });
+            })
+
+            //si la categoria es residente
+            $('#categorias').on('change', function() {
+                let categoria = $(this).val();
+
+                if (categoria == 3) {
+                    // $('#cont-archivo-residente').css('display', 'inline-block');
+                    // $('#archivo_residente').attr('required', 'required');
+                    $('#cont-ano-residente').css('display', 'inline-block');
+                    $('#ano_residencia').attr('required', 'required');
+
+                    // Swal.fire({
+                    //     title: '',
+                    //     text: 'Se le recuerda que deberá subir imagen legible de su credencial de residente vigente, o su carta de residencia expedida por su hospital vigente, para proceder a realizar el cobro, de lo contrario deberá pagar la inscripción al Curso o al Congreso en la Modalidad de Médico No Socio',
+                    //     icon: 'info',
+                    //     showCancelButton: true,
+                    //     showCancelButton: false,
+                    //     allowOutsideClick: false,
+                    //     confirmButtonColor: '#3085d6',
+                    //     confirmButtonText: 'Aceptar'
+                    // })
+                } else {
+                    // $('#cont-archivo-residente').css('display', 'none');
+                    // $('#archivo_residente').removeAttr('required')
+                    // $('#archivo_residente').val('')
+                    $('#cont-ano-residente').css('display', 'none');
+                    $('#ano_residencia').removeAttr('required');
+                    $('#ano_residencia').val('');
+
+
+                }
+            });
+
+            $("#especialidades").on("change", function() {
+                // var especialidad = $("#especialidades option:selected").text();
+                var especialidad = $(this).val();
+                if (especialidad == 6) {
+                    $("#cont-especialidad-text").show();
+                    $("#txt_especialidad").attr('required', 'required');
+                } else {
+                    $("#cont-especialidad-text").hide();
+                    $("#txt_especialidad").val("");
+                    $("#txt_especialidad").removeAttr('required');
+                }
+            })
+
 
 
             function seleccionarTalleres(user_id) {
@@ -520,7 +879,7 @@
                             $('#modal_talleres').modal('show');
                             $("#nombre_paquete").text(respuesta.nombre_combo);
                             $("#numero_talleres").text(respuesta.numero_talleres);
-                            $("#nombre_user").text(respuesta.nombre_user);
+                            $("#nombre_user_text").text(respuesta.nombre_user);
                             $("#clave_combo").val(respuesta.clave);
                             getTalleres(user_id);
                         } else {
@@ -640,7 +999,7 @@
                 var descripcion = $("#txt_descripcion").val();
                 console.log(tipo_moneda);
 
-                
+
 
                 if (metodo_pago != '') {
                     Swal.fire({
@@ -689,7 +1048,7 @@
                                             getCombo(user_id);
 
                                         });
-                                       
+
 
                                     }
                                 },
@@ -874,7 +1233,7 @@
                         } else {
                             // console.log(Object.keys(respuesta).length);
                             // crearTabla(respuesta);
-                            location.reload();
+                            // location.reload();
                             console.log("refrescar");
                         }
                     },

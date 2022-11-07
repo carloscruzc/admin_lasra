@@ -536,5 +536,16 @@ sql;
         //$mysqli -> set_charset("utf8");
     }
 
+    public static function getEmail($search){
+      $mysqli = Database::getInstance();
+      $query =<<<sql
+      SELECT *
+      FROM utilerias_administradores WHERE
+      usuario = '$search'
+sql;
+      
+      return $mysqli->queryAll($query);
+    }
+
 
 }

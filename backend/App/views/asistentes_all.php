@@ -1,9 +1,10 @@
-<?php echo $header;?>
+<?php echo $header; ?>
 <title>
-    Asistentes - LASRA - GRUPO LAHE    
+    Asistentes - LASRA - GRUPO LAHE
 </title>
+
 <body class="g-sidenav-show  bg-gray-100">
-    <?php echo $asideMenu;?>
+    <?php echo $asideMenu; ?>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
         <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-4 top-1 px-0 mx-4 shadow-none border-radius-xl z-index-sticky" id="navbarBlur" data-scroll="true">
@@ -96,7 +97,7 @@
                                 </p>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -108,7 +109,7 @@
                     </div>
                     <div class="ps-4">
                         <div class="panel-body" <?php echo $visible; ?>></div>
-                        <button type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3" data-toggle="modal" data-target="#Modal_Add"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                        <button type="button" class="btn bg-gradient-info btn-icon-only mb-0 mt-3" data-toggle="modal" data-target="#addNewUser"><i class="fa fa-plus" aria-hidden="true"></i></button>
                         <button type="button" class="btn bg-gradient-secondary btn-icon-only mb-0 mt-3" data-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Todo cambio que usted realice en el sistema será guardado con fecha, usuario y transacción.">
                             <span class="fa fa-info"></span>
                         </button>
@@ -124,8 +125,8 @@
 
                         <div class="card-header pb-0">
                             <div class="d-lg-flex">
-                               
-                               
+
+
                                 <div class="ms-auto my-auto mt-lg-0 mt-4">
                                     <div class="ms-auto my-auto">
 
@@ -159,19 +160,19 @@
 
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
-                                <div>
-                                    <form class="form-inline my-2 my-lg-0" action="/Asistentes/Usuario" method="post">
-                                        <div class="row">
-                                            <div class="col-12 col-md-12">
-                                                <input class="form-control mr-sm-2" style="font-size: 35px;" autofocus type="search" id="search" name="search" placeholder="Ej. Adrian Segura Becerra - XaS6cr" aria-label="Search">
+                                    <div>
+                                        <form class="form-inline my-2 my-lg-0" action="/Asistentes/Usuario" method="post">
+                                            <div class="row">
+                                                <div class="col-12 col-md-12">
+                                                    <input class="form-control mr-sm-2" style="font-size: 35px;" autofocus type="search" id="search" name="search" placeholder="Ej. Adrian Segura Becerra - XaS6cr" aria-label="Search">
+                                                </div>
+                                                <div class="col-12 col-md-12 mt-md-2">
+                                                    <button class="btn max-btn-lg bg-gradient-pink-white text-white my-2 my-sm-0" type="submit">Buscar</button>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-md-12 mt-md-2">
-                                                <button class="btn max-btn-lg bg-gradient-pink-white text-white my-2 my-sm-0" type="submit">Buscar</button>
-                                            </div>
-                                        </div>
-                                       
-                                    </form>
-                                </div>
+
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
 
@@ -208,7 +209,7 @@
             </div>
 
             <style>
-                table.dataTable tbody tr.even{
+                table.dataTable tbody tr.even {
                     background-color: #DEDDDF;
                 }
             </style>
@@ -230,138 +231,239 @@
             </footer>
 
     </main>
-    <?php echo $modal;?>
-<!-- MODAL AGREGAR USUARIO -->
-    <div class="modal fade" id="Modal_Add" role="dialog" aria-labelledby="" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
+    <?php echo $modal; ?>
+    <!-- Modal crear nuevo usuario -->
+    <div class="modal fade" id="addNewUser" tabindex="-1" role="dialog" aria-labelledby="addNewUserLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        Asistente para Crear Usuarios
-                    </h5>
-
+                    <h5 class="modal-title" id="addNewUserLabel">Crear Usuario</h5>
                     <span type="button" class="btn bg-gradient-danger" data-dismiss="modal" aria-label="Close">
                         X
                     </span>
                 </div>
-                <div class="modal-body">
-                    <p style="font-size: 12px">A continuación ingrese los datos del usuario.</p>
-                    <hr>
-                    <form method="POST" enctype="multipart/form-data" id="form_datos">
-                        <div class="form-group row">
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-12 col-sm-1 col-xs-12" for="nombre">Nombre <span class="required">*</span></label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
-                            </div>
+                <form class="form-horizontal" id="addUser" action="" method="POST">
+                    <div class="modal-body">
 
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-12 col-sm-1 col-xs-12" for="apellidop">Apellido Paterno <span class="required">*</span></label>
-                                <input type="text" class="form-control" id="apellidop" name="apellidop" placeholder="Apellido Paterno" required  style="text-transform:uppercase;"onkeyup="javascript:this.value=this.value.toUpperCase();">
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-12 col-sm-1 col-xs-12" for="apellidom">Apellido Materno <span class="required"></span></label>
-                                <input type="text" class="form-control" id="apellidom" name="apellidom" placeholder="Apellido Materno" require style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-12 col-sm-1 col-xs-12" for="usuario">Email <span class="required">*</span></label>
-                                <input type="email" class="form-control" id="usuario" name="usuario" placeholder="Email" required>
-                                <span id="msg_email" style="font-size: 0.75rem; font-weight: 700;margin-bottom: 0.5rem;"></span>
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-12 col-sm-1 col-xs-12" for="title">Prefijo <span class="required">*</span></label>
+                        <div class="row">
+                            <div class="col-12 col-sm-2">
+                                <label>Prefijo *</label>
                                 <select class="multisteps-form__select form-control all_input_select" name="title" id="title" required>
-                                    <option value="" selected>Selecciona una Opción</option>
                                     <option value="Dr.">Dr.</option>
                                     <option value="Dra.">Dra.</option>
                                     <option value="Sr.">Sr.</option>
                                     <option value="Sra.">Sra.</option>
                                 </select>
                             </div>
-
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-12 col-sm-1 col-xs-12" for="telefono">Telefono <span class="required">*</span></label>
-                                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Telefono" required>
+                            <div class="col-12 col-sm-5">
+                                <label>Nombre *</label>
+                                <input class="multisteps-form__input form-control" type="text" id="nombre_user" name="nombre_user" placeholder="" maxlength="100" style="text-transform:uppercase;" required>
+                            </div>
+                            <div class="col-12 col-sm-5">
+                                <label>Apellido Paterno *</label>
+                                <input class="multisteps-form__input form-control" type="text" id="apellidop_user" name="apellidop_user" placeholder="" style="text-transform:uppercase;" maxlength="100">
                             </div>
 
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-12 col-sm-1 col-xs-12" for="pais">País <span class="required">*</span></label>
-                                <select class="multisteps-form__select form-control all_input_select" name="pais" id="pais" required>
-                                    <option value="" selected>Selecciona una Opción</option>
-                                    <?= $optionPais ?>
+                            <div class="col-12 col-sm-5">
+                                <label>Apellido Materno *</label>
+                                <input class="multisteps-form__input form-control" type="text" id="apellidom_user" name="apellidom_user" placeholder="" style="text-transform:uppercase;" maxlength="100">
+                            </div>
+
+                            <div class="col-12 col-sm-7">
+                                <label>Email *</label>
+                                <input class="multisteps-form__input form-control" type="text" id="email_user" name="email_user" placeholder="" maxlength="100">
+                                <span id="msg_email_user" style="color:#FF3B11;font-size: 12px;"></span>
+                            </div>
+
+                            <div class="col-12 col-sm-4">
+                                <label>Teléfono</label>
+                                <input class="multisteps-form__input form-control" type="number" id="telephone" name="telephone" maxlength="10" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="ej. (555) 555-1234" autocomplete="no" value="">
+                            </div>
+
+                            <div class="col-12 col-sm-4" id="cont-categoria">
+
+                                <label>Nivel *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="categorias" id="categorias" required>
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+                                    <?php echo $categorias ?>
+                                </select>
+
+                            </div>
+
+
+
+                            <!-- <div class="col-12 col-sm-4" id="cont-ano-residente" style="display: none;">
+
+                                <label>Año de Residencia *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="ano_residencia" id="ano_residencia">
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+
+                                </select>
+
+                            </div> -->
+
+                            <div class="col-12 col-sm-4" id="cont-archivo-residente" style="display: none;">
+                                <label>Archivo *</label>
+                                <input type="file" accept="image/*,.pdf" class="form-control" id="archivo_residente" name="archivo_residente" style="width: auto; margin: 0 auto;" onfocus="focused(this)" onfocusout="defocused(this)">
+                            </div>
+
+
+                            <!-- <div class="col-12 col-sm-4 mt-3" id="cont-clave-socio" style="display: none;">
+                                <label id="label-clave-socio">Clave Socio *</label>
+                                <input type="text" class="form-control" name="clave_socio" id="clave_socio" value="<?= $data['clave_socio'] ?>">
+                            </div> -->
+
+                            <div class="col-12 col-sm-4" id="cont-especialidades">
+
+                                <label id="label-especialidades">Especialidades *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="especialidades" id="especialidades" required>
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+
+                                    <?= $especialidades ?>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-12 col-sm-4" id="cont-especialidad-text" style="display: none;">
+
+                                <label id="label-especialidades">Especialidad (Especifique) *</label>
+                                <input type="text" class="form-control" id="txt_especialidad" name="txt_especialidad">
+
+                            </div>
+
+
+
+
+                            <div class="col-12 col-sm-4">
+                                <label>País *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="nationality" id="nationality" onchange="actualizaEdos();" required>
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+                                    <option value="156">Mexico</option>
+                                    <?php echo $idCountry; ?>
                                 </select>
                             </div>
 
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-12 col-sm-1 col-xs-12" for="estado">Estado <span class="required">*</span></label>
-                                <select class="multisteps-form__select form-control all_input_select" name="estado" id="estado" required disabled>
-                                    <option value="" selected>Selecciona una Opción</option>
+
+                            <div class="col-12 col-sm-4  ">
+                                <label>Estado *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="state" id="state" required>
+
                                 </select>
                             </div>
 
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-12 col-sm-1 col-xs-12" for="categoria">Categoría <span class="required">*</span></label>
-                                <select class="multisteps-form__select form-control all_input_select" name="categoria" id="categoria" required>
-                                    <option value="" selected>Selecciona una Opción</option>
-                                    <?= $optionCate ?>
-                                </select>
-                            </div>
-
-                            <div class="form-group col-md-12">
-                                <label class="control-label col-md-12 col-sm-1 col-xs-12" for="motivo">Motivo <span class="required">*</span></label>
-                                <textarea id="motivo" name="motivo" class="form-control"></textarea>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn bg-gradient-success" id="btn_upload" name="btn_upload">Aceptar</button>
-                                <button type="button" class="btn bg-gradient-secondary" data-dismiss="modal">Cancelar</button>
-                            </div>
                         </div>
-                    </form>
-                </div>
+                        <br>
 
+
+                        <h5 class="modal-title" id="">Datos de Facturación</h5>
+
+                        <hr>
+
+                        <!-- <input type="hidden" name="modal_user_id" id="modal_user_id"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-4">
+                                <label>Razón Social </label>
+                                <input class="multisteps-form__input form-control" type="text" id="business_name_iva_user" name="business_name_iva_user" style="text-transform: uppercase;" placeholder="eg. Christopher Prior Jones" maxlength="100">
+                            </div>
+                            <div class="col-12 col-sm-4 mt-1 mt-sm-0">
+                                <label>RFC </label>
+                                <input class="multisteps-form__input form-control" type="text" id="code_iva_user" name="code_iva_user" placeholder="eg. CPJ41250AS" maxlength="13" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                            </div>
+
+
+                            <div class="col-md-4 col-sm-12">
+                                <label>Correo Electrónico facturación </label>
+                                <input class="multisteps-form__input form-control" type="text" id="email_receipt_iva_user" name="email_receipt_iva_user" placeholder="eg. user@domain.com">
+                                <span class="mb-0 text-sm" id="error_email_send" style="display:none;color:red;">Correo electrónico incorrecto</span>
+                            </div>
+
+
+                            <div class="col-md-4 col-sm-12">
+                                <label>CP</label>
+                                <input class="multisteps-form__input form-control" id="postal_code_iva_user" name="postal_code_iva_user" type="number" min="1" maxlength="5" placeholder="Código postal" class="form-control ameg-shadow-box-two" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            </div>
+
+                            <div class="col-md-4 col-sm-12">
+                                <label>CFDI * </label>
+                                <select class="multisteps-form__select form-control all_input_select" name="cfdi" id="cfdi">
+                                    <option value="">Selecciona una opción</option>
+                                    <?= $usoCfdi ?>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-4 col-sm-12">
+                                <label>Régimen Fiscal * </label>
+                                <select class="multisteps-form__select form-control all_input_select" name="regimen_fiscal" id="regimen_fiscal">
+                                    <option value="">Selecciona una opción</option>
+                                    <?= $remigenFiscal ?>
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-12 col-sm-12">
+                                <label>Dirección Fiscal </label>
+                                <textarea class="multisteps-form__input form-control" name="direccion_user" id="direccion_user" cols="30" rows="3"></textarea>
+                                <!-- <input class="multisteps-form__input form-control" type="text" id="direccion_user" name="direccion_user" placeholder=""> -->
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="reset" id="reset_form_addUser"  class="d-none">
+                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" id="cerrar_modal">Cerrar</button>
+                        <button type="submit" class="btn bg-gradient-primary" id="btn_save_user">Guardar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+
 </body>
 
 <?php echo $footer; ?>
 
 <script>
     if (window.history.replaceState) { // verificamos disponibilidad
-    window.history.replaceState(null, null, window.location.href);
-}
+        window.history.replaceState(null, null, window.location.href);
+    }
 </script>
 
 <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js" defer></script>
 <link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" />
 
 <script>
+    function actualizaEdos(pais = null) {
+        var pais = $('#nationality').val();
+        $.ajax({
+                url: '/Caja/ObtenerEstado',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    pais: pais
+                },
+
+            })
+            .done(function(json) {
+                if (json.success) {
+                    $("#state").html(json.html);
+                }
+            })
+            .fail(function() {
+                //   alert("Ocurrio un error al actualizar el estado intenta de nuevo");
+            })
+    }
     $(document).ready(function() {
 
-        // $("#categoria").on("change",function(){
-        //     alert($(this).attr('data-costo'));
-        //     alert($(this).val());
-        // })
 
-        $("#form_etiquetas").on("click", function(event) {
-            event.preventDefault();
-            var formData = new FormData(document.getElementById("form_etiquetas"));
-
-            no_habitacion = $("#no_habitacion").val();
-            clave_ra = $("#clave_ra").val();
-            no_etiquetas = $("#no_etiquetas").val();
-
-            console.log(no_habitacion);
-            console.log(clave_ra);
-            console.log(no_etiquetas);
-
-            $("#a_abrir_etiqueta").attr("href", "/Asistentes/abrirpdf/" + clave_ra + "/" + no_etiquetas + "/" + no_habitacion);
-            $("#a_abrir_etiqueta")[0].click();
-
-        });
 
         $('#utilerias').removeAttr('hidden');
         $('#utilerias').addClass('show');
@@ -538,125 +640,180 @@
 
             });
         });
-        
-        $("#pais").on("change", function() {
-            var pais = $(this).val();
-            $.ajax({
-                url: "/Asistentes/getEstadoPais",
-                type: "POST",
-                data: {
-                    pais
-                },
-                dataType: "json",
-                beforeSend: function() {
-                    console.log("Procesando....");
-                    $('#estado')
-                        .find('option')
-                        .remove()
-                        .end();
 
-                },
-                success: function(respuesta) {
-                    console.log(respuesta);
-
-                    $('#estado').removeAttr('disabled');
-
-                    $('#estado')
-                        .append($('<option>', {
-                                value: ''
-                            })
-                            .text('Selecciona una opción'));
-
-                    $.each(respuesta, function(key, value) {
-                        //console.log(key);
-                        console.log(value);
-                        $('#estado')
-                            .append($('<option>', {
-                                    value: value.id_estado
-                                })
-                                .text(value.estado));
-                    });
-
-                },
-                error: function(respuesta) {
-                    console.log(respuesta);
-                }
-
-            });
-        });
-
-        $("#form_datos").on("submit", function(event) {
+        //crear usuarios
+        $("#addUser").on("submit", function(event) {
             event.preventDefault();
-            var formData = new FormData(document.getElementById("form_datos"));
 
-            // for (var value of formData.values()) {
-            //     console.log(value);
-            // }
+            var formData = new FormData(document.getElementById("addUser"));
+            for (var value of formData.values()) {
+                console.log(value);
+            }
+
             $.ajax({
-                url: "/Asistentes/saveData",
+                url: "/Caja/addNewUser",
                 type: "POST",
                 data: formData,
+                dataType: 'json',
+                cache: false,
                 contentType: false,
                 processData: false,
                 beforeSend: function() {
                     console.log("Procesando....");
-                    // alert('Se está borrando');
-
                 },
                 success: function(respuesta) {
                     console.log(respuesta);
 
-                    if (respuesta == 'success') {
-                        Swal.fire("¡Se creo el usuario correctamente!", "", "success").
-                        then((value) => {
-                            window.location.reload();
+                    if (respuesta.status == 'success') {
+                        // swal("¡Se actualizaron los Datos Correctamente!", "", "success")
+                        // $('#cerrar_modal').click();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Alerta',
+                            text: 'Usuario registrado correctamente.',
+                            timer: 2000
                         });
+                        $("#reset_form_addUser").click();                        
+                       
+                        setTimeout(function(){
+                            location.href = '/Asistentes';
+                        },2000)
+                        
+                        
+                        // $("#search_item").focus();
                     } else {
-                        Swal.fire("¡Hubo un error al crear el usuario!", "", "warning").
-                        then((value) => {
-                            window.location.reload();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Alerta',
+                            text: 'Hubo un error al registrar el usuario.',
+                            timer: 2000
                         });
+                       
+                        $("#reset_form_addUser").click();
+                        setTimeout(function(){
+                            location.href = '/Asistentes';
+                        },2000)
+                        
+                        
+                        // swal("¡Hubo un error al actualizar!", "Contacte a soporte", "error")
+                        // $('#cerrar_modal').modal();
                     }
+
+
                 },
                 error: function(respuesta) {
                     console.log(respuesta);
-                    // alert('Error');
-                    Swal.fire("¡Hubo un error al crear el usuario!", "", "warning").
-                    then((value) => {
-                        window.location.reload();
-                    });
                 }
+
             });
         });
+
+        $("#nombre_user").on("keyup", function() {
+            var nombre = $(this).val();
+            var apellidop = $("#apellidop_user").val();
+            var apellidom = $("#apellidom_user").val();
+            $("#business_name_iva_user").val(nombre + " " + apellidop + " " + apellidom);
+        })
+
+        $("#apellidop_user").on("keyup", function() {
+            var nombre = $("#nombre_user").val();
+            var apellidop = $(this).val();
+            var apellidom = $("#apellidom_user").val();
+            $("#business_name_iva_user").val(nombre + " " + apellidop + " " + apellidom);
+        })
+
+        $("#apellidom_user").on("keyup", function() {
+            var nombre = $("#nombre_user").val();
+            var apellidop = $("#apellidop_user").val();
+            var apellidom = $(this).val();
+            $("#business_name_iva_user").val(nombre + " " + apellidop + " " + apellidom);
+        })
+
+
+        $("#email_user").on("keyup", function() {
+            var email = $(this).val();
+            $("#email_receipt_iva_user").val(email);
+
+            console.log(email);
+
+            $.ajax({
+                url: "/Caja/searchEmail",
+                type: "POST",
+                data: {
+                    email
+                },
+                dataType: 'json',
+                beforeSend: function() {
+                    console.log("Procesando....");
+
+                },
+                success: function(respuesta) {
+                    // console.log(respuesta);
+                    // console.log(respuesta.length);
+                    if (respuesta.length > 0) {
+                        $("#msg_email_user").html("Este correo ya esta registrado.");
+                        $("#btn_save_user").attr('disabled', 'disabled');
+                    } else {
+                        $("#msg_email_user").html("");
+                        $("#btn_save_user").removeAttr('disabled');
+                    }
+
+                },
+                error: function(respuesta) {
+
+                }
+
+            });
+        })
+
+        //si la categoria es residente
+        $('#categorias').on('change', function() {
+            let categoria = $(this).val();
+
+            if (categoria == 3) {
+                // $('#cont-archivo-residente').css('display', 'inline-block');
+                // $('#archivo_residente').attr('required', 'required');
+                $('#cont-ano-residente').css('display', 'inline-block');
+                $('#ano_residencia').attr('required', 'required');
+
+                // Swal.fire({
+                //     title: '',
+                //     text: 'Se le recuerda que deberá subir imagen legible de su credencial de residente vigente, o su carta de residencia expedida por su hospital vigente, para proceder a realizar el cobro, de lo contrario deberá pagar la inscripción al Curso o al Congreso en la Modalidad de Médico No Socio',
+                //     icon: 'info',
+                //     showCancelButton: true,
+                //     showCancelButton: false,
+                //     allowOutsideClick: false,
+                //     confirmButtonColor: '#3085d6',
+                //     confirmButtonText: 'Aceptar'
+                // })
+            } else {
+                // $('#cont-archivo-residente').css('display', 'none');
+                // $('#archivo_residente').removeAttr('required')
+                // $('#archivo_residente').val('')
+                $('#cont-ano-residente').css('display', 'none');
+                $('#ano_residencia').removeAttr('required');
+                $('#ano_residencia').val('');
+
+
+            }
+        });
+
+        $("#especialidades").on("change", function() {
+            // var especialidad = $("#especialidades option:selected").text();
+            var especialidad = $(this).val();
+            if (especialidad == 6) {
+                $("#cont-especialidad-text").show();
+                $("#txt_especialidad").attr('required', 'required');
+            } else {
+                $("#cont-especialidad-text").hide();
+                $("#txt_especialidad").val("");
+                $("#txt_especialidad").removeAttr('required');
+            }
+        })
+
+
+
+
 
     });
-
-    $("#usuario").on("keyup", function() {
-            console.log($(this).val());
-            $.ajax({
-                type: "POST",
-                async: false,
-                url: "/Asistentes/isUserValidate",
-                data: {
-                    usuario: $(this).val()
-                },
-                success: function(data) {
-                    console.log(data)
-                    if (data == "true") {
-                        //el usuario ya existe
-                        $("#btn_upload").css('display', 'none');
-                        $("#msg_email").css('color', 'red');
-                        $("#msg_email").html('Este correo ya se ha registrado');
-
-                    } else {
-                        $("#btn_upload").css('display', 'inline-block');
-                        $("#msg_email").css('color', 'red');
-                        $("#msg_email").html('');
-                    }
-                }
-            });
-        });
-
-    
 </script>
-

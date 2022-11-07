@@ -812,4 +812,106 @@ sql;
 sql;
                 return $mysqli->update($query);
         }
+
+        public static function getCfdi()
+        {
+                $mysqli = Database::getInstance(true);
+                $query = <<<sql
+        SELECT * FROM cat_uso_cfdi
+sql;
+
+                return $mysqli->queryAll($query);
+        }
+
+        public static function getRegimenFiscal()
+        {
+                $mysqli = Database::getInstance(true);
+                $query = <<<sql
+        SELECT * FROM cat_regimen_fiscal
+sql;
+
+                return $mysqli->queryAll($query);
+        }
+
+        public static function InsertUser($usuario)
+        {
+                $mysqli = Database::getInstance(true);
+                $query = <<<sql
+        INSERT INTO utilerias_administradores (usuario, title,nombre, apellidop, apellidom, telefono,id_categoria,especialidades,id_pais, id_estado, referencia,monto_congreso,txt_especialidad, business_name_iva, code_iva, email_receipt_iva, direccion, postal_code_iva, regimen_fiscal, cfdi) 
+        VALUES (:email, :title,:nombre, :apellidop, :apellidom, :telefono,:id_categoria,:especialidades,:id_pais, :id_estado,:referencia,:monto_congreso,:txt_especialidad,:razon_social, :rfc, :email_fac, :direccion_fiscal, :cp_fiscal, :regimen_fiscal, :cfdi)
+sql;
+
+                $params = array(
+                        ':email' => $usuario->_email,
+                        ':title' => $usuario->_title,
+                        ':nombre' => $usuario->_nombre,
+                        ':apellidop' => $usuario->_apellidop,
+                        ':apellidom' => $usuario->_apellidom,
+
+                        ':telefono' => $usuario->_telephone,
+                        ':id_categoria' => $usuario->_categorias,
+                        ':especialidades' => $usuario->_especialidades,
+                        ':id_pais' => $usuario->_nationality,
+                        ':id_estado' => $usuario->_state,
+                        ':referencia' => $usuario->_referencia,
+                        ':monto_congreso' => $usuario->_monto_congreso,
+                        ':txt_especialidad' => $usuario->_txt_especialidad,
+
+                        ':razon_social' => $usuario->_business_name_iva,
+                        ':rfc' => $usuario->_code_iva,
+                        ':email_fac' => $usuario->_email_receipt_iva,
+                        ':direccion_fiscal' => $usuario->_direccion,
+                        ':cp_fiscal' => $usuario->_postal_code_iva,
+                        ':regimen_fiscal' => $usuario->_regimen_fiscal,
+                        ':cfdi' => $usuario->_cfdi
+                );
+
+                return $mysqli->insert($query, $params);
+        }
+
+        public static function getAllEspecialidades()
+        {
+                $mysqli = Database::getInstance();
+                $query = <<<sql
+        SELECT * FROM especialidades
+sql;
+                return $mysqli->queryAll($query);
+        }
+
+        public static function getCategorias()
+        {
+                $mysqli = Database::getInstance();
+                $query = <<<sql
+                SELECT * FROM categorias WHERE id_categoria IN (3,7)
+sql;
+                return $mysqli->queryAll($query);
+        }
+
+        public static function getCountryAll()
+        {
+                $mysqli = Database::getInstance();
+                $query = <<<sql
+      SELECT * FROM paises WHERE id_pais != 156 ORDER BY country ASC
+sql;
+                return $mysqli->queryAll($query);
+        }
+
+        public static function getState($pais)
+        {
+                $mysqli = Database::getInstance();
+                $query = <<<sql
+     SELECT * FROM estados WHERE id_pais = $pais;
+sql;
+                return $mysqli->queryAll($query);
+        }
+
+        public static function getMontoPago($id_categoria)
+        {
+                $mysqli = Database::getInstance(true);
+                $query = <<<sql
+        SELECT * FROM categorias where id_categoria = '$id_categoria'
+sql;
+
+                return $mysqli->queryOne($query);
+        }
 }

@@ -35,33 +35,60 @@ class Asistentes extends Controller
     public function index()
     {
 
-        $paises = AsistentesDao::getPais();
-        $optionPais = '';
-        foreach($paises as $key => $value){
-            $optionPais .= <<<html
-                    <option value="{$value['id_pais']}">{$value['pais']}</option>
+        $cfdi = '';
+        foreach (CajaDao::getCfdi() as $key => $value) {
+            // $cfdi = ($value['id_pais'] == $userData['id_pais']) ? 'selected' : '';  
+            $cfdi .= <<<html
+                    <option value="{$value['id_uso_cfdi']}">{$value['clave_uso_cfdi']} - {$value['descripcion_uso_cfdi']}</option>
 html;
         }
 
-        $cate = AsistentesDao::getCategoriaMas();
-        $optionCate = '';
-        foreach($cate as $key => $value){
-            $optionCate .= <<<html
-                    <option value="{$value['id_categoria']}" data-costo="{$value['costo']}">{$value['categoria']}</option>
+        $remigenFiscal = '';
+        foreach (CajaDao::getRegimenFiscal() as $key => $value) {
+            // $cfdi = ($value['id_pais'] == $userData['id_pais']) ? 'selected' : '';  
+            $remigenFiscal .= <<<html
+                    <option value="{$value['id_regimen_fiscal']}">{$value['descripcion_regimen_fiscal']}</option>
 html;
         }
 
-        // var_dump($cate);
+        $especialidades = '';
+        foreach (CajaDao::getAllEspecialidades() as $key => $value) {
+            $especialidades .= <<<html
+           
+        <option value="{$value['id_especialidad']}">{$value['nombre']}</option>
+html;
+        }
 
-        // exit;
+        $categorias = '';
+        foreach (CajaDao::getCategorias() as $key => $value) {
+            $categorias .= <<<html
+           
+        <option value="{$value['id_categoria']}">{$value['categoria']}</option>
+html;
+        }
+
+
+        View::set('usoCfdi', $cfdi);
+        View::set('remigenFiscal', $remigenFiscal);
+        View::set('idCountry', $this->getCountry());
+        View::set('especialidades', $especialidades);
+        View::set('categorias', $categorias);
 
 
         View::set('asideMenu',$this->_contenedor->asideMenu());
-        View::set('optionPais', $optionPais);
-        View::set('optionCate', $optionCate);
-        // View::set('tabla_faltantes', $this->getAsistentesFaltantes());
-        // View::set('tabla', $this->getAllColaboradoresAsignados());
         View::render("asistentes_all");
+    }
+
+    public function getCountry()
+    {
+        $country = '';
+        foreach (CajaDao::getCountryAll() as $key => $value) {
+            $country .= <<<html
+           
+        <option value="{$value['id_pais']}">{$value['country']}</option>
+html;
+        }
+        return $country;
     }
 
     public function getEstadoPais(){
