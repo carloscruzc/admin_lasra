@@ -67,15 +67,24 @@ html;
 html;
         }
 
+        $categoria_gaf = '';
+        foreach (CajaDao::getCategoriasGafetes() as $key => $value) {
+            $categoria_gaf .= <<<html
+           
+        <option value="{$value['id']}">{$value['tipo']}</option>
+html;
+        }
+
 
         View::set('usoCfdi', $cfdi);
         View::set('remigenFiscal', $remigenFiscal);
         View::set('idCountry', $this->getCountry());
         View::set('especialidades', $especialidades);
         View::set('categorias', $categorias);
+        View::set('categoria_gaf', $categoria_gaf);
 
 
-        View::set('asideMenu',$this->_contenedor->asideMenu());
+        View::set('asideMenu', $this->_contenedor->asideMenu());
         View::render("asistentes_all");
     }
 
@@ -91,7 +100,8 @@ html;
         return $country;
     }
 
-    public function getEstadoPais(){
+    public function getEstadoPais()
+    {
         $pais = $_POST['pais'];
 
         if (isset($pais)) {
@@ -108,19 +118,19 @@ html;
         $str_apellidop = str_split($_POST['apellidop']);
         $str_apellidom = str_split($_POST['apellidom']);
 
-        $fecha = explode('-',$date);
+        $fecha = explode('-', $date);
 
-        $referencia = $str_nombre[0].$str_nombre[1].$str_apellidop[0].$str_apellidop[1].$fecha[0].$fecha[1].$fecha[2];
+        $referencia = $str_nombre[0] . $str_nombre[1] . $str_apellidop[0] . $str_apellidop[1] . $fecha[0] . $fecha[1] . $fecha[2];
 
         $monto_congreso = AsistentesDao::getCostoCategoria(MasterDom::getData('categoria'))['costo'];
 
 
-        $data = new \stdClass();            
+        $data = new \stdClass();
         $data->_nombre = MasterDom::getData('nombre');
         $data->_apellidop = MasterDom::getData('apellidop');
         $data->_apellidom = MasterDom::getData('apellidom');
         $data->_usuario = MasterDom::getData('usuario');
-        $data->_title= MasterDom::getData('title');
+        $data->_title = MasterDom::getData('title');
         $data->_telefono = MasterDom::getData('telefono');
         $data->_pais = MasterDom::getData('pais');
         $data->_estado = MasterDom::getData('estado');
@@ -142,13 +152,15 @@ html;
         }
     }
 
-    public function isUserValidate(){
-        echo (count(AsistentesDao::getUserRegister($_POST['usuario']))>=1)? 'true' : 'false';
+    public function isUserValidate()
+    {
+        echo (count(AsistentesDao::getUserRegister($_POST['usuario'])) >= 1) ? 'true' : 'false';
     }
 
     //Metodo para reaslizar busqueda de usuarios, sin este metodo no podemos obtener informacion en la vista
-    public function Usuario() {
-        $search = $_POST['search'];       
+    public function Usuario()
+    {
+        $search = $_POST['search'];
 
         // $all_ra = AsistentesDao::getAllRegistrosAcceso();
         // $this->setTicketVirtual($all_ra);
@@ -159,31 +171,60 @@ html;
             $modal .= $this->generarModal($value);
         }
 
-        $paises = AsistentesDao::getPais();
-        $optionPais = '';
-        foreach($paises as $key => $value){
-            $optionPais .= <<<html
-                    <option value="{$value['id_pais']}">{$value['pais']}</option>
+        $cfdi = '';
+        foreach (CajaDao::getCfdi() as $key => $value) {
+            // $cfdi = ($value['id_pais'] == $userData['id_pais']) ? 'selected' : '';  
+            $cfdi .= <<<html
+                    <option value="{$value['id_uso_cfdi']}">{$value['clave_uso_cfdi']} - {$value['descripcion_uso_cfdi']}</option>
 html;
         }
 
-        $cate = AsistentesDao::getCategoriaMas();
-        $optionCate = '';
-        foreach($cate as $key => $value){
-            $optionCate .= <<<html
-                    <option value="{$value['id_categoria']}" data-costo="{$value['costo']}">{$value['categoria']}</option>
+        $remigenFiscal = '';
+        foreach (CajaDao::getRegimenFiscal() as $key => $value) {
+            // $cfdi = ($value['id_pais'] == $userData['id_pais']) ? 'selected' : '';  
+            $remigenFiscal .= <<<html
+                    <option value="{$value['id_regimen_fiscal']}">{$value['descripcion_regimen_fiscal']}</option>
 html;
         }
-        
-        View::set('optionPais', $optionPais); 
-        View::set('optionCate', $optionCate);     
-        View::set('modal',$modal);    
+
+        $especialidades = '';
+        foreach (CajaDao::getAllEspecialidades() as $key => $value) {
+            $especialidades .= <<<html
+           
+        <option value="{$value['id_especialidad']}">{$value['nombre']}</option>
+html;
+        }
+
+        $categorias = '';
+        foreach (CajaDao::getCategorias() as $key => $value) {
+            $categorias .= <<<html
+           
+        <option value="{$value['id_categoria']}">{$value['categoria']}</option>
+html;
+        }
+
+        $categoria_gaf = '';
+        foreach (CajaDao::getCategoriasGafetes() as $key => $value) {
+            $categoria_gaf .= <<<html
+           
+        <option value="{$value['id']}">{$value['tipo']}</option>
+html;
+        }
+
+
+        View::set('usoCfdi', $cfdi);
+        View::set('remigenFiscal', $remigenFiscal);
+        View::set('idCountry', $this->getCountry());
+        View::set('especialidades', $especialidades);
+        View::set('categorias', $categorias);
+        View::set('categoria_gaf',$categoria_gaf);
         View::set('tabla', $this->getAllColaboradoresAsignadosByName($search));
-        View::set('asideMenu',$this->_contenedor->asideMenu());    
+        View::set('asideMenu', $this->_contenedor->asideMenu());
         View::render("asistentes_all");
     }
 
-    public function setTicketVirtual($asistentes){
+    public function setTicketVirtual($asistentes)
+    {
         foreach ($asistentes as $key => $value) {
             if ($value['clave'] == '' || $value['clave'] == NULL || $value['clave'] == 'NULL') {
                 $clave_10 = $this->generateRandomString(6);
@@ -192,7 +233,8 @@ html;
         }
     }
 
-    public function setClaveRA($all_ra){
+    public function setClaveRA($all_ra)
+    {
         foreach ($all_ra as $key => $value) {
             if ($value['clave'] == '' || $value['clave'] == NULL || $value['clave'] == 'NULL') {
                 $clave_10 = $this->generateRandomString(10);
@@ -201,7 +243,8 @@ html;
         }
     }
 
-    public function Detalles($id){
+    public function Detalles($id)
+    {
 
         $extraHeader = <<<html
 
@@ -345,30 +388,30 @@ html;
             <link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" />
 html;
 
-//         $categorias = AsistentesDao::getCategoria($id)[0];
-//         $optionCategorias = '';
-//         foreach($categorias as $key => $value){
-//             // $selectedInsti = ($value['id_categoria'] == $value['asd']) ? 'selected' : '';
-//             $optionCategorias .= <<<html
-//                     <option value="{$value['idcate']}">{$value['catecate']}</option>
-// html;
-//         }
+        //         $categorias = AsistentesDao::getCategoria($id)[0];
+        //         $optionCategorias = '';
+        //         foreach($categorias as $key => $value){
+        //             // $selectedInsti = ($value['id_categoria'] == $value['asd']) ? 'selected' : '';
+        //             $optionCategorias .= <<<html
+        //                     <option value="{$value['idcate']}">{$value['catecate']}</option>
+        // html;
+        //         }
 
         $usuario = AsistentesDao::getIdUsuarios($id);
         $cate = AsistentesDao::getCategoria();
         $optionCate = '';
-        foreach($cate as $key => $value){
+        foreach ($cate as $key => $value) {
             $selectedStatus = ($value['id_categoria'] == $usuario['id_categoria']) ? 'selected' : '';
             $optionCate .= <<<html
                     <option value="{$value['id_categoria']}" $selectedStatus>{$value['categoria']}</option>
 html;
         }
-        
+
         $detalles = AsistentesDao::getByClaveRA($id);
         $detalles_registro = AsistentesDao::getTotalByClaveRA($id);
         $detalles_categoria = AsistentesDao::getCategoria($id);
 
-        
+
 
         if ($detalles_registro[0]['img'] == '') {
             $img_asistente = <<<html
@@ -401,7 +444,7 @@ html;
         $clave_user = AsistentesDao::getRegistroAccesoByClaveRA($id)[0];
         $tv = AsistentesDao::getRegistroAccesoByClaveRA($id)[0]['ticket_virtual'];
         $nombre = AsistentesDao::getRegistroAccesoByClaveRA($id)[0]['nombre'];
-        $apellidos = AsistentesDao::getRegistroAccesoByClaveRA($id)[0]['apellido_paterno'].' '.AsistentesDao::getRegistroAccesoByClaveRA($id)[0]['apellido_materno'];
+        $apellidos = AsistentesDao::getRegistroAccesoByClaveRA($id)[0]['apellido_paterno'] . ' ' . AsistentesDao::getRegistroAccesoByClaveRA($id)[0]['apellido_materno'];
         if ($clave_user['ticket_virtual'] == '' || $clave_user['ticket_virtual'] == NULL || $clave_user['ticket_virtual'] == 'NULL') {
             $msg_clave = 'No posee ningún código';
             $btn_clave = '';
@@ -433,8 +476,6 @@ html;
                 </td>
             </tr>
 html;
-            
-
         }
 
         foreach ($productos_notin_pendientes_pago as $key => $value) {
@@ -449,7 +490,6 @@ html;
                 </td>
             </tr>
 html;
-            
         }
 
 
@@ -490,7 +530,7 @@ html;
         View::set('msg_clave', $msg_clave);
         View::set('btn_gafete', $btn_gafete);
         View::set('clave_ra', $id);
-        View::set('asideMenu',$this->_contenedor->asideMenu());
+        View::set('asideMenu', $this->_contenedor->asideMenu());
         View::set('btn_clave', $btn_clave);
         View::set('btn_genQr', $btn_genQr);
         // View::set('alergias_a', $alergias_a);
@@ -506,39 +546,40 @@ html;
         View::set('footer', $this->_contenedor->footer($extraFooter));
         // View::set('tabla_vacunacion', $this->getComprobanteVacunacionById($id));
         // View::set('tabla_prueba_covid', $this->getPruebasCovidById($id));
-        View::set('tabla_pendientes',$tabla_pendientes);
+        View::set('tabla_pendientes', $tabla_pendientes);
         View::render("asistentes_detalles");
     }
 
-    public function AsignarCurso(){
+    public function AsignarCurso()
+    {
         $user_id = $_POST['user_id'];
         $id_producto = $_POST['id_producto'];
         $id_pendiente_pago = $_POST['id_pendiente_pago'];
 
-        if($id_pendiente_pago != "" ){
-            
+        if ($id_pendiente_pago != "") {
+
             $existe = CajaDao::getPendientePagoById($id_pendiente_pago);
-            
-            if($existe){
 
-                $reference = $existe['reference']; 
-            
+            if ($existe) {
 
-                $updateStatus = CajaDao::updateStatusPendientePago($id_pendiente_pago,'socio');
+                $reference = $existe['reference'];
 
-                if($updateStatus){
+
+                $updateStatus = CajaDao::updateStatusPendientePago($id_pendiente_pago, 'socio');
+
+                if ($updateStatus) {
                     $data = new \stdClass();
                     $data->_user_id = $user_id;
-                    $data->_id_producto = $id_producto;           
+                    $data->_id_producto = $id_producto;
 
                     $insertAsiganProducto = CajaDao::insertAsignaProducto($data);
 
-                    if($insertAsiganProducto){
+                    if ($insertAsiganProducto) {
                         $data = [
                             "status" => "success",
                             "msg" => "Se actualizo pendiente pago y se asigno"
                         ];
-                    }else{
+                    } else {
                         $data = [
                             "status" => "fail",
                             "msg" => "No se actualizo pendiente pago y no se asigno"
@@ -546,13 +587,11 @@ html;
                     }
                 }
                 //acualizar el asigna pendiete pago
-               // insertar en saigna producto
+                // insertar en saigna producto
                 // echo "existe";
             }
-            
-            
-        }else{
-           
+        } else {
+
             //  insertar en saigna producto
             $user_data = AsistentesDao::getByClaveRA($user_id)[0];
 
@@ -565,39 +604,36 @@ html;
             $data->_tipo_pago = 'socio';
 
             $inserPendientesPago = CajaDao::insertPendientePago($data);
-            
-            if($inserPendientesPago){
+
+            if ($inserPendientesPago) {
                 // insertar en pendientes pago
                 $datos = new \stdClass();
                 $datos->_user_id = $user_id;
-                $datos->_id_producto = $id_producto;              
-                
+                $datos->_id_producto = $id_producto;
+
 
                 $insertAsiganProducto = CajaDao::insertAsignaProducto($datos);
 
-                if($insertAsiganProducto){
+                if ($insertAsiganProducto) {
                     $data = [
                         "status" => "success",
                         "msg" => "Se inserto pendiente pago y se asigno"
                     ];
-                }else{
+                } else {
                     $data = [
                         "status" => "fail",
                         "msg" => "No se insertp pendiente pago y no se asigno"
                     ];
                 }
-            }else{
+            } else {
                 $data = [
                     "status" => "fail",
                     "msg" => "No se inserto pendiente pago y no se asigno"
                 ];
             }
-            
-           
         }
 
         echo json_encode($data);
-
     }
 
     public function generaterQr($clave_ticket)
@@ -676,13 +712,13 @@ html;
             $clave_socio = $_POST['clave_socio'];
             $id_categoria = $_POST['id_categoria'];
 
-            if($id_categoria > 5){
+            if ($id_categoria > 5) {
                 $monto_congreso = 0;
-            }else if($id_categoria == 5){
+            } else if ($id_categoria == 5) {
                 $monto_congreso = 1000;
-            }else if ($id_categoria == 3){
+            } else if ($id_categoria == 3) {
                 $monto_congreso = 1500;
-            } else{
+            } else {
                 $monto_congreso = 5000;
             }
 
@@ -697,8 +733,7 @@ html;
 
             $id = AsistentesDao::update($documento);
 
-            if ($id)
-            {
+            if ($id) {
                 echo "success";
             } else {
                 echo "fail";
@@ -750,11 +785,12 @@ html;
     }
 
 
-    public function getAllColaboradoresAsignadosByName($name){
+    public function getAllColaboradoresAsignadosByName($name)
+    {
 
         $html = "";
         $incremento = 0;
-        
+
         foreach (GeneralDao::getAllColaboradoresByName($name) as $key => $value) {
             $incremento++;
             $clave_socio = '';
@@ -771,174 +807,76 @@ html;
             $status2 = '';
             $status3 = '';
             $status4 = '';
-////////////////////////////////////////////////////////////////////////////////////////////
-//             
-////////////////////////////////////////////////////////////////////////////////////////////
-        if($value['clave_socio'] == 'socio' || $value['socio'] == 1){
-            $sociote .= <<<html
+            ////////////////////////////////////////////////////////////////////////////////////////////
+            //             
+            ////////////////////////////////////////////////////////////////////////////////////////////
+            if ($value['clave_socio'] == 'socio' || $value['socio'] == 1) {
+                $sociote .= <<<html
             <span class="badge" style="background-image: linear-gradient(0deg, #02A7E9, #293A90 70%); color:#FFF !important; ">SOCIO</strong></span>
 html;
-        }else{
-            $sociote .= <<<html
+            } else {
+                $sociote .= <<<html
             <span class="badge" style="background-image: linear-gradient(0deg, rgba(234, 6, 6, 0.6), #b80505 50%); color:#FFF !important; "><strong>{$value['clave_socio']}NO ES SOCIO</strong></span>
 html;
-        }
-        
-        $socio = GeneralDao::getAdeudosUser($value['user_id']);
-        
-        if($value['socio'] == '4')
-                {
-                    $miembro_apm = '';
-                    $clave_socio .= <<<html
-                    <span class="badge badge-success" style="background-color: #0c6300; color:white "><strong>USUARIO AGREGADO MANUALMENTE</strong></span>  
-html;
-                }
-
-        if($socio['adeudos'] != 0){
-            if($value['clave_socio'] != '')
-                {
-                    $miembro_apm = '';
-                    $clave_socio .= <<<html
-                    <span class="badge badge-success" style="background-color: #0c6300; color:white "><strong>SOCIO ACTIVO</strong></span>  
-html;
-                }
-                else
-                {
-                    $clave_socio .= <<<html
-                    <span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>SOCIO NO ACTIVO</strong></span>
-                    <span class="badge badge-success" style="background-color: #F2B500; color:white "><strong>TOTAL ANUALIDADES ADEUDADAS: {$socio['adeudos']}</strong></span>  
-html;
-                }
-        }
-
-                if($value['id_categoria'] != 1)
-                {
-                    $becado_apm = 'NO';
-                    $clave_beca = '';
-                }
-                else
-                {
-                    foreach (GeneralDao::getBecaUser($value['user_id']) as $key => $value_beca) {
-
-                    $becado_apm = 'SI';
-                    $clave_beca .= <<<html
-                    <span class="badge badge-success" style="background-color: #239187; color:white "><strong>BECA #{$value_beca['codigo']} </strong></span>
-html;
-                    $clave_beca_2 .= <<<html
-                    <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm text-black"><span class="fa fa-calendar" style="font-size: 13px"></span>Becado por: {$value_beca['nombrecompleto']}</h6> 
-                    </div>
-html;
-                    }
-                }
-
-                $impreso = GeneralDao::getImpresionGafete($value['user_id']);
-                $imprimir = GeneralDao::getAllColaboradoresImprimir($value['user_id']);
-                
-                if($imprimir){
-                    if($impreso >= 1){
-                        $gafetes_httml .=<<<html
-                <td style="text-align:center; vertical-align:middle;">
-                <span class="badge badge-success" style="background-color: #44509C; color:white;"><strong>GAFETE YA IMPRESO</strong></span>
-                <br>
-                <span class="badge badge-success" style="background-color: #1279C4; color:white;"><strong>{$impreso['fecha_hora']}</strong></span>
-                <br>
-                    <a style="margin-top:5px;" href="/RegistroAsistencia/abrirpdfGafete/{$value['user_id']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
-
-                    <a href="/Constancias/abrirConstancia/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>
-                    
-                    <a href="/Constancias/abrirConstanciaDigital/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-2 btn-icon-only text-white" title="Imprimir Constancia Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Digital" target="_blank"><i class="fas fa-print"> </i></a>
-
-                </td>
-html;
-
-                    }else{
-                    $gafetes_httml .=<<<html
-                <td style="text-align:center; vertical-align:middle;">
-                <span class="badge badge-success" style="background-color: #0c6300; color:white; margin:10px;"><strong>DISPONIBLE PARA IMPRIMIR</strong></span>
-                <br>
-                    <a href="/RegistroAsistencia/abrirpdfGafete/{$value['user_id']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
-
-                    <a href="/Constancias/abrirConstancia/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>
-                    
-                    <a href="/Constancias/abrirConstanciaDigital/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-2 btn-icon-only text-white" title="Imprimir Constancia Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Digital" target="_blank"><i class="fas fa-print"> </i></a>
-
-                </td>
-html;
-                    $miembro_apm .= <<<html
-                    <span class="badge badge-success" style="background-color: #0c6300; color:white "><strong>OK - HABILITADO PARA IMPRESIÓN DE GAFETE </strong></span>  
-html;
-                }
             }
-                
-                else{
 
-                    if($impreso >= 1){
-                        $gafetes_httml .=<<<html
+            $socio = GeneralDao::getAdeudosUser($value['user_id']);
+
+
+
+
+            $impreso = GeneralDao::getImpresionGafete($value['user_id']);
+            $imprimir = GeneralDao::getAllColaboradoresImprimir($value['user_id']);
+
+
+
+
+            $gafetes_httml .= <<<html
                 <td style="text-align:center; vertical-align:middle;">
-                <span class="badge badge-success" style="background-color: #44509C; color:white;"><strong>GAFETE YA IMPRESO</strong></span>
-                <br>
-                <span class="badge badge-success" style="background-color: #1279C4; color:white;"><strong>{$impreso['fecha_hora']}</strong></span>
-                <br>
-                    <a style="margin-top:5px;" href="/RegistroAsistencia/abrirpdfGafete/{$value['user_id']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
-
-                    <a href="/Constancias/abrirConstancia/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>
-                    
-                    <a href="/Constancias/abrirConstanciaDigital/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-2 btn-icon-only text-white" title="Imprimir Constancia Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Digital" target="_blank"><i class="fas fa-print"> </i></a>
-
-                </td>
-html;
-
-                    }else{
-                
-                    $gafetes_httml .=<<<html
-                <td style="text-align:center; vertical-align:middle;">
-                <span class="badge badge-success" style="background-color: #1279C4; color:white; margin:10px;"><strong>REVISE ANTES DE IMPRIMIR</strong></span>
+                <!--<span class="badge badge-success" style="background-color: #1279C4; color:white; margin:10px;"><strong></strong></span>-->
                 <br>
                     <a href="/RegistroAsistencia/abrirpdfGafete/{$value['user_id']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
 
                     <a href="/Constancias/abrirConstancia/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>
                     
                     <a href="/Constancias/abrirConstanciaDigital/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-2 btn-icon-only text-white" title="Imprimir Constancia Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Digital" target="_blank"><i class="fas fa-print"> </i></a>
+
+                    <button type="button" class="btn bg-gradient-info btn-icon-only mb-3 search_user" value={$value['user_id']}  data-toggle="modal" data-target="#datosFacturacion" title="Editar Datos" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Editar Datos"><i class="fa fa-plus" aria-hidden="true"></i></button>
 
                 </td> 
 html;
-                    $miembro_apm .= <<<html
-                    <span class="badge badge-success" style="background-color: #ff1d1d; color:white "><strong>NO IMPRIMIR - DIRIGIR A CAJA A PAGAR </strong></span>  
-html;
-                }
-            }
 
-            $status_compra = GeneralDao::getStatusCompra($value['user_id']);
-            $status_solicitar = GeneralDao::getStatusSolicitar($value['user_id']);
-            $status_pendiente = GeneralDao::getStatusValidando($value['user_id']);
-            $status_liberado = GeneralDao::getStatusLiberado($value['user_id']);
 
-            if(!$status_compra){
-                $status1 .= <<<html
-                <span class="badge badge-success" style="background-image: linear-gradient(0deg, rgba(234, 6, 6, 0.6), #b80505 50%); color:#FFF !important; "><strong>Comprando</strong></span>
-html;
-            }
+            // $status_compra = GeneralDao::getStatusCompra($value['user_id']);
+            // $status_solicitar = GeneralDao::getStatusSolicitar($value['user_id']);
+            // $status_pendiente = GeneralDao::getStatusValidando($value['user_id']);
+            // $status_liberado = GeneralDao::getStatusLiberado($value['user_id']);
 
-            if($status_solicitar){
-                $status2 .= <<<html
-                <span class="badge badge-success" style="background: linear-gradient(180deg, rgba(249,255,0,1) 0%, rgba(250,145,7,1) 100%); color:#FFF !important; "><strong>Solicitado</strong></span>
-html;
-            }
+//             if (!$status_compra) {
+//                 $status1 .= <<<html
+//                 <span class="badge badge-success" style="background-image: linear-gradient(0deg, rgba(234, 6, 6, 0.6), #b80505 50%); color:#FFF !important; "><strong>Comprando</strong></span>
+// html;
+//             }
 
-            if($status_pendiente){
-                $status3 .= <<<html
-                <span class="badge badge-success" style="background-image: linear-gradient(0deg, #02A7E9, #293A90 70%); color:#FFF !important;"><strong>Validando pagos</strong></span>       
-html;
-            }
+//             if ($status_solicitar) {
+//                 $status2 .= <<<html
+//                 <span class="badge badge-success" style="background: linear-gradient(180deg, rgba(249,255,0,1) 0%, rgba(250,145,7,1) 100%); color:#FFF !important; "><strong>Solicitado</strong></span>
+// html;
+//             }
 
-            if($status_liberado){
-                $status4 .= <<<html
-                <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>Estatus: Liberado</strong></span>       
-html;
-            }
+//             if ($status_pendiente) {
+//                 $status3 .= <<<html
+//                 <span class="badge badge-success" style="background-image: linear-gradient(0deg, #02A7E9, #293A90 70%); color:#FFF !important;"><strong>Validando pagos</strong></span>       
+// html;
+//             }
 
-/////////////////////////////////////////////////////////////////////////////////////////
+//             if ($status_liberado) {
+//                 $status4 .= <<<html
+//                 <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>Estatus: Liberado</strong></span>       
+// html;
+//             }
+
+            /////////////////////////////////////////////////////////////////////////////////////////
 
 
             if (empty($value['img']) || $value['img'] == null) {
@@ -950,7 +888,7 @@ html;
             $nombre = html_entity_decode($value['nombre']);
             $apellido = html_entity_decode($value['apellido_paterno']);
             $segundo_apellido = html_entity_decode($value['apellido_materno']);
-            $nombre_completo = ($nombre)." ".($apellido)." ".($segundo_apellido);
+            $nombre_completo = ($nombre) . " " . ($apellido) . " " . ($segundo_apellido);
             $nombre_completo = mb_strtoupper($nombre_completo);
             $id_producto = 1;
 
@@ -959,7 +897,7 @@ html;
                  <span class="badge badge-warning" style="color:#f1a300"><strong>Modalidad - {$value['modality']} </strong></span> 
             </div>
 html;
-           
+
             $html .= <<<html
             <tr>
                 <td style="text-align:center; vertical-align:middle;">
@@ -981,9 +919,9 @@ html;
                     <div class="d-flex px-3 py-3">
                         
                         <div class="d-flex flex-column justify-content-center text-black">
-                        <div>
+                        <!--<div>
                             {$status1}{$status2}{$status3}{$status4}{$sociote}
-                        </div>
+                        </div>-->
                             
                             {$clave_beca_2}
                             <div class="d-flex flex-column justify-content-center">
@@ -1008,11 +946,23 @@ html;
             </tr>
 html;
         }
-       
+
         return $html;
     }
 
-    public function generarModal($datos){
+    public function getDataUser(){
+        $user_id = $_POST['user_id'];
+        $data_user = CajaDao::getDataUser($user_id);
+        $data = [
+            "status" => "success",
+            "datos_user" => $data_user
+        ];
+
+        echo json_encode($data);
+    }
+
+    public function generarModal($datos)
+    {
         $modal = <<<html
             <div class="modal fade" id="modal-constancia-{$datos['id_registro_acceso']}" role="dialog" aria-labelledby="" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -1083,362 +1033,362 @@ html;
 
     /*COMPROBANTES DE VACUNACION Y PRUEBAS COVID*/
 
-//     public function getComprobanteVacunacionById($id)
-//     {
+    //     public function getComprobanteVacunacionById($id)
+    //     {
 
-//         $comprobantes = ComprobantesVacunacionDao::getComprobateByClaveUser($id);
-//         $tabla = '';
-//         foreach ($comprobantes as $key => $value) {
+    //         $comprobantes = ComprobantesVacunacionDao::getComprobateByClaveUser($id);
+    //         $tabla = '';
+    //         foreach ($comprobantes as $key => $value) {
 
-//             $tabla .= <<<html
-//         <tr>
-//           <td class="text-center">
-//             <span class="badge badge-success"><i class="fas fa-check"> </i> Aprobado</span> <br>
-//             <span class="badge badge-secondary">Folio <i class="fas fa-hashtag"> </i> {$value['id_c_v']}</span>
-//              <hr>
-//              <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br><span class="fas fa-suitcase"> </span> {$value['nombre_ejecutivo']} <span class="badge badge-success" style="background-color:  {$value['color']}; color:white "><strong>{$value['nombre_linea_ejecutivo']}</strong></span></p>-->
-                      
-//           </td>
-//           <td>
-//             <h6 class="mb-0 text-sm"> <span class="fas fa-user-md"> </span>  {$value['nombre_completo']}</h6>
-//             <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-business-time" style="font-size: 13px;"></span><b> Bu: </b>{$value['nombre_bu']}</p>-->
-//               <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-pills" style="font-size: 13px;"></span><b> Linea Principal: </b>{$value['nombre_linea']}</p>
-//               <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-hospital" style="font-size: 13px;"></span><b> Posición: </b>{$value['nombre_posicion']}</p>-->
+    //             $tabla .= <<<html
+    //         <tr>
+    //           <td class="text-center">
+    //             <span class="badge badge-success"><i class="fas fa-check"> </i> Aprobado</span> <br>
+    //             <span class="badge badge-secondary">Folio <i class="fas fa-hashtag"> </i> {$value['id_c_v']}</span>
+    //              <hr>
+    //              <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br><span class="fas fa-suitcase"> </span> {$value['nombre_ejecutivo']} <span class="badge badge-success" style="background-color:  {$value['color']}; color:white "><strong>{$value['nombre_linea_ejecutivo']}</strong></span></p>-->
 
-//             <hr>
+    //           </td>
+    //           <td>
+    //             <h6 class="mb-0 text-sm"> <span class="fas fa-user-md"> </span>  {$value['nombre_completo']}</h6>
+    //             <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-business-time" style="font-size: 13px;"></span><b> Bu: </b>{$value['nombre_bu']}</p>-->
+    //               <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-pills" style="font-size: 13px;"></span><b> Linea Principal: </b>{$value['nombre_linea']}</p>
+    //               <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-hospital" style="font-size: 13px;"></span><b> Posición: </b>{$value['nombre_posicion']}</p>-->
 
-//               <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br></p-->
+    //             <hr>
 
-//               <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span><b> </b>{$value['telefono']}</p>
-//               <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-mail-bulk" style="font-size: 13px;"></span><b>  </b><a "mailto:{$value['email']}">{$value['email']}</a></p-->
+    //               <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br></p-->
 
-//               <div class="d-flex flex-column justify-content-center">
-//                   <u><a href="mailto:{$value['email']}"><h6 class="mb-0 text-sm"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['email']}</h6></a></u>
-//                   <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank"><p class="text-sm font-weight-bold text-secondary mb-0"><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span> {$value['telefono']}</p></a></u>
-//               </div>
-//           </td>
-//           <td>
-//             <p class="text-center" style="font-size: small;"><span class="fa fa-calendar-check-o" style="font-size: 13px;"></span> Fecha Carga: {$value['fecha_carga_documento']}</p>
-//             <p class="text-center" style="font-size: small;"><span class="fa fa-syringe" style="font-size: 13px;"></span> # Dosis: {$value['numero_dosis']}</p>
-//             <p class="text-center" style="font-size: small;"><span class="fa fa-cubes" style="font-size: 13px;"></span> <strong>Marca: {$value['marca_dosis']}</strong></p>
-//           </td>
-//           <td class="text-center">
-//             <button type="button" class="btn bg-gradient-primary btn_iframe" data-document="{$value['documento']}" data-toggle="modal" data-target="#ver-documento-{$value['id_c_v']}">
-//               <i class="fas fa-eye"></i>
-//             </button>
-//           </td>
-//         </tr>
+    //               <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span><b> </b>{$value['telefono']}</p>
+    //               <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-mail-bulk" style="font-size: 13px;"></span><b>  </b><a "mailto:{$value['email']}">{$value['email']}</a></p-->
 
-//         <div class="modal fade" id="ver-documento-{$value['id_c_v']}" tabindex="-1" role="dialog" aria-labelledby="ver-documento-{$value['id_c_v']}" aria-hidden="true">
-//           <div class="modal-dialog" role="document" style="max-width: 1000px;">
-//             <div class="modal-content">
-//               <div class="modal-header">
-//                   <h5 class="modal-title" id="exampleModalLabel">Comprobante de Vacunación</h5>
-//                   <span type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
-//                       X
-//                   </span>
-//               </div>
-//               <div class="modal-body bg-gray-200">
-//                 <div class="row">
-//                   <div class="col-md-8 col-12">
-//                     <div class="card card-body mb-4 iframe">
-//                       <!--<iframe src="https://registro.foromusa.com/comprobante_vacunacion/{$value['documento']}" style="width:100%; height:700px;" frameborder="0" >
-//                       </iframe>-->
-//                     </div>
-//                   </div>
-//                   <div class="col-md-4 col-12">
-//                     <div class="card card-body mb-4">
-//                       <h5>Datos Personales</h5>
-//                       <div class="mb-2">
-//                         <h6 class="fas fa-user"> </h6>
-//                         <span> <b>Nombre:</b> {$value['nombre_completo']}</span>
-//                         <span class="badge badge-success">Aprobado</span>
-//                       </div>
-//                       <!-- <div class="mb-2">
-//                         <h6 class="fas fa-address-card"> </h6>
-//                         <span> <b>Número de empleado:</b> {$value['numero_empleado']}</span>
-//                       </div>
-//                       <div class="mb-2">
-//                         <h6 class="fas fa-business-time"> </h6>
-//                         <span> <b>Bu:</b> {$value['nombre_bu']}</span>
-//                       </div>-->
-//                       <div class="mb-2">
-//                         <h6 class="fas fa-pills"> </h6>
-//                         <span> <b>Línea:</b> {$value['nombre_linea']}</span>
-//                       </div>
-//                       <!--<div class="mb-2">
-//                         <h6 class="fas fa-hospital"> </h6>
-//                         <span> <b>Posición:</b> {$value['nombre_posicion']}</span>
-//                       </div>-->
-//                       <div class="mb-2">
-//                         <h6 class="fa fa-mail-bulk"> </h6>
-//                         <span> <b>Correo Electrónico:</b> <u><a href="mailto:{$value['email']}">{$value['email']}</a></u></span>
-//                       </div>
-//                       <div class="mb-2">
-//                       <h6 class="fa fa-whatsapp" style="font-size: 13px; color:green;"> </h6>
-//                       <span> <b></b> <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank">{$value['telefono']}</a></u></span>
-//                       </div>
-//                     </div>
-//                     <div class="card card-body mb-4">
-//                       <h5>Datos del Comprobante</h5>
-//                       <div class="mb-2">
-//                         <h6 class="fas fa-calendar"> </h6>
-//                         <span> <b>Fecha de alta:</b> {$value['fecha_carga_documento']}</span>
-//                       </div>
-//                       <div class="mb-2">
-//                         <h6 class="fas fa-hashtag"> </h6>
-//                         <span> <b>Número de Dósis:</b> {$value['numero_dosis']}</span>
-//                       </div>
-//                       <div class="mb-2">
-//                         <h6 class="fas fa-syringe"> </h6>
-//                         <span> <b>Marca:</b> {$value['marca_dosis']}</span>
-//                       </div>
-//                     </div>
-//                     <div class="card card-body">
-//                       <h5>Notas</h5>
-// html;
+    //               <div class="d-flex flex-column justify-content-center">
+    //                   <u><a href="mailto:{$value['email']}"><h6 class="mb-0 text-sm"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['email']}</h6></a></u>
+    //                   <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank"><p class="text-sm font-weight-bold text-secondary mb-0"><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span> {$value['telefono']}</p></a></u>
+    //               </div>
+    //           </td>
+    //           <td>
+    //             <p class="text-center" style="font-size: small;"><span class="fa fa-calendar-check-o" style="font-size: 13px;"></span> Fecha Carga: {$value['fecha_carga_documento']}</p>
+    //             <p class="text-center" style="font-size: small;"><span class="fa fa-syringe" style="font-size: 13px;"></span> # Dosis: {$value['numero_dosis']}</p>
+    //             <p class="text-center" style="font-size: small;"><span class="fa fa-cubes" style="font-size: 13px;"></span> <strong>Marca: {$value['marca_dosis']}</strong></p>
+    //           </td>
+    //           <td class="text-center">
+    //             <button type="button" class="btn bg-gradient-primary btn_iframe" data-document="{$value['documento']}" data-toggle="modal" data-target="#ver-documento-{$value['id_c_v']}">
+    //               <i class="fas fa-eye"></i>
+    //             </button>
+    //           </td>
+    //         </tr>
 
-//             if ($value['nota'] != '') {
-//                 $tabla .= <<<html
-//                       <div class="editar_section" id="editar_section">
-//                         <p id="">
-//                           {$value['nota']}
-//                         </p>
-//                         <button id="editar_nota" type="button" class="btn bg-gradient-primary w-50 editar_nota" >
-//                           Editar
-//                         </button>
-//                       </div>
+    //         <div class="modal fade" id="ver-documento-{$value['id_c_v']}" tabindex="-1" role="dialog" aria-labelledby="ver-documento-{$value['id_c_v']}" aria-hidden="true">
+    //           <div class="modal-dialog" role="document" style="max-width: 1000px;">
+    //             <div class="modal-content">
+    //               <div class="modal-header">
+    //                   <h5 class="modal-title" id="exampleModalLabel">Comprobante de Vacunación</h5>
+    //                   <span type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+    //                       X
+    //                   </span>
+    //               </div>
+    //               <div class="modal-body bg-gray-200">
+    //                 <div class="row">
+    //                   <div class="col-md-8 col-12">
+    //                     <div class="card card-body mb-4 iframe">
+    //                       <!--<iframe src="https://registro.foromusa.com/comprobante_vacunacion/{$value['documento']}" style="width:100%; height:700px;" frameborder="0" >
+    //                       </iframe>-->
+    //                     </div>
+    //                   </div>
+    //                   <div class="col-md-4 col-12">
+    //                     <div class="card card-body mb-4">
+    //                       <h5>Datos Personales</h5>
+    //                       <div class="mb-2">
+    //                         <h6 class="fas fa-user"> </h6>
+    //                         <span> <b>Nombre:</b> {$value['nombre_completo']}</span>
+    //                         <span class="badge badge-success">Aprobado</span>
+    //                       </div>
+    //                       <!-- <div class="mb-2">
+    //                         <h6 class="fas fa-address-card"> </h6>
+    //                         <span> <b>Número de empleado:</b> {$value['numero_empleado']}</span>
+    //                       </div>
+    //                       <div class="mb-2">
+    //                         <h6 class="fas fa-business-time"> </h6>
+    //                         <span> <b>Bu:</b> {$value['nombre_bu']}</span>
+    //                       </div>-->
+    //                       <div class="mb-2">
+    //                         <h6 class="fas fa-pills"> </h6>
+    //                         <span> <b>Línea:</b> {$value['nombre_linea']}</span>
+    //                       </div>
+    //                       <!--<div class="mb-2">
+    //                         <h6 class="fas fa-hospital"> </h6>
+    //                         <span> <b>Posición:</b> {$value['nombre_posicion']}</span>
+    //                       </div>-->
+    //                       <div class="mb-2">
+    //                         <h6 class="fa fa-mail-bulk"> </h6>
+    //                         <span> <b>Correo Electrónico:</b> <u><a href="mailto:{$value['email']}">{$value['email']}</a></u></span>
+    //                       </div>
+    //                       <div class="mb-2">
+    //                       <h6 class="fa fa-whatsapp" style="font-size: 13px; color:green;"> </h6>
+    //                       <span> <b></b> <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank">{$value['telefono']}</a></u></span>
+    //                       </div>
+    //                     </div>
+    //                     <div class="card card-body mb-4">
+    //                       <h5>Datos del Comprobante</h5>
+    //                       <div class="mb-2">
+    //                         <h6 class="fas fa-calendar"> </h6>
+    //                         <span> <b>Fecha de alta:</b> {$value['fecha_carga_documento']}</span>
+    //                       </div>
+    //                       <div class="mb-2">
+    //                         <h6 class="fas fa-hashtag"> </h6>
+    //                         <span> <b>Número de Dósis:</b> {$value['numero_dosis']}</span>
+    //                       </div>
+    //                       <div class="mb-2">
+    //                         <h6 class="fas fa-syringe"> </h6>
+    //                         <span> <b>Marca:</b> {$value['marca_dosis']}</span>
+    //                       </div>
+    //                     </div>
+    //                     <div class="card card-body">
+    //                       <h5>Notas</h5>
+    // html;
 
-//                       <div class="hide-section editar_section_textarea" id="editar_section_textarea">
-//                         <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
-//                           <input type="text" id="id_comprobante_vacuna" name="id_comprobante_vacuna" value="{$value['id_c_v']}" readonly style="display:none;"> 
-//                           <p>
-//                             <textarea class="form-control" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required> {$value['nota']} </textarea>
-//                           </p>
-//                           <div class="row">
-//                             <div class="col-md-6 col-12">
-//                             <button type="submit" id="guardar_editar_nota" class="btn bg-gradient-dark guardar_editar_nota" >
-//                               Guardar
-//                             </button>
-//                             </div>
-//                             <div class="col-md-6 col-12">
-//                               <button type="button" id="cancelar_editar_nota" class="btn bg-gradient-danger cancelar_editar_nota" >
-//                                 Cancelar
-//                               </button>
-//                             </div>
-//                           </div>
-//                         </form>
-//                       </div>
-// html;
-//             } else {
-//                 $tabla .= <<<html
-//                       <p>
-//                         {$value['nota']}
-//                       </p>
-//                       <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
-//                         <input type="text" id="id_comprobante_vacuna" name="id_comprobante_vacuna" value="{$value['id_c_v']}" readonly style="display:none;"> 
-//                         <p>
-//                           <textarea class="form-control" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required></textarea>
-//                         </p>
-//                         <button type="submit" class="btn bg-gradient-dark w-50" >
-//                           Guardar
-//                         </button>
-//                       </form>
-// html;
-//             }
-//             $tabla .= <<<html
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-// html;
-//         }
+    //             if ($value['nota'] != '') {
+    //                 $tabla .= <<<html
+    //                       <div class="editar_section" id="editar_section">
+    //                         <p id="">
+    //                           {$value['nota']}
+    //                         </p>
+    //                         <button id="editar_nota" type="button" class="btn bg-gradient-primary w-50 editar_nota" >
+    //                           Editar
+    //                         </button>
+    //                       </div>
 
-
-//         return $tabla;
-//     }
-
-//     public function getPruebasCovidById($id)
-//     {
-//         $pruebas = PruebasCovidUsuariosDao::getComprobateByIdUser($id);
-//         $tabla = '';
-//         foreach ($pruebas as $key => $value) {
-//             $tabla .= <<<html
-//         <tr>
-//           <td class="text-center">
-//             <span class="badge badge-success"><i class="fas fa-check"></i> Aprobada</span> <br>
-//             <span class="badge badge-secondary">Folio <i class="fas fa-hashtag"> </i> {$value['id_c_v']}</span>
-//             <hr>
-//             <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br><span class="fas fa-suitcase"> </span> {$value['nombre_ejecutivo']} <span class="badge badge-success" style="background-color:  {$value['color']}; color:white "><strong>{$value['nombre_linea_ejecutivo']}</strong></span></p>-->
-//           </td>
-//           <td>
-//             <h6 class="mb-0 text-sm"> <span class="fas fa-user-md"> </span>  {$value['nombre_completo']}</h6>
-//             <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-business-time" style="font-size: 13px;"></span><b> Bu: </b>{$value['nombre_bu']}</p>-->
-//               <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-pills" style="font-size: 13px;"></span><b> Linea Principal: </b>{$value['nombre_linea']}</p>
-//               <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-hospital" style="font-size: 13px;"></span><b> Posición: </b>{$value['nombre_posicion']}</p>-->
-
-//             <hr>
-
-//               <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br></p-->
-
-//               <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span><b> </b>{$value['telefono']}</p>
-//               <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-mail-bulk" style="font-size: 13px;"></span><b>  </b><a "mailto:{$value['email']}">{$value['email']}</a></p-->
-
-//               <div class="d-flex flex-column justify-content-center">
-//                   <u><a href="mailto:{$value['email']}"><h6 class="mb-0 text-sm"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['email']}</h6></a></u>
-//                   <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank"><p class="text-sm font-weight-bold text-secondary mb-0"><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span> {$value['telefono']}</p></a></u>
-//               </div>
-//           </td>
-//           <td>
-//             <p class="text-center" style="font-size: small;">{$value['fecha_carga_documento']}</p>
-//           </td>
-//           <td>
-//             <p class="text-center" style="font-size: small;">{$value['tipo_prueba']}</p>
-//           </td>
-//           <td>
-//             <p class="text-center" style="font-size: small;">{$value['resultado']}</p>
-//           </td>
-//           <td class="text-center">
-//             <button type="button" class="btn bg-gradient-primary btn_iframe_pruebas_covid" data-document="{$value['documento']}" data-toggle="modal" data-target="#ver-documento-{$value['id_c_v']}">
-//               <i class="fas fa-eye"></i>
-//             </button>
-//           </td>
-//         </tr>
-
-//         <div class="modal fade" id="ver-documento-{$value['id_c_v']}" tabindex="-1" role="dialog" aria-labelledby="ver-documento-{$value['id_c_v']}" aria-hidden="true">
-//           <div class="modal-dialog" role="document" style="max-width: 1000px;">
-//               <div class="modal-content">
-//                   <div class="modal-header">
-//                       <h5 class="modal-title" id="exampleModalLabel">Documento Prueba SARS-CoV-2</h5>
-//                       <span type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
-//                           X
-//                       </span>
-//                   </div>
-//                   <div class="modal-body bg-gray-200">
-//                     <div class="row">
-//                       <div class="col-md-8 col-12">
-//                         <div class="card card-body mb-4 iframe">
-//                           <!--<iframe src="/PDF/{$value['documento']}" style="width:100%; height:700px;" frameborder="0" >
-//                           </iframe>-->
-//                         </div>
-//                       </div>
-//                       <div class="col-md-4 col-12">
-//                         <div class="card card-body mb-4">
-//                           <h5>Datos Personales</h5>
-//                           <div class="mb-2">
-//                             <h6 class="fas fa-user"> </h6>
-//                             <span> <b>Nombre:</b> {$value['nombre_completo']}</span>
-//                             <span class="badge badge-success">Aprobado</span>
-//                           </div>
-//                           <!--<div class="mb-2">
-//                             <h6 class="fas fa-address-card"> </h6>
-//                             <span> <b>Número de empleado:</b> {$value['numero_empleado']}</span>
-//                           </div>
-//                           <div class="mb-2">
-//                             <h6 class="fas fa-business-time"> </h6>
-//                             <span> <b>Bu:</b> {$value['nombre_bu']}</span>
-//                           </div>-->
-//                           <div class="mb-2">
-//                             <h6 class="fas fa-pills"> </h6>
-//                             <span> <b>Línea:</b> {$value['nombre_linea']}</span>
-//                           </div>
-//                           <!--<div class="mb-2">
-//                             <h6 class="fas fa-hospital"> </h6>
-//                             <span> <b>Posición:</b> {$value['nombre_posicion']}</span>
-//                           </div>-->
-//                           <div class="mb-2">
-//                             <h6 class="fa fa-mail-bulk"> </h6>
-//                             <span> <b>Correo Electrónico:</b> <u><a href="mailto:{$value['email']}">{$value['email']}</a></u></span>
-//                           </div>
-//                           <div class="mb-2">
-//                             <h6 class="fa fa-whatsapp" style="font-size: 13px; color:green;"> </h6>
-//                             <span> <b></b> <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank">{$value['telefono']}</a></u></span>
-//                           </div>
-//                         </div>
-//                         <div class="card card-body mb-4">
-//                           <h5>Datos de la Prueba</h5>
-//                           <div class="mb-2">
-//                             <h6 class="fas fa-calendar"> </h6>
-//                             <span> <b>Fecha de alta:</b> {$value['fecha_carga_documento']}</span>
-//                           </div>
-//                           <div class="mb-2">
-//                             <h6 class="fas fa-hashtag"> </h6>
-//                             <span> <b>Resultado:</b> {$value['resultado']}</span>
-//                           </div>
-//                           <div class="mb-2">
-//                             <h6 class="fas fa-syringe"> </h6>
-//                             <span> <b>Tipo de prueba:</b> {$value['tipo_prueba']}</span>
-//                           </div>
-//                         </div>
-//                         <div class="card card-body">
-//                           <h5>Notas</h5>
-                          
-// html;
-//             if ($value['nota'] != '') {
-//                 $tabla .= <<<html
-//                           <div class="editar_section" id="editar_section">
-//                             <p id="">
-//                               {$value['nota']}
-//                             </p>
-//                             <button id="editar_nota" type="button" class="btn bg-gradient-primary w-50 editar_nota" >
-//                               Editar
-//                             </button>
-//                           </div>
-
-//                           <div class="hide-section editar_section_textarea" id="editar_section_textarea">
-//                             <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
-//                               <input type="text" id="id_prueba_covid" name="id_prueba_covid" value="{$value['id_c_v']}" readonly style="display:none;"> 
-//                               <p>
-//                                 <textarea class="form-control nota" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required> {$value['nota']} </textarea>
-//                               </p>
-//                               <div class="row">
-//                                 <div class="col-md-6 col-12">
-//                                 <button type="submit" id="guardar_editar_nota" class="btn bg-gradient-dark guardar_editar_nota" >
-//                                   Guardar
-//                                 </button>
-//                                 </div>
-//                                 <div class="col-md-6 col-12">
-//                                   <button type="button" id="cancelar_editar_nota" class="btn bg-gradient-danger cancelar_editar_nota" >
-//                                     Cancelar
-//                                   </button>
-//                                 </div>
-//                               </div>
-//                             </form>
-//                           </div>
-// html;
-//             } else {
-//                 $tabla .= <<<html
-//                           <p>
-//                             {$value['nota']}
-//                           </p>
-//                           <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
-//                             <input type="text" id="id_prueba_covid" name="id_prueba_covid" value="{$value['id_c_v']}" readonly style="display:none;"> 
-//                             <p>
-//                               <textarea class="form-control nota" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required></textarea>
-//                             </p>
-//                             <button type="submit" class="btn bg-gradient-dark w-50" >
-//                               Guardar
-//                             </button>
-//                           </form>
-// html;
-//             }
-//             $tabla .= <<<html
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </div>
-//               </div>
-//           </div>
-//         </div>
-// html;
-//         }
+    //                       <div class="hide-section editar_section_textarea" id="editar_section_textarea">
+    //                         <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
+    //                           <input type="text" id="id_comprobante_vacuna" name="id_comprobante_vacuna" value="{$value['id_c_v']}" readonly style="display:none;"> 
+    //                           <p>
+    //                             <textarea class="form-control" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required> {$value['nota']} </textarea>
+    //                           </p>
+    //                           <div class="row">
+    //                             <div class="col-md-6 col-12">
+    //                             <button type="submit" id="guardar_editar_nota" class="btn bg-gradient-dark guardar_editar_nota" >
+    //                               Guardar
+    //                             </button>
+    //                             </div>
+    //                             <div class="col-md-6 col-12">
+    //                               <button type="button" id="cancelar_editar_nota" class="btn bg-gradient-danger cancelar_editar_nota" >
+    //                                 Cancelar
+    //                               </button>
+    //                             </div>
+    //                           </div>
+    //                         </form>
+    //                       </div>
+    // html;
+    //             } else {
+    //                 $tabla .= <<<html
+    //                       <p>
+    //                         {$value['nota']}
+    //                       </p>
+    //                       <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
+    //                         <input type="text" id="id_comprobante_vacuna" name="id_comprobante_vacuna" value="{$value['id_c_v']}" readonly style="display:none;"> 
+    //                         <p>
+    //                           <textarea class="form-control" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required></textarea>
+    //                         </p>
+    //                         <button type="submit" class="btn bg-gradient-dark w-50" >
+    //                           Guardar
+    //                         </button>
+    //                       </form>
+    // html;
+    //             }
+    //             $tabla .= <<<html
+    //                     </div>
+    //                   </div>
+    //                 </div>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    // html;
+    //         }
 
 
-//         return $tabla;
-//     }
+    //         return $tabla;
+    //     }
+
+    //     public function getPruebasCovidById($id)
+    //     {
+    //         $pruebas = PruebasCovidUsuariosDao::getComprobateByIdUser($id);
+    //         $tabla = '';
+    //         foreach ($pruebas as $key => $value) {
+    //             $tabla .= <<<html
+    //         <tr>
+    //           <td class="text-center">
+    //             <span class="badge badge-success"><i class="fas fa-check"></i> Aprobada</span> <br>
+    //             <span class="badge badge-secondary">Folio <i class="fas fa-hashtag"> </i> {$value['id_c_v']}</span>
+    //             <hr>
+    //             <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br><span class="fas fa-suitcase"> </span> {$value['nombre_ejecutivo']} <span class="badge badge-success" style="background-color:  {$value['color']}; color:white "><strong>{$value['nombre_linea_ejecutivo']}</strong></span></p>-->
+    //           </td>
+    //           <td>
+    //             <h6 class="mb-0 text-sm"> <span class="fas fa-user-md"> </span>  {$value['nombre_completo']}</h6>
+    //             <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-business-time" style="font-size: 13px;"></span><b> Bu: </b>{$value['nombre_bu']}</p>-->
+    //               <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-pills" style="font-size: 13px;"></span><b> Linea Principal: </b>{$value['nombre_linea']}</p>
+    //               <!--<p class="text-sm font-weight-bold mb-0 "><span class="fa fa-hospital" style="font-size: 13px;"></span><b> Posición: </b>{$value['nombre_posicion']}</p>-->
+
+    //             <hr>
+
+    //               <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fas fa-user-tie" style="font-size: 13px;"></span><b> Ejecutivo Asignado a Línea: </b><br></p-->
+
+    //               <!--p class="text-sm font-weight-bold mb-0 "><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span><b> </b>{$value['telefono']}</p>
+    //               <p class="text-sm font-weight-bold mb-0 "><span class="fa fa-mail-bulk" style="font-size: 13px;"></span><b>  </b><a "mailto:{$value['email']}">{$value['email']}</a></p-->
+
+    //               <div class="d-flex flex-column justify-content-center">
+    //                   <u><a href="mailto:{$value['email']}"><h6 class="mb-0 text-sm"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['email']}</h6></a></u>
+    //                   <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank"><p class="text-sm font-weight-bold text-secondary mb-0"><span class="fa fa-whatsapp" style="font-size: 13px; color:green;"></span> {$value['telefono']}</p></a></u>
+    //               </div>
+    //           </td>
+    //           <td>
+    //             <p class="text-center" style="font-size: small;">{$value['fecha_carga_documento']}</p>
+    //           </td>
+    //           <td>
+    //             <p class="text-center" style="font-size: small;">{$value['tipo_prueba']}</p>
+    //           </td>
+    //           <td>
+    //             <p class="text-center" style="font-size: small;">{$value['resultado']}</p>
+    //           </td>
+    //           <td class="text-center">
+    //             <button type="button" class="btn bg-gradient-primary btn_iframe_pruebas_covid" data-document="{$value['documento']}" data-toggle="modal" data-target="#ver-documento-{$value['id_c_v']}">
+    //               <i class="fas fa-eye"></i>
+    //             </button>
+    //           </td>
+    //         </tr>
+
+    //         <div class="modal fade" id="ver-documento-{$value['id_c_v']}" tabindex="-1" role="dialog" aria-labelledby="ver-documento-{$value['id_c_v']}" aria-hidden="true">
+    //           <div class="modal-dialog" role="document" style="max-width: 1000px;">
+    //               <div class="modal-content">
+    //                   <div class="modal-header">
+    //                       <h5 class="modal-title" id="exampleModalLabel">Documento Prueba SARS-CoV-2</h5>
+    //                       <span type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+    //                           X
+    //                       </span>
+    //                   </div>
+    //                   <div class="modal-body bg-gray-200">
+    //                     <div class="row">
+    //                       <div class="col-md-8 col-12">
+    //                         <div class="card card-body mb-4 iframe">
+    //                           <!--<iframe src="/PDF/{$value['documento']}" style="width:100%; height:700px;" frameborder="0" >
+    //                           </iframe>-->
+    //                         </div>
+    //                       </div>
+    //                       <div class="col-md-4 col-12">
+    //                         <div class="card card-body mb-4">
+    //                           <h5>Datos Personales</h5>
+    //                           <div class="mb-2">
+    //                             <h6 class="fas fa-user"> </h6>
+    //                             <span> <b>Nombre:</b> {$value['nombre_completo']}</span>
+    //                             <span class="badge badge-success">Aprobado</span>
+    //                           </div>
+    //                           <!--<div class="mb-2">
+    //                             <h6 class="fas fa-address-card"> </h6>
+    //                             <span> <b>Número de empleado:</b> {$value['numero_empleado']}</span>
+    //                           </div>
+    //                           <div class="mb-2">
+    //                             <h6 class="fas fa-business-time"> </h6>
+    //                             <span> <b>Bu:</b> {$value['nombre_bu']}</span>
+    //                           </div>-->
+    //                           <div class="mb-2">
+    //                             <h6 class="fas fa-pills"> </h6>
+    //                             <span> <b>Línea:</b> {$value['nombre_linea']}</span>
+    //                           </div>
+    //                           <!--<div class="mb-2">
+    //                             <h6 class="fas fa-hospital"> </h6>
+    //                             <span> <b>Posición:</b> {$value['nombre_posicion']}</span>
+    //                           </div>-->
+    //                           <div class="mb-2">
+    //                             <h6 class="fa fa-mail-bulk"> </h6>
+    //                             <span> <b>Correo Electrónico:</b> <u><a href="mailto:{$value['email']}">{$value['email']}</a></u></span>
+    //                           </div>
+    //                           <div class="mb-2">
+    //                             <h6 class="fa fa-whatsapp" style="font-size: 13px; color:green;"> </h6>
+    //                             <span> <b></b> <u><a href="https://api.whatsapp.com/send?phone=52{$value['telefono']}&text=Buen%20d%C3%ADa,%20te%20contacto%20de%20parte%20del%20Equipo%20Grupo%20LAHE%20%F0%9F%98%80" target="_blank">{$value['telefono']}</a></u></span>
+    //                           </div>
+    //                         </div>
+    //                         <div class="card card-body mb-4">
+    //                           <h5>Datos de la Prueba</h5>
+    //                           <div class="mb-2">
+    //                             <h6 class="fas fa-calendar"> </h6>
+    //                             <span> <b>Fecha de alta:</b> {$value['fecha_carga_documento']}</span>
+    //                           </div>
+    //                           <div class="mb-2">
+    //                             <h6 class="fas fa-hashtag"> </h6>
+    //                             <span> <b>Resultado:</b> {$value['resultado']}</span>
+    //                           </div>
+    //                           <div class="mb-2">
+    //                             <h6 class="fas fa-syringe"> </h6>
+    //                             <span> <b>Tipo de prueba:</b> {$value['tipo_prueba']}</span>
+    //                           </div>
+    //                         </div>
+    //                         <div class="card card-body">
+    //                           <h5>Notas</h5>
+
+    // html;
+    //             if ($value['nota'] != '') {
+    //                 $tabla .= <<<html
+    //                           <div class="editar_section" id="editar_section">
+    //                             <p id="">
+    //                               {$value['nota']}
+    //                             </p>
+    //                             <button id="editar_nota" type="button" class="btn bg-gradient-primary w-50 editar_nota" >
+    //                               Editar
+    //                             </button>
+    //                           </div>
+
+    //                           <div class="hide-section editar_section_textarea" id="editar_section_textarea">
+    //                             <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
+    //                               <input type="text" id="id_prueba_covid" name="id_prueba_covid" value="{$value['id_c_v']}" readonly style="display:none;"> 
+    //                               <p>
+    //                                 <textarea class="form-control nota" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required> {$value['nota']} </textarea>
+    //                               </p>
+    //                               <div class="row">
+    //                                 <div class="col-md-6 col-12">
+    //                                 <button type="submit" id="guardar_editar_nota" class="btn bg-gradient-dark guardar_editar_nota" >
+    //                                   Guardar
+    //                                 </button>
+    //                                 </div>
+    //                                 <div class="col-md-6 col-12">
+    //                                   <button type="button" id="cancelar_editar_nota" class="btn bg-gradient-danger cancelar_editar_nota" >
+    //                                     Cancelar
+    //                                   </button>
+    //                                 </div>
+    //                               </div>
+    //                             </form>
+    //                           </div>
+    // html;
+    //             } else {
+    //                 $tabla .= <<<html
+    //                           <p>
+    //                             {$value['nota']}
+    //                           </p>
+    //                           <form class="form-horizontal guardar_nota" id="guardar_nota" action="" method="POST">
+    //                             <input type="text" id="id_prueba_covid" name="id_prueba_covid" value="{$value['id_c_v']}" readonly style="display:none;"> 
+    //                             <p>
+    //                               <textarea class="form-control nota" name="nota" id="nota" placeholder="Agregar notas sobre la respuesta de la validación del documento" required></textarea>
+    //                             </p>
+    //                             <button type="submit" class="btn bg-gradient-dark w-50" >
+    //                               Guardar
+    //                             </button>
+    //                           </form>
+    // html;
+    //             }
+    //             $tabla .= <<<html
+    //                         </div>
+    //                       </div>
+    //                     </div>
+    //                   </div>
+    //               </div>
+    //           </div>
+    //         </div>
+    // html;
+    //         }
+
+
+    //         return $tabla;
+    //     }
 
     public function getAsistentesFaltantes()
     {
@@ -1486,11 +1436,11 @@ html;
     public function abrirpdf($clave, $noPages = null, $no_habitacion = null)
     {
         $datos_user = AsistentesDao::getRegistroAccesoByClaveRA($clave)[0];
-        $nombre_completo = strtoupper($datos_user['nombre'] . " " . $datos_user['apellido_paterno']) ;
-       
+        $nombre_completo = strtoupper($datos_user['nombre'] . " " . $datos_user['apellido_paterno']);
+
         //$nombre_completo = utf8_decode($_POST['nombre']);
         //$datos_user['numero_habitacion']
-        
+
 
 
         $pdf = new \FPDF($orientation = 'L', $unit = 'mm', array(37, 155));
@@ -1510,9 +1460,9 @@ html;
             $pdf->SetFont('Arial', 'B', 25);
             #4D9A9B
             $pdf->SetTextColor(0, 0, 0);
-            $pdf->Multicell(130, 5.5, utf8_decode($nombre_completo) , 0, 'C');
+            $pdf->Multicell(130, 5.5, utf8_decode($nombre_completo), 0, 'C');
 
- 
+
             $textypos += 6;
             $pdf->setX(2);
 
@@ -1520,7 +1470,6 @@ html;
         }
 
         $pdf->Output();
-       
     }
 }
 
@@ -1870,4 +1819,3 @@ class PHPQRCode
         return $ext_type;
     }
 } // class end
-

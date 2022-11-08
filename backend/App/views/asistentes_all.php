@@ -356,6 +356,18 @@
                                 </select>
                             </div>
 
+                            <div class="col-12 col-sm-4">
+
+                                <label id="label-categoria_gaf">Categoria *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="categoria_gaf" id="categoria_gaf" required>
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+
+                                    <?= $categoria_gaf ?>
+
+                                </select>
+
+                            </div>
+
                         </div>
                         <br>
 
@@ -418,9 +430,200 @@
 
                     </div>
                     <div class="modal-footer">
-                        <input type="reset" id="reset_form_addUser"  class="d-none">
+                        <input type="reset" id="reset_form_addUser" class="d-none">
                         <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" id="cerrar_modal">Cerrar</button>
                         <button type="submit" class="btn bg-gradient-primary" id="btn_save_user">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actualizar datos -->
+    <div class="modal fade" id="datosFacturacion" tabindex="-1" role="dialog" aria-labelledby="datosFacturacionLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="datosFacturacionLabel">Actualizar Usuario</h5>
+                    <span type="button" class="btn bg-gradient-danger" data-dismiss="modal" aria-label="Close">
+                        X
+                    </span>
+                </div>
+                <form class="form-horizontal" id="update_fiscal_data" action="" method="POST">
+                    <div class="modal-body">
+                        <input type="hidden" name="modal_user_id" id="modal_user_id">
+                        <div class="row">
+                            <div class="col-12 col-sm-2">
+                                <label>Prefijo *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="title" id="title_update" required>
+                                    <option value="Dr.">Dr.</option>
+                                    <option value="Dra.">Dra.</option>
+                                    <option value="Sr.">Sr.</option>
+                                    <option value="Sra.">Sra.</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-5">
+                                <label>Nombre *</label>
+                                <input class="multisteps-form__input form-control" type="text" id="nombre_user_update" name="nombre_user" placeholder="" maxlength="100" style="text-transform:uppercase;" required>
+                            </div>
+                            <div class="col-12 col-sm-5">
+                                <label>Apellido Paterno *</label>
+                                <input class="multisteps-form__input form-control" type="text" id="apellidop_user_update" name="apellidop_user" placeholder="" style="text-transform:uppercase;" maxlength="100">
+                            </div>
+
+                            <div class="col-12 col-sm-5">
+                                <label>Apellido Materno *</label>
+                                <input class="multisteps-form__input form-control" type="text" id="apellidom_user_update" name="apellidom_user" placeholder="" style="text-transform:uppercase;" maxlength="100">
+                            </div>
+
+                            <div class="col-12 col-sm-7">
+                                <label>Email *</label>
+                                <input class="multisteps-form__input form-control" type="text" id="email_user_update" name="email_user" placeholder="" maxlength="100">
+                                <span id="msg_email_user_update" style="color:#FF3B11;font-size: 12px;"></span>
+                            </div>
+
+                            <div class="col-12 col-sm-4">
+                                <label>Teléfono</label>
+                                <input class="multisteps-form__input form-control" type="number" id="telephone_update" name="telephone" maxlength="10" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="ej. (555) 555-1234" autocomplete="no" value="">
+                            </div>
+
+                            <div class="col-12 col-sm-4" id="cont-categoria">
+
+                                <label>Nivel *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="categorias" id="categorias_update" required>
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+                                    <?php echo $categorias ?>
+                                </select>
+
+                            </div>
+
+
+
+                            <div class="col-12 col-sm-4" id="cont-archivo-residente" style="display: none;">
+                                <label>Archivo *</label>
+                                <input type="file" accept="image/*,.pdf" class="form-control" id="archivo_residente" name="archivo_residente" style="width: auto; margin: 0 auto;" onfocus="focused(this)" onfocusout="defocused(this)">
+                            </div>
+
+
+
+
+                            <div class="col-12 col-sm-4" id="cont-especialidades">
+
+                                <label id="label-especialidades">Especialidades *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="especialidades" id="especialidades_update" required>
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+
+                                    <?= $especialidades ?>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-12 col-sm-4" id="cont-especialidad-text-update" style="display: none;">
+
+                                <label id="label-especialidades">Especialidad (Especifique) *</label>
+                                <input type="text" class="form-control" id="txt_especialidad_update" name="txt_especialidad">
+
+                            </div>
+
+
+
+
+                            <div class="col-12 col-sm-4">
+                                <label>País *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="nationality" id="nationality_update" onchange="actualizaEdosUpdate();" required>
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+                                    <option value="156">Mexico</option>
+                                    <?php echo $idCountry; ?>
+                                </select>
+                            </div>
+
+
+                            <div class="col-12 col-sm-4  ">
+                                <label>Estado *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="state" id="state_update" required>
+
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-sm-4">
+
+                                <label id="label-categoria_gaf">Categoria *</label>
+                                <select class="multisteps-form__select form-control all_input_select" name="categoria_gaf" id="categoria_gaf_update" required>
+                                    <option value="" disabled selected>Selecciona una Opción</option>
+
+                                    <?= $categoria_gaf ?>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+                        <br>
+
+
+                        <h5 class="modal-title" id="">Datos de Facturación</h5>
+
+                        <hr>
+
+
+                        <div class="row">
+                            <div class="col-12 col-sm-4">
+                                <label>Razón Social </label>
+                                <input class="multisteps-form__input form-control" type="text" id="business_name_iva_update" name="business_name_iva" style="text-transform: uppercase;" placeholder="eg. Christopher Prior Jones" maxlength="100">
+                            </div>
+                            <div class="col-12 col-sm-4 mt-1 mt-sm-0">
+                                <label>RFC </label>
+                                <input class="multisteps-form__input form-control" type="text" id="code_iva_update" name="code_iva" placeholder="eg. CPJ41250AS" maxlength="13" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                            </div>
+
+
+                            <div class="col-md-4 col-sm-12">
+                                <label>Correo Electrónico facturación </label>
+                                <input class="multisteps-form__input form-control" type="text" id="email_receipt_iva_update" name="email_receipt_iva" placeholder="eg. user@domain.com">
+                                <span class="mb-0 text-sm" id="error_email_send" style="display:none;color:red;">Correo electrónico incorrecto</span>
+                            </div>
+
+
+                            <div class="col-md-4 col-sm-12">
+                                <label>CP</label>
+                                <input class="multisteps-form__input form-control" id="postal_code_iva_update" name="postal_code_iva" type="number" min="1" maxlength="5" placeholder="Código postal" class="form-control ameg-shadow-box-two" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            </div>
+
+                            <div class="col-md-4 col-sm-12">
+                                <label>CFDI * </label>
+                                <select class="multisteps-form__select form-control all_input_select" name="cfdi" id="cfdi_update">
+                                    <option value="">Selecciona una opción</option>
+                                    <?= $usoCfdi ?>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-4 col-sm-12">
+                                <label>Régimen Fiscal * </label>
+                                <select class="multisteps-form__select form-control all_input_select" name="regimen_fiscal" id="regimen_fiscal_update">
+                                    <option value="">Selecciona una opción</option>
+                                    <?= $remigenFiscal ?>
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-12 col-sm-12">
+                                <label>Dirección Fiscal </label>
+                                <textarea class="multisteps-form__input form-control" name="direccion_user" id="direccion_user_update" cols="30" rows="3"></textarea>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="reset" id="reset_form_updateUser" data-bs-dismiss="modal" class="d-none">
+                        <button type="button" class="btn bg-gradient-secondary" data-dismiss="modal" id="cerrar_modal_datos_fac">Cerrar</button>
+                        <button type="submit" class="btn bg-gradient-primary" id="btn_update_user">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -455,6 +658,28 @@
             .done(function(json) {
                 if (json.success) {
                     $("#state").html(json.html);
+                }
+            })
+            .fail(function() {
+                //   alert("Ocurrio un error al actualizar el estado intenta de nuevo");
+            })
+    }
+
+    function actualizaEdosUpdate(pais = null) {
+        var pais = $('#nationality_update').val();
+
+        $.ajax({
+                url: '/Caja/ObtenerEstado',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    pais: pais
+                },
+
+            })
+            .done(function(json) {
+                if (json.success) {
+                    $("#state_update").html(json.html);
                 }
             })
             .fail(function() {
@@ -673,13 +898,13 @@
                             text: 'Usuario registrado correctamente.',
                             timer: 2000
                         });
-                        $("#reset_form_addUser").click();                        
-                       
-                        setTimeout(function(){
+                        $("#reset_form_addUser").click();
+
+                        setTimeout(function() {
                             location.href = '/Asistentes';
-                        },2000)
-                        
-                        
+                        }, 2000)
+
+
                         // $("#search_item").focus();
                     } else {
                         Swal.fire({
@@ -688,13 +913,13 @@
                             text: 'Hubo un error al registrar el usuario.',
                             timer: 2000
                         });
-                       
+
                         $("#reset_form_addUser").click();
-                        setTimeout(function(){
+                        setTimeout(function() {
                             location.href = '/Asistentes';
-                        },2000)
-                        
-                        
+                        }, 2000)
+
+
                         // swal("¡Hubo un error al actualizar!", "Contacte a soporte", "error")
                         // $('#cerrar_modal').modal();
                     }
@@ -811,6 +1036,116 @@
             }
         })
 
+
+        // buscar los datos para el modal
+        $(".search_user").on("click", function() {
+            var user_id = $(this).val();
+
+            $.ajax({
+                url: "/Asistentes/getDataUser",
+                type: "POST",
+                data: {
+                    user_id
+                },
+                dataType: 'json',
+                beforeSend: function() {
+                    console.log("Procesando....");
+
+                },
+                success: function(respuesta) {
+                    console.log(respuesta);
+                   
+                    if (respuesta.status == "success") {
+
+                        console.log(respuesta.datos_user)
+
+
+                        //modal facturacion
+                        $("#modal_user_id").val(user_id);
+                        $("#title_update").val(respuesta.datos_user.title);
+                        $("#nombre_user_update").val(respuesta.datos_user.nombre);
+                        $("#apellidop_user_update").val(respuesta.datos_user.apellidop);
+                        $("#apellidom_user_update").val(respuesta.datos_user.apellidom);
+                        $("#email_user_update").val(respuesta.datos_user.usuario);
+                        $("#telephone_update").val(respuesta.datos_user.telefono);
+                        $("#categorias_update").val(respuesta.datos_user.id_categoria);
+                        $("#especialidades_update").val(respuesta.datos_user.especialidades);
+                        $("#nationality_update").val(respuesta.datos_user.id_pais);
+                        actualizaEdosUpdate();
+                        setTimeout(function() {
+                            $("#state_update").val(respuesta.datos_user.id_estado);
+                        }, 1000);
+                        $("#categoria_gaf_update").val(respuesta.datos_user.categoria_gafete);
+
+
+
+                        $("#business_name_iva_update").val(respuesta.datos_user.business_name_iva);
+                        $("#code_iva_update").val(respuesta.datos_user.code_iva);
+                        $("#email_receipt_iva_update").val(respuesta.datos_user.email_receipt_iva);
+                        $("#direccion_update").val(respuesta.datos_user.direccion);
+                        $("#postal_code_iva_update").val(respuesta.datos_user.postal_code_iva);
+                        $("#cfdi_update").val(respuesta.datos_user.cfdi);
+                        $("#regimen_fiscal_update").val(respuesta.datos_user.regimen_fiscal);
+                        $("#direccion_user_update").val(respuesta.datos_user.direccion);
+
+
+                    } else {
+
+                        console.log("refrescar");
+                    }
+                },
+                error: function(respuesta) {
+                    // Swal.fire('No se encontro ningun registro', '', 'info');
+                    console.log("error");
+                    console.log(respuesta);
+                }
+
+            });
+
+        })
+
+        //Actulizar usuarios
+        $("#update_fiscal_data").on("submit", function(event) {
+                event.preventDefault();
+
+                var formData = new FormData(document.getElementById("update_fiscal_data"));
+                for (var value of formData.values()) {
+                    console.log(value);
+                }
+
+                $.ajax({
+                    url: "/Caja/UpdateFiscalData",
+                    type: "POST",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        console.log("Procesando....");
+                    },
+                    success: function(respuesta) {
+                        console.log(respuesta);
+
+                        if (respuesta == 'success') {
+                            swal("¡Se actualizaron los Datos Correctamente!", "", "success")
+                            // $('#cerrar_modal').click();
+                            $("#cerrar_modal_datos_fac").click();
+                            getSell(formData.get('modal_user_id'));
+                        } else {
+                            console.log(respuesta);
+                            swal("¡Hubo un error al actualizar!", "Contacte a soporte", "error")
+                            $("#cerrar_modal_datos_fac").click();
+                            // $('#cerrar_modal').modal();
+                        }
+
+
+                    },
+                    error: function(respuesta) {
+                        console.log(respuesta);
+                    }
+
+                });
+            });
 
 
 

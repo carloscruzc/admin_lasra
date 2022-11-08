@@ -134,12 +134,21 @@ html;
 html;
         }
 
+        $categoria_gaf = '';
+        foreach (CajaDao::getCategoriasGafetes() as $key => $value) {
+            $categoria_gaf .= <<<html
+           
+        <option value="{$value['id']}">{$value['tipo']}</option>
+html;
+        }
+
 
         View::set('usoCfdi', $cfdi);
         View::set('remigenFiscal', $remigenFiscal);
         View::set('idCountry', $this->getCountry());
         View::set('especialidades', $especialidades);
         View::set('categorias', $categorias);
+        View::set('categoria_gaf',$categoria_gaf);
 
 
         View::set('header', $extraHeader);
@@ -170,6 +179,12 @@ html;
 
         if ($_POST['especialidades'] == null) {
             $_POST['especialidades'] = '';
+        }
+
+        if($_POST['categoria_gaf'] == 1){
+            $es_socio = 1;
+        }else{
+            $es_socio = "";
         }
 
         $date = date('Y-m-d');
@@ -211,6 +226,8 @@ html;
         $data->_state = $_POST['state'];
         $data->_monto_congreso = $monto_congreso;
         $data->_txt_especialidad = $_POST['txt_especialidad'];
+        $data->_categoria_gaf = $_POST['categoria_gaf'];
+        $data->_socio = $es_socio;
         // datos de facturacion
         $data->_business_name_iva = $business_name_iva;
         $data->_code_iva = $code_iva;
@@ -464,24 +481,60 @@ html;
     public function UpdateFiscalData()
     {
 
+        if ($_POST['especialidades'] == null) {
+            $_POST['especialidades'] = '';
+        }
+        
+        if($_POST['categoria_gaf'] == 1){
+            $es_socio = 1;
+        }else{
+            $es_socio = "";
+        }
+
         $user_id = $_POST["modal_user_id"];
         $business_name_iva = $_POST['business_name_iva'];
         $code_iva = $_POST['code_iva'];
         $email_receipt_iva = $_POST['email_receipt_iva'];
         $direccion = $_POST['direccion'];
         $postal_code_iva = $_POST['postal_code_iva'];
-
+        $direccion = $_POST['direccion_user'];
+        $cfdi = $_POST['cfdi'];
+        $regimen_fiscal = $_POST['regimen_fiscal'];
+        
+        $title = $_POST['title'];
+        $nombre_user = $_POST['nombre_user'];
+        $apellidop_user = $_POST['apellidop_user'];
+        $apellidom_user = $_POST['apellidom_user'];
+        $email_user = $_POST['email_user'];
+ 
         $data = new \stdClass();
         $data->_user_id = $user_id;
+        $data->_title = $title;
+        $data->_nombre = $nombre_user;
+        $data->_apellidop = $apellidop_user;
+        $data->_apellidom = $apellidom_user;
+        $data->_email = $email_user;
+        $data->_telephone = $_POST['telephone'];
+        $data->_categorias = $_POST['categorias'];
+        $data->_especialidades = $_POST['especialidades'];
+        $data->_nationality = $_POST['nationality'];
+        $data->_state = $_POST['state'];
+        $data->_txt_especialidad = $_POST['txt_especialidad'];
+        $data->_categoria_gaf = $_POST['categoria_gaf'];
+        $data->_socio = $es_socio;
+
         $data->_business_name_iva = $business_name_iva;
         $data->_code_iva = $code_iva;
         $data->_email_receipt_iva = $email_receipt_iva;
         $data->_direccion = $direccion;
         $data->_postal_code_iva = $postal_code_iva;
+        $data->_cfdi = $cfdi;
+        $data->_regimen_fiscal = $regimen_fiscal;
 
 
         $updateFiscalData = CajaDao::UpdateFiscalData($data);
 
+      
         if ($updateFiscalData) {
             echo "success";
         } else {

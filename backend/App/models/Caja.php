@@ -789,17 +789,33 @@ sql;
         {
                 $mysqli = Database::getInstance(true);
                 $query = <<<sql
-        UPDATE utilerias_administradores SET business_name_iva = :business_name_iva, code_iva = :code_iva, email_receipt_iva = :email_receipt_iva, direccion = :direccion, postal_code_iva = :postal_code_iva WHERE user_id = :user_id
+        UPDATE utilerias_administradores SET usuario =:usuario, title = :title, nombre = :nombre, apellidop = :apellidop, apellidom = :apellidom, telefono = :telefono, id_categoria = :id_categoria, especialidades = :especialidades, id_pais = :id_pais,id_estado = :id_estado, txt_especialidad = :txt_especialidad, business_name_iva = :business_name_iva, code_iva = :code_iva, email_receipt_iva = :email_receipt_iva, direccion = :direccion, postal_code_iva = :postal_code_iva, regimen_fiscal = :regimen_fiscal, cfdi = :cfdi, categoria_gafete = :categoria_gafete, socio = :socio WHERE user_id = :user_id
 sql;
 
                 $params = array(
                         ':user_id' => $usuario->_user_id,
+                        ':usuario' => $usuario->_email,
+                        ':title' => $usuario->_title,
+                        ':nombre' => $usuario->_nombre,
+                        ':apellidop' => $usuario->_apellidop,
+                        ':apellidom' => $usuario->_apellidom,
+                        ':telefono' => $usuario->_telephone,
+                        ':id_categoria' => $usuario->_categorias,
+                        ':especialidades' => $usuario->_especialidades,
+                        ':id_pais' => $usuario->_nationality,
+                        ':id_estado' => $usuario->_state,
+                        ':txt_especialidad' => $usuario->_txt_especialidad,
+                        ':categoria_gafete' => $usuario->_categoria_gaf,
+                        ':socio' => $usuario->_socio,
+                        ':regimen_fiscal' => $usuario->_regimen_fiscal,
+                        ':cfdi' => $usuario->_cfdi,
                         ':business_name_iva' => $usuario->_business_name_iva,
                         ':code_iva' => $usuario->_code_iva,
                         ':email_receipt_iva' => $usuario->_email_receipt_iva,
                         ':direccion' => $usuario->_direccion,
                         ':postal_code_iva' => $usuario->_postal_code_iva
                 );
+
 
                 return $mysqli->update($query, $params);
         }
@@ -837,8 +853,8 @@ sql;
         {
                 $mysqli = Database::getInstance(true);
                 $query = <<<sql
-        INSERT INTO utilerias_administradores (usuario, title,nombre, apellidop, apellidom, telefono,id_categoria,especialidades,id_pais, id_estado, referencia,monto_congreso,txt_especialidad, business_name_iva, code_iva, email_receipt_iva, direccion, postal_code_iva, regimen_fiscal, cfdi) 
-        VALUES (:email, :title,:nombre, :apellidop, :apellidom, :telefono,:id_categoria,:especialidades,:id_pais, :id_estado,:referencia,:monto_congreso,:txt_especialidad,:razon_social, :rfc, :email_fac, :direccion_fiscal, :cp_fiscal, :regimen_fiscal, :cfdi)
+        INSERT INTO utilerias_administradores (usuario, title,nombre, apellidop, apellidom, telefono,id_categoria,especialidades,id_pais, id_estado, referencia,monto_congreso,txt_especialidad, business_name_iva, code_iva, email_receipt_iva, direccion, postal_code_iva, regimen_fiscal, cfdi, categoria_gafete, socio) 
+        VALUES (:email, :title,:nombre, :apellidop, :apellidom, :telefono,:id_categoria,:especialidades,:id_pais, :id_estado,:referencia,:monto_congreso,:txt_especialidad,:razon_social, :rfc, :email_fac, :direccion_fiscal, :cp_fiscal, :regimen_fiscal, :cfdi, :categoria_gafete,:socio)
 sql;
 
                 $params = array(
@@ -856,6 +872,8 @@ sql;
                         ':referencia' => $usuario->_referencia,
                         ':monto_congreso' => $usuario->_monto_congreso,
                         ':txt_especialidad' => $usuario->_txt_especialidad,
+                        ':categoria_gafete' => $usuario->_categoria_gaf,
+                        ':socio' => $usuario->_socio,
 
                         ':razon_social' => $usuario->_business_name_iva,
                         ':rfc' => $usuario->_code_iva,
@@ -883,6 +901,15 @@ sql;
                 $mysqli = Database::getInstance();
                 $query = <<<sql
                 SELECT * FROM categorias WHERE id_categoria IN (3,7)
+sql;
+                return $mysqli->queryAll($query);
+        }
+
+        public static function getCategoriasGafetes()
+        {
+                $mysqli = Database::getInstance();
+                $query = <<<sql
+                SELECT * FROM categorias_gafetes
 sql;
                 return $mysqli->queryAll($query);
         }
