@@ -923,7 +923,8 @@ html;
                             {$status1}{$status2}{$status3}{$status4}{$sociote}
                         </div>-->
                             
-                            {$clave_beca_2}
+                        <span class="badge badge-info" style="background-image: linear-gradient(0deg, #02A7E9, #293A90 70%); color:#FFF !important;"><strong>{$value['tipo_categoria_gafete']}</strong></span>
+
                             <div class="d-flex flex-column justify-content-center">
                                 <u><h6 class="mb-0 text-sm text-black"><span class="fa fa-mail-bulk" style="font-size: 13px"></span> {$value['usuario']}</h6></u>
                                 <h6 class="mb-0 text-sm text-black"><span class="fa fa-flag" style="font-size: 13px"></span> {$value['pais']}<span class="fa fa-map-pin" style="margin-left: 3px; font-size: 13px"></span> {$value['estado']}</h6>

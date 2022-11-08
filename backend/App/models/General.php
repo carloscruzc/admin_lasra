@@ -27,12 +27,13 @@ sql;
   public static function getAllColaboradoresByName($search){
     $mysqli = Database::getInstance();
     $query =<<<sql
-    SELECT ra.*, ra.user_id as id_registro_acceso,ra.usuario as email , 
+    SELECT ra.*, ra.user_id as id_registro_acceso,ra.usuario as email, cg.tipo as tipo_categoria_gafete, 
     ra.usuario as usuario, ra.clave as ticket_virtual, 
     ra.apellidop as apellido_paterno,
     ra.apellidom as apellido_materno, ra.clave, ra.organizacion, pa.pais, es.estado,
     ra.clave, ra.clave_socio 
     FROM utilerias_administradores ra 
+    LEFT JOIN categorias_gafetes cg ON(ra.categoria_gafete = cg.id)
     INNER JOIN paises pa ON (ra.id_pais = pa.id_pais) 
     INNER JOIN estados es ON (ra.id_estado = es.id_estado)
     WHERE ra.mostrar = 1 
