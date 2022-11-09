@@ -368,6 +368,21 @@
 
                             </div>
 
+                            <div class="col-12 col-sm-4 cont-porcentaje-becado" style="display: none;">
+
+                                <label id="label-porcentaje-becado">Becado %</label>
+                                <input type="number" min="1" value="0" class="form-control" id="porcentaje_becado" name="porcentaje_becado">
+
+                            </div>
+
+                            <div class="col-12 col-sm-4 cont-porcentaje-becado" style="display: none;">
+
+                                <label id="label-porcentaje-becado">Comentario Beca</label>
+                                <textarea class="form-control" name="comentario_beca" id="comentario_beca" cols="30" rows="5"></textarea>
+
+                            </div>
+
+
                         </div>
                         <br>
 
@@ -556,6 +571,20 @@
                                     <?= $categoria_gaf ?>
 
                                 </select>
+
+                            </div>
+
+                            <div class="col-12 col-sm-4 cont-porcentaje-becado-update" style="display: none;">
+
+                                <label id="label-porcentaje-becado">Becado %</label>
+                                <input type="number" min="1" class="form-control" id="porcentaje_becado_update" name="porcentaje_becado">
+
+                            </div>
+
+                            <div class="col-12 col-sm-4 cont-porcentaje-becado-update" style="display: none;">
+
+                                <label id="label-porcentaje-becado">Comentario Beca</label>
+                                <textarea class="form-control" name="comentario_beca" id="comentario_beca_update" cols="30" rows="5"></textarea>
 
                             </div>
 
@@ -1054,7 +1083,7 @@
                 },
                 success: function(respuesta) {
                     console.log(respuesta);
-                   
+
                     if (respuesta.status == "success") {
 
                         console.log(respuesta.datos_user)
@@ -1076,6 +1105,11 @@
                             $("#state_update").val(respuesta.datos_user.id_estado);
                         }, 1000);
                         $("#categoria_gaf_update").val(respuesta.datos_user.categoria_gafete);
+                        if (respuesta.datos_user.categoria_gafete == 2) {
+                            $(".cont-porcentaje-becado-update").show();
+                        }
+                        $("#porcentaje_becado_update").val(respuesta.datos_user.porcentaje_beca);
+                        $("#comentario_beca_update").val(respuesta.datos_user.comentario_beca);
 
 
 
@@ -1104,48 +1138,83 @@
 
         })
 
+        $("#categoria_gaf").on("change", function() {
+            var categoria_gaf = $(this).val();
+
+            if (categoria_gaf == 2) {
+                $(".cont-porcentaje-becado").show();
+                $("#porcentaje_becado").attr('required', 'required');
+                $("#comentario_beca").attr('required', 'required');
+
+            } else {
+                $(".cont-porcentaje-becado").hide();
+                $("#porcentaje_becado").val("");
+                $("#comentario_beca").val("");
+                $("#porcentaje_becado").removeAttr('required');
+                $("#comentario_beca").removeAttr('required');
+            }
+        });
+
         //Actulizar usuarios
         $("#update_fiscal_data").on("submit", function(event) {
-                event.preventDefault();
+            event.preventDefault();
 
-                var formData = new FormData(document.getElementById("update_fiscal_data"));
-                for (var value of formData.values()) {
-                    console.log(value);
-                }
+            var formData = new FormData(document.getElementById("update_fiscal_data"));
+            for (var value of formData.values()) {
+                console.log(value);
+            }
 
-                $.ajax({
-                    url: "/Caja/UpdateFiscalData",
-                    type: "POST",
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    beforeSend: function() {
-                        console.log("Procesando....");
-                    },
-                    success: function(respuesta) {
+            $.ajax({
+                url: "/Caja/UpdateFiscalData",
+                type: "POST",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    console.log("Procesando....");
+                },
+                success: function(respuesta) {
+                    console.log(respuesta);
+
+                    if (respuesta == 'success') {
+                        swal("¡Se actualizaron los Datos Correctamente!", "", "success")
+                        // $('#cerrar_modal').click();
+                        $("#cerrar_modal_datos_fac").click();
+                        getSell(formData.get('modal_user_id'));
+                    } else {
                         console.log(respuesta);
-
-                        if (respuesta == 'success') {
-                            swal("¡Se actualizaron los Datos Correctamente!", "", "success")
-                            // $('#cerrar_modal').click();
-                            $("#cerrar_modal_datos_fac").click();
-                            getSell(formData.get('modal_user_id'));
-                        } else {
-                            console.log(respuesta);
-                            swal("¡Hubo un error al actualizar!", "Contacte a soporte", "error")
-                            $("#cerrar_modal_datos_fac").click();
-                            // $('#cerrar_modal').modal();
-                        }
-
-
-                    },
-                    error: function(respuesta) {
-                        console.log(respuesta);
+                        swal("¡Hubo un error al actualizar!", "Contacte a soporte", "error")
+                        $("#cerrar_modal_datos_fac").click();
+                        // $('#cerrar_modal').modal();
                     }
 
-                });
+
+                },
+                error: function(respuesta) {
+                    console.log(respuesta);
+                }
+
             });
+        });
+
+
+
+        $("#categoria_gaf_update").on("change", function() {
+            var categoria_gaf = $(this).val();
+
+            if (categoria_gaf == 2) {
+                $(".cont-porcentaje-becado-update").show();
+                $("#porcentaje_becado_update").attr('required', 'required');
+                $("#comentario_beca_update").attr('required', 'required');
+            } else {
+                $(".cont-porcentaje-becado-update").hide();
+                $("#porcentaje_becado_update").val("");
+                $("#comentario_beca_update").val("");
+                $("#porcentaje_becado_update").removeAttr('required');
+                $("#comentario_beca_update").removeAttr('required');
+            }
+        });
 
 
 

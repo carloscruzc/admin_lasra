@@ -343,10 +343,10 @@
 
                             </div> -->
 
-                            <div class="col-12 col-sm-4" id="cont-archivo-residente" style="display: none;">
+                            <!-- <div class="col-12 col-sm-4" id="cont-archivo-residente" style="display: none;">
                                 <label>Archivo *</label>
                                 <input type="file" accept="image/*,.pdf" class="form-control" id="archivo_residente" name="archivo_residente" style="width: auto; margin: 0 auto;" onfocus="focused(this)" onfocusout="defocused(this)">
-                            </div>
+                            </div> -->
 
 
                             <!-- <div class="col-12 col-sm-4 mt-3" id="cont-clave-socio" style="display: none;">
@@ -403,6 +403,20 @@
                                     <?= $categoria_gaf ?>
 
                                 </select>
+
+                            </div>
+
+                            <div class="col-12 col-sm-4 cont-porcentaje-becado"  style="display: none;">
+
+                                <label id="label-porcentaje-becado">Becado %</label>
+                                <input type="number" min="1" value="0" class="form-control" id="porcentaje_becado" name="porcentaje_becado">
+
+                            </div>
+
+                            <div class="col-12 col-sm-4 cont-porcentaje-becado" style="display: none;">
+
+                                <label id="label-porcentaje-becado">Comentario Beca</label>
+                                <textarea class="form-control" name="comentario_beca" id="comentario_beca" cols="30" rows="5"></textarea>
 
                             </div>
 
@@ -537,10 +551,10 @@
 
 
 
-                            <div class="col-12 col-sm-4" id="cont-archivo-residente" style="display: none;">
+                            <!-- <div class="col-12 col-sm-4" id="cont-archivo-residente" style="display: none;">
                                 <label>Archivo *</label>
                                 <input type="file" accept="image/*,.pdf" class="form-control" id="archivo_residente" name="archivo_residente" style="width: auto; margin: 0 auto;" onfocus="focused(this)" onfocusout="defocused(this)">
-                            </div>
+                            </div> -->
 
 
 
@@ -594,6 +608,20 @@
                                     <?= $categoria_gaf ?>
 
                                 </select>
+
+                            </div>
+
+                            <div class="col-12 col-sm-4 cont-porcentaje-becado-update"  style="display: none;">
+
+                                <label id="label-porcentaje-becado">Becado %</label>
+                                <input type="number" min="1" class="form-control" id="porcentaje_becado_update" name="porcentaje_becado">
+
+                            </div>
+
+                            <div class="col-12 col-sm-4 cont-porcentaje-becado-update" style="display: none;">
+
+                                <label id="label-porcentaje-becado">Comentario Beca</label>
+                                <textarea class="form-control" name="comentario_beca" id="comentario_beca_update" cols="30" rows="5"></textarea>
 
                             </div>
 
@@ -1039,6 +1067,35 @@
                     $("#txt_especialidad_update").removeAttr('required');
                 }
             })
+
+            $("#categoria_gaf").on("change",function(){
+                var categoria_gaf = $(this).val();
+
+                if(categoria_gaf == 2){
+                    $(".cont-porcentaje-becado").show();
+                    $("#porcentaje_becado").attr('required', 'required');
+                    $("#comentario_beca").attr('required', 'required');
+                    
+                }else{
+                    $(".cont-porcentaje-becado").hide();
+                    $("#porcentaje_becado").val("");
+                    $("#comentario_beca").val("");
+                    $("#porcentaje_becado").removeAttr('required');
+                    $("#comentario_beca").removeAttr('required');
+                }
+            });
+
+            $("#categoria_gaf_update").on("change",function(){
+                var categoria_gaf = $(this).val();
+
+                if(categoria_gaf == 2){
+                    $(".cont-porcentaje-becado-update").show();
+                }else{
+                    $(".cont-porcentaje-becado-update").hide();
+                    $("#porcentaje_becado_update").val("");
+                    $("#comentario_beca_update").val("");
+                }
+            });
 
             $("#email_user_update").on("keyup", function() {
                 var email = $(this).val();
@@ -1500,6 +1557,12 @@
                     $("#state_update").val(respuesta.datos_user.id_estado);
                 },1000);
                 $("#categoria_gaf_update").val(respuesta.datos_user.categoria_gafete);
+
+                if(respuesta.datos_user.categoria_gafete == 2){
+                    $(".cont-porcentaje-becado-update").show();
+                }
+                $("#porcentaje_becado_update").val(respuesta.datos_user.porcentaje_beca);
+                $("#comentario_beca_update").val(respuesta.datos_user.comentario_beca);
                 
 
 
