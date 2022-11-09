@@ -532,20 +532,68 @@ html;
         $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
         $pdf->setY(1);
        
-        $pdf->SetXY(55, 66);        
+        $pdf->SetXY(55, 67);        
         $pdf->SetFont('Arial', 'B', 30);        
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(200, 22, utf8_decode($nombre_completo), 0, 'C');
+        $pdf->Multicell(200, 15, utf8_decode($nombre_completo), 0, 'C');
         
         //nombre Supra
         $pdf->SetFont('Arial', 'B',14);
-        $pdf->SetXY(55, 100);
+        $pdf->SetXY(55, 104);
         $pdf->Multicell(200, 8, utf8_decode('Por su participación como ASISTENTE en el : '.$nombre_supra), 0, 'C');
         
 
         //qr supra
         $pdf->Image('constancias/plantillas/qr_supra.png',20,20, 25, 25);
             
+        $pdf->Output();
+        // $pdf->Output('F','constancias/'.$clave.$id_curso.'.pdf');
+
+        // $pdf->Output('F', 'C:/pases_abordar/'. $clave.'.pdf');
+    }
+
+    public function abrirConstanciaCongreso($clave, $id_producto = null, $no_horas = NULL)
+    {
+
+        // $this->generaterQr($clave_ticket);
+        $clave = base64_decode($clave);
+        $id_producto = base64_decode($id_producto);
+
+        // exit;
+        $datos_user = GeneralDao::getUserRegisterByClave($clave)[0];
+
+        // $nombre = explode(" ", $datos_user['nombre']);
+
+
+        $title = html_entity_decode($datos_user['title']);
+        $nombre = html_entity_decode($datos_user['nombre']);
+        $apellido = html_entity_decode($datos_user['apellidop']);
+        $segundo_apellido = html_entity_decode($datos_user['apellidom']);
+        $nombre_completo = ($title) . " " . ($nombre) . " " . ($apellido) . " " . ($segundo_apellido);
+        $nombre_completo = mb_strtoupper($nombre_completo);
+
+        $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($datos_user['user_id'], 'Fisica', $id_producto);
+
+
+        $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'A4');
+        $pdf->AddPage();
+        $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
+        $pdf->setY(1);
+
+        $pdf->SetXY(55, 66);
+        $pdf->SetFont('Arial', 'B', 30);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->Multicell(200, 22, utf8_decode($nombre_completo), 0, 'C');
+
+        // //nombre Supra
+        // $pdf->SetFont('Arial', 'B', 14);
+        // $pdf->SetXY(55, 100);
+        // $pdf->Multicell(200, 8, utf8_decode('Por su participación como ASISTENTE en el : ' . $nombre_supra), 0, 'C');
+
+
+        //qr supra
+        $pdf->Image('constancias/plantillas/qr_congreso.png', 20, 20, 25, 25);
+
         $pdf->Output();
         // $pdf->Output('F','constancias/'.$clave.$id_curso.'.pdf');
 

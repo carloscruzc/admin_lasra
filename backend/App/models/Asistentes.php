@@ -581,9 +581,10 @@ sql;
   {
     $mysqli = Database::getInstance();
     $query = <<<sql
-      SELECT ua.usuario, ua.user_id,ap.id_producto
+      SELECT ua.usuario, ua.user_id,ap.id_producto, pro.nombre
       FROM utilerias_administradores ua
       INNER JOIN asigna_producto ap ON (ua.user_id = ap.user_id)
+      INNER JOIN productos pro ON (pro.id_producto = ap.id_producto)
       WHERE ap.id_producto IN (1,23,34) AND ua.user_id = $user_id
 sql;
 
