@@ -559,10 +559,19 @@ html;
         }
 
         //firma 1
-        $pdf->Image('constancias/plantillas/firma1_supra.jpg',100,165, 25, 25);
+        //nombre Supra
+        $pdf->Image('constancias/plantillas/firma1_supra.jpg',80,160, 40, 25);
+        $pdf->SetFont('Arial', '',10);
+        $pdf->SetXY(70, 179.9);
+        $pdf->Multicell(60, 5, utf8_decode('Dr. José Ramón Saucillo Osuna Direcctor del Curso'), 0, 'C');
+        
 
         //firma 2
-        $pdf->Image('constancias/plantillas/firma2_supra.jpg',180,165, 25, 25);
+        $pdf->Image('constancias/plantillas/firma2_supra.jpg',185,160, 25, 25);
+        $pdf->SetFont('Arial', '',10);
+        $pdf->SetXY(170, 179.9);
+        $pdf->Multicell(60, 5, utf8_decode('Dra. Sandra Patricia Gaspar Carrillo Direcctor del Cruso'), 0, 'C');
+        
         
 
         //qr supra
