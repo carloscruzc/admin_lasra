@@ -745,7 +745,7 @@ sql;
         {
                 $mysqli = Database::getInstance();
                 $query = <<<sql
-        SELECT p.id_producto, p.nombre as nombre_producto, p.precio_publico, p.precio_socio, p.precio_publico_usd, p.precio_socio_usd,p.tipo_moneda,p.precio_publico_usd, p.precio_socio_usd, p.tipo_moneda_usd, p.max_compra, p.es_congreso, p.es_servicio, p.es_curso, p.tipo,p.fecha_producto,ua.clave_socio, ua.monto_congreso as amout_due, ua.socio 
+        SELECT p.id_producto, p.nombre as nombre_producto, p.precio_publico, p.precio_socio, p.precio_publico_usd, p.precio_socio_usd,p.tipo_moneda,p.precio_publico_usd, p.precio_socio_usd, p.tipo_moneda_usd, p.max_compra, p.es_congreso, p.es_servicio, p.es_curso, p.tipo,p.fecha_producto,ua.clave_socio, ua.monto_congreso as amout_due, ua.socio, ua.porcentaje_beca 
         FROM productos p
         INNER JOIN utilerias_administradores ua
         INNER JOIN costos_productos cp ON (cp.id_producto = p.id_producto and cp.id_categoria = ua.id_categoria)
@@ -944,5 +944,18 @@ sql;
 sql;
 
                 return $mysqli->queryOne($query);
+        }
+
+        public static function getTicketUser($user_id, $clave)
+        {
+                $mysqli = Database::getInstance();
+                $query = <<<sql
+        SELECT pro.id_producto,pro.nombre,pro.precio_publico,pro.precio_socio,pro.tipo_moneda,pro.caratula,pro.es_curso,pro.es_servicio,pro.es_congreso,ua.monto_congreso as amout_due,ua.clave_socio, pp.status,pp.monto,pp.tipo_pago,pp.tipo_moneda as t_moneda
+        FROM productos pro         
+        INNER JOIN pendiente_pago pp ON (pp.id_producto = pro.id_producto)
+        INNER JOIN utilerias_administradores ua ON(pp.user_id = ua.user_id)
+        WHERE pp.user_id = $user_id AND pp.clave = '$clave' and pp.status in (0,2)
+sql;
+                return $mysqli->queryAll($query);
         }
 }

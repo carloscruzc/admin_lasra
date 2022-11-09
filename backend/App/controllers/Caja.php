@@ -395,9 +395,40 @@ html;
 
 
             if ($value['socio'] == 1 || $value['socio'] == '1') {
-                $precio = $value['precio_socio'];
+
+                if($value['es_congreso'] == '1' || $value['es_congreso'] == 1){
+
+                    if($value['porcentaje_beca'] > 0 || $value['porcentaje_beca'] != ""){
+
+                    $valor = ($value['porcentaje_beca'] * $value['precio_socio']) / 100;
+                    $precio = $value['precio_socio'] - $valor;
+                    
+                    }else{
+                        $precio = $value['precio_socio'];
+                    }
+                   
+                }else{
+                    $precio = $value['precio_socio'];
+
+                }
+                // $precio = $value['precio_socio'];
             } else {
-                $precio = $value['precio_publico'];
+                if($value['es_congreso'] == '1' || $value['es_congreso'] == 1){
+
+                    if($value['porcentaje_beca'] > 0 || $value['porcentaje_beca'] != ""){
+
+                    $valor = ($value['porcentaje_beca'] * $value['precio_publico']) / 100;
+                    $precio = $value['precio_publico'] - $valor;
+                    
+                    }else{
+                        $precio = $value['precio_publico'];
+                    }
+                   
+                }else{
+                    $precio = $value['precio_publico'];
+
+                }
+                // $precio = $value['precio_publico'];
             }
 
             if ($value['max_compra'] <= 1) {
@@ -1031,7 +1062,7 @@ html;
             $ini_folio = '';
         }
 
-        $nombre_completo = $datos_user['nombre'] . " " . $datos_user['apellidop'] . "\n " . $datos_user['apellidom'];
+        $nombre_completo = $datos_user['nombre'] . " " . $datos_user['apellidop'] . " " . $datos_user['apellidom'];
 
 
         $pdf = new \FPDF($orientation = 'P', $unit = 'mm', $format = 'A4');
@@ -1046,7 +1077,7 @@ html;
         $pdf->SetFont('Arial', 'B', 5);    //Letra Arial, negrita (Bold), tam. 20
 
 
-        $espace = 142;
+        $espace = 138;
         $total = array();
         $pro = explode(",", $productos['productos']);
 
@@ -1132,40 +1163,40 @@ html;
         $pdf->Multicell(100, 10, $fecha, 0, 'C');
 
         //Nombre
-        $pdf->SetXY(120, 85);
+        $pdf->SetXY(149, 79);
         $pdf->SetFont('Arial', 'B', 9);
         $pdf->SetTextColor(94, 94, 94);
-        $pdf->Multicell(114, 6, utf8_decode($nombre_completo), 0, 'C');
+        $pdf->Multicell(55, 6, utf8_decode($nombre_completo), 0, 'L');
 
         //correo
-        $pdf->SetXY(120, 95);
+        $pdf->SetXY(149, 85);
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->SetTextColor(94, 94, 94);
-        $pdf->Multicell(114, 10, utf8_decode($datos_user['direccion_fiscal']), 0, 'C');
+        $pdf->Multicell(55, 10, utf8_decode($datos_user['direccion']), 0, 'L');
 
         //Nombre empresa
-        $pdf->SetXY(120, 100);
+        $pdf->SetXY(149, 92);
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->SetTextColor(94, 94, 94);
-        $pdf->Multicell(114, 10, utf8_decode($datos_user['razon_social']), 0, 'C');
+        $pdf->Multicell(55, 10, utf8_decode($datos_user['business_name_iva']), 0, 'L');
 
         //RFC
-        $pdf->SetXY(120, 105);
+        $pdf->SetXY(149, 97);
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->SetTextColor(94, 94, 94);
-        $pdf->Multicell(114, 10, utf8_decode($datos_user['rfc']), 0, 'C');
+        $pdf->Multicell(55, 10, utf8_decode($datos_user['code_iva']), 0, 'L');
 
         //correo
-        $pdf->SetXY(120, 110);
+        $pdf->SetXY(149, 103);
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->SetTextColor(94, 94, 94);
-        $pdf->Multicell(114, 10, utf8_decode($datos_user['email_fac']), 0, 'C');
+        $pdf->Multicell(55, 10, utf8_decode($datos_user['email_receipt_iva']), 0, 'L');
 
         //correo
-        $pdf->SetXY(120, 115);
+        $pdf->SetXY(149, 107);
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->SetTextColor(94, 94, 94);
-        $pdf->Multicell(114, 10, utf8_decode($datos_user['cp_fiscal']), 0, 'C');
+        $pdf->Multicell(55, 10, utf8_decode($datos_user['postal_code_iva']), 0, 'L');
 
 
 
@@ -1175,13 +1206,13 @@ html;
 
 
         //total 
-        $pdf->SetXY(138, 255);
+        $pdf->SetXY(138, 248);
         $pdf->SetFont('Arial', 'B', 13);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Multicell(100, 10, '$ ' . number_format($total, 2) . '', 0, 'C');
 
         //total  letra
-        $pdf->SetXY(5, 247);
+        $pdf->SetXY(5, 240);
         $pdf->SetFont('Arial', 'B', 13);
         $pdf->SetTextColor(94, 94, 94);
         $pdf->Multicell(120, 5, $total_en_letras, 0, 'C');

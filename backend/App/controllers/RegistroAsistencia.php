@@ -412,6 +412,7 @@ html;
 
         $datos_user = AsistentesDao::getRegistroAccesoByClaveRA($clave)[0];
         $id = $datos_user['user_id'];
+        $tipo = '';
         $nombre = html_entity_decode($datos_user['nombre'], ENT_QUOTES, "UTF-8");
         $apellidop = html_entity_decode($datos_user['apellido_paterno'], ENT_QUOTES, "UTF-8");
         $apellidom = html_entity_decode($datos_user['apellido_materno'], ENT_QUOTES, "UTF-8");
@@ -429,9 +430,6 @@ html;
 
         // $user_id = new \stdClass();
         // $user_id->_user_id = $datos_user['user_id'];
-        $insertImpresionGafete = RegistroAsistenciaDao::insertImpGafete($datos_user['user_id'], $_SESSION['utilerias_administradores_id']);
-
-
         $pdf = new \FPDF($orientation = 'P', $unit = 'mm', array(300, 210));
         $pdf->AddPage();
         $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
@@ -439,9 +437,17 @@ html;
         //HABILITAR CODIGO QR ↓↓↓↓
         // $pdf->Image('qrs/gafetes/'.$clave.'.png',70,40,70,0,'PNG');
 
-        //HABILITAR CODIGO DE BARRAS ↓↓↓↓
-        $pdf->Image("codigos_barras/" . $clave . ".png", 84.5, 206, 40, 20);
+        if ($datos_user['categoria_gafete'] == 1 || $datos_user['categoria_gafete'] == 2 || $datos_user['categoria_gafete'] == 3) {
+            //HABILITAR CODIGO DE BARRAS ↓↓↓↓
+            $pdf->Image("codigos_barras/" . $clave . ".png", 84.5, 206, 40, 20);
+            $tipo = 'Congreso';
+        } else if ($datos_user['categoria_gafete'] == 4) {
+            $tipo = 'Expositor';
+        } else if ($datos_user['categoria_gafete'] == 5) {
+            $tipo = 'Staff';
+        }
 
+        $insertImpresionGafete = RegistroAsistenciaDao::insertImpGafete($datos_user['user_id'], $_SESSION['utilerias_administradores_id'], $tipo);
 
 
         $pdf->setXY(40, 190);
@@ -453,7 +459,60 @@ html;
         $pdf->Multicell(140, 15, utf8_decode($nombre_completo), 0, 'C');
         // $pdf->Multicell(150.8, 7, utf8_decode($clave), 1, 'C');
 
-        // unlink("codigos_barras/" . $clave . ".png"); //Eliminar codigo de barras
+        unlink("codigos_barras/" . $clave . ".png"); //Eliminar codigo de barras
+
+        $pdf->output();
+    }
+
+    public function abrirpdfGafeteSupras($clave, $clave_ticket = null)
+    {
+        // $this->generaterQr($clave); con qur
+
+        $datos_user = AsistentesDao::getRegistroAccesoByClaveRA($clave)[0];
+        $id = $datos_user['user_id'];
+        $tipo = 'Supra';
+        $nombre = html_entity_decode($datos_user['nombre'], ENT_QUOTES, "UTF-8");
+        $apellidop = html_entity_decode($datos_user['apellido_paterno'], ENT_QUOTES, "UTF-8");
+        $apellidom = html_entity_decode($datos_user['apellido_materno'], ENT_QUOTES, "UTF-8");
+        $nombre_completo = mb_strtoupper($nombre) . " " . mb_strtoupper($apellidop) . " " . mb_strtoupper($apellidom);
+        // $nombre_completo = mb_strtoupper($datos_user['nombre']) . "\n\n" . mb_strtoupper($datos_user['apellido_paterno']) . "\n\n" . mb_strtoupper($datos_user['apellido_materno']);
+
+        $nombre_fichero = 'codigos_barras/';
+
+        if (!file_exists($nombre_fichero)) {
+            mkdir($nombre_fichero, 0777, true);
+        }
+
+        //Crear Codigo de barras
+        $this->barcode($nombre_fichero . $clave . ".png", $clave, "20", "horizontal", "code128", true, 1);
+
+        // $user_id = new \stdClass();
+        // $user_id->_user_id = $datos_user['user_id'];
+        $pdf = new \FPDF($orientation = 'P', $unit = 'mm', array(300, 210));
+        $pdf->AddPage();
+        $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
+        $pdf->SetFont('Arial', 'B', 16);
+        //HABILITAR CODIGO QR ↓↓↓↓
+        // $pdf->Image('qrs/gafetes/'.$clave.'.png',70,40,70,0,'PNG');
+
+
+        //HABILITAR CODIGO DE BARRAS ↓↓↓↓
+        $pdf->Image("codigos_barras/" . $clave . ".png", 84.5, 206, 40, 20);
+
+
+        $insertImpresionGafete = RegistroAsistenciaDao::insertImpGafete($datos_user['user_id'], $_SESSION['utilerias_administradores_id'], $tipo);
+
+
+        $pdf->setXY(40, 190);
+        $pdf->SetFont('Arial', 'B', 18);
+        #4D9A9B
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetAutoPageBreak(true, 25);
+        $pdf->SetMargins(30, 25, 30, 10);
+        $pdf->Multicell(140, 15, utf8_decode($nombre_completo), 0, 'C');
+        // $pdf->Multicell(150.8, 7, utf8_decode($clave), 1, 'C');
+
+        unlink("codigos_barras/" . $clave . ".png"); //Eliminar codigo de barras
 
         $pdf->output();
     }

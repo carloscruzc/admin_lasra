@@ -217,7 +217,7 @@ html;
         View::set('idCountry', $this->getCountry());
         View::set('especialidades', $especialidades);
         View::set('categorias', $categorias);
-        View::set('categoria_gaf',$categoria_gaf);
+        View::set('categoria_gaf', $categoria_gaf);
         View::set('tabla', $this->getAllColaboradoresAsignadosByName($search));
         View::set('asideMenu', $this->_contenedor->asideMenu());
         View::render("asistentes_all");
@@ -829,17 +829,47 @@ html;
             $imprimir = GeneralDao::getAllColaboradoresImprimir($value['user_id']);
 
 
+            //get congreso
+            $button_congreso = AsistentesDao::getCongresoByUserId($value['user_id']);
+            if (count($button_congreso) > 0) {
+                $btn_congreso = '<a href="/RegistroAsistencia/abrirpdfGafete/'.$value['user_id'].'" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafete Congreso" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>';
 
+            }else{
+                $btn_congreso = '';
+            }
+            /***************************************************************************/
+
+            //boton staff o expositores
+            if ($value['categoria_gafete'] == 4 || $value['categoria_gafete'] == 5) {
+                $btn_staff = '<a href="/RegistroAsistencia/abrirpdfGafete/'.$value['user_id'].'" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafete" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>';
+            }
+            /**************************************************************************** */
+
+            //boton supras
+            $button_congreso = AsistentesDao::getSupraByUserId($value['user_id']);
+
+            if (count($button_congreso) > 0) {
+                $btn_supras = '<a href="/RegistroAsistencia/abrirpdfGafeteSupras/'.$value['user_id'].'" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafete Supra" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafete Supra" target="_blank"><i class="fas fa-print"> </i></a>';
+
+            }else{
+                $btn_supras = '';
+            }
+
+            /***************************************************************************** */
 
             $gafetes_httml .= <<<html
                 <td style="text-align:center; vertical-align:middle;">
                 <!--<span class="badge badge-success" style="background-color: #1279C4; color:white; margin:10px;"><strong></strong></span>-->
                 <br>
-                    <a href="/RegistroAsistencia/abrirpdfGafete/{$value['user_id']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>     
+                    <!--<a href="/RegistroAsistencia/abrirpdfGafete/{$value['user_id']}" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafetes" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>--> 
+                    {$btn_staff}
+                    {$btn_congreso} 
+                    {$btn_supras}
 
-                    <a href="/Constancias/abrirConstancia/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>
+
+                    <!--<a href="/Constancias/abrirConstancia/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>
                     
-                    <a href="/Constancias/abrirConstanciaDigital/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-2 btn-icon-only text-white" title="Imprimir Constancia Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Digital" target="_blank"><i class="fas fa-print"> </i></a>
+                    <a href="/Constancias/abrirConstanciaDigital/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-2 btn-icon-only text-white" title="Imprimir Constancia Digital" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Digital" target="_blank"><i class="fas fa-print"> </i></a>-->
 
                     <button type="button" class="btn bg-gradient-info btn-icon-only mb-3 search_user" value={$value['user_id']}  data-toggle="modal" data-target="#datosFacturacion" title="Editar Datos" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Editar Datos"><i class="fa fa-plus" aria-hidden="true"></i></button>
 
@@ -852,29 +882,31 @@ html;
             // $status_pendiente = GeneralDao::getStatusValidando($value['user_id']);
             // $status_liberado = GeneralDao::getStatusLiberado($value['user_id']);
 
-//             if (!$status_compra) {
-//                 $status1 .= <<<html
-//                 <span class="badge badge-success" style="background-image: linear-gradient(0deg, rgba(234, 6, 6, 0.6), #b80505 50%); color:#FFF !important; "><strong>Comprando</strong></span>
-// html;
-//             }
+            
 
-//             if ($status_solicitar) {
-//                 $status2 .= <<<html
-//                 <span class="badge badge-success" style="background: linear-gradient(180deg, rgba(249,255,0,1) 0%, rgba(250,145,7,1) 100%); color:#FFF !important; "><strong>Solicitado</strong></span>
-// html;
-//             }
+            //             if (!$status_compra) {
+            //                 $status1 .= <<<html
+            //                 <span class="badge badge-success" style="background-image: linear-gradient(0deg, rgba(234, 6, 6, 0.6), #b80505 50%); color:#FFF !important; "><strong>Comprando</strong></span>
+            // html;
+            //             }
 
-//             if ($status_pendiente) {
-//                 $status3 .= <<<html
-//                 <span class="badge badge-success" style="background-image: linear-gradient(0deg, #02A7E9, #293A90 70%); color:#FFF !important;"><strong>Validando pagos</strong></span>       
-// html;
-//             }
+            //             if ($status_solicitar) {
+            //                 $status2 .= <<<html
+            //                 <span class="badge badge-success" style="background: linear-gradient(180deg, rgba(249,255,0,1) 0%, rgba(250,145,7,1) 100%); color:#FFF !important; "><strong>Solicitado</strong></span>
+            // html;
+            //             }
 
-//             if ($status_liberado) {
-//                 $status4 .= <<<html
-//                 <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>Estatus: Liberado</strong></span>       
-// html;
-//             }
+            //             if ($status_pendiente) {
+            //                 $status3 .= <<<html
+            //                 <span class="badge badge-success" style="background-image: linear-gradient(0deg, #02A7E9, #293A90 70%); color:#FFF !important;"><strong>Validando pagos</strong></span>       
+            // html;
+            //             }
+
+            //             if ($status_liberado) {
+            //                 $status4 .= <<<html
+            //                 <span class="badge badge-success" style="background-color: color:#ea5b9b; "><strong>Estatus: Liberado</strong></span>       
+            // html;
+            //             }
 
             /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -951,7 +983,8 @@ html;
         return $html;
     }
 
-    public function getDataUser(){
+    public function getDataUser()
+    {
         $user_id = $_POST['user_id'];
         $data_user = CajaDao::getDataUser($user_id);
         $data = [
@@ -960,6 +993,106 @@ html;
         ];
 
         echo json_encode($data);
+    }
+
+    public function ticketImp($clave,$user_id = null)
+    {
+
+        date_default_timezone_set('America/Mexico_City');
+
+
+        $user_id = $_SESSION['user_id'];
+        // $clave = $this->generateRandomString();
+        $datos_user = CajaDao::getDataUser($user_id);
+        $productos = CajaDao::getTicketUser($user_id, $clave);
+
+
+        $fecha =  date("Y-m-d");       
+
+
+
+        // $d = $this->fechaCastellano($fecha);
+
+        $nombre_completo = $datos_user['nombre'] . " " . $datos_user['apellidom'] . " " . $datos_user['apellidop'];
+
+
+        $pdf = new \FPDF($orientation = 'P', $unit = 'mm', $format = 'A4');
+        $pdf->AddPage();
+        $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
+        $pdf->setY(1);
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->Image('constancias/plantillas/orden.png', 0, 0, 210, 300);
+        // $pdf->SetFont('Arial', 'B', 25);
+        // $pdf->Multicell(133, 80, $clave_ticket, 0, 'C');
+
+        $espace = 142;
+        $total = array();
+        foreach ($productos as $key => $value) {
+
+
+            // if($value['es_congreso'] == 1 && $value['clave_socio'] == ""){
+            // $precio = $value['amout_due'];
+            // // $precio = $value['precio_publico'];
+            // }elseif($value['es_congreso'] == 1 && $value['clave_socio'] != ""){
+            //     $precio = $value['amout_due'];
+            // }
+            // else if($value['es_servicio'] == 1 && $value['clave_socio'] == ""){
+            //     $precio = $value['precio_publico'];
+            // }else if($value['es_servicio'] == 1 && $value['clave_socio'] != ""){
+            //     $precio = $value['precio_socio'];
+            // }
+            // else if($value['es_curso'] == 1  && $value['clave_socio'] == ""){
+            //     $precio = $value['precio_publico'];
+            // }else if($value['es_curso'] == 1  && $value['clave_socio'] != ""){
+            //     $precio = $value['precio_socio'];
+            // }
+            $precio = $value['monto'];
+
+            array_push($total, $precio);
+
+            //Nombre Curso
+            $pdf->SetXY(28, $espace);
+            $pdf->SetFont('Arial', 'B', 8);
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->Multicell(100, 4, utf8_decode($value['nombre']), 0, 'C');
+
+            //Costo
+            $pdf->SetXY(129, $espace);
+            $pdf->SetFont('Arial', 'B', 8);
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->Multicell(100, 4, '$ ' . $precio . ' ' . $value['tipo_moneda'], 0, 'C');
+
+            $espace = $espace + 10;
+        }
+
+        //folio
+        $pdf->SetXY(90, 60);
+        $pdf->SetFont('Arial', 'B', 13);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->Multicell(100, 10, $datos_user['referencia'], 0, 'C');
+
+        //fecha
+        $pdf->SetXY(88, 70);
+        $pdf->SetFont('Arial', 'B', 13);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->Multicell(100, 10, $fecha, 0, 'C');
+
+        //nombre
+        $pdf->SetXY(88, 80);
+        $pdf->SetFont('Arial', 'B', 13);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->Multicell(100, 10, utf8_decode($nombre_completo), 0, 'C');
+
+         //total
+        // $pdf->SetXY(118, 170);
+        // $pdf->SetFont('Arial', 'B', 8);  
+        // $pdf->SetTextColor(0, 0, 0);
+        // $pdf->Multicell(100, 10, 'TOTAL : '.number_format(array_sum($total),2), 0, 'C');
+
+        $pdf->Output();
+        // $pdf->Output('F','constancias/'.$clave.$id_curso.'.pdf');
+
+        // $pdf->Output('F', 'C:/pases_abordar/'. $clave.'.pdf');
     }
 
     public function generarModal($datos)

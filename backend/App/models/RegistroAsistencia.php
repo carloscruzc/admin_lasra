@@ -402,11 +402,11 @@ sql;
         return $id_user;
     }
 
-    public static function insertImpGafete($user_id,$admin_id){
+    public static function insertImpGafete($user_id,$admin_id,$tipo){
         $mysqli = Database::getInstance();
         $query=<<<sql
-        INSERT INTO impresion_gafete ( `user_id`, `fecha_hora`, `utilerias_administrador`) 
-        VALUES ($user_id,NOW(),'$admin_id')
+        INSERT INTO impresion_gafete ( user_id, fecha_hora, tipo ,utilerias_administrador) 
+        VALUES ($user_id,NOW(),'$tipo','$admin_id')
 sql;
         $id = $mysqli->insert($query);
         return $id;

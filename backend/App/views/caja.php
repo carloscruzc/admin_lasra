@@ -239,7 +239,7 @@
                                                         <div style="display:flex; justify-content:start;">
 
                                                             <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#datosFacturacion" style="display: none;" id="btn_fact">
-                                                                Facturación de Datos
+                                                                Actualización de Datos
                                                             </button>
                                                         </div>
                                                     </div>
@@ -270,8 +270,8 @@
 
     </main>
 
-     <!-- Modal crear nuevo usuario -->
-     <div class="modal fade" id="addNewUser" tabindex="-1" role="dialog" aria-labelledby="addNewUserLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <!-- Modal crear nuevo usuario -->
+    <div class="modal fade" id="addNewUser" tabindex="-1" role="dialog" aria-labelledby="addNewUserLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -406,7 +406,7 @@
 
                             </div>
 
-                            <div class="col-12 col-sm-4 cont-porcentaje-becado"  style="display: none;">
+                            <div class="col-12 col-sm-4 cont-porcentaje-becado" style="display: none;">
 
                                 <label id="label-porcentaje-becado">Becado %</label>
                                 <input type="number" min="1" value="0" class="form-control" id="porcentaje_becado" name="porcentaje_becado">
@@ -496,7 +496,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="datosFacturacionLabel">Actulizar Usuario</h5>
+                    <h5 class="modal-title" id="datosFacturacionLabel">Actualizar Usuario</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -611,7 +611,7 @@
 
                             </div>
 
-                            <div class="col-12 col-sm-4 cont-porcentaje-becado-update"  style="display: none;">
+                            <div class="col-12 col-sm-4 cont-porcentaje-becado-update" style="display: none;">
 
                                 <label id="label-porcentaje-becado">Becado %</label>
                                 <input type="number" min="1" class="form-control" id="porcentaje_becado_update" name="porcentaje_becado">
@@ -789,7 +789,7 @@
         </div>
     </div>
 
-   
+
 
 
     <!--   Core JS Files   -->
@@ -812,7 +812,7 @@
 
         function actualizaEdos(pais = null) {
             var pais = $('#nationality').val();
-            
+
             $.ajax({
                     url: '/Caja/ObtenerEstado',
                     type: 'POST',
@@ -821,20 +821,20 @@
                         pais: pais
                     },
 
-            })
-            .done(function(json) {
-                if (json.success) {
-                    $("#state").html(json.html);
-                }
-            })
-            .fail(function() {
-                //   alert("Ocurrio un error al actualizar el estado intenta de nuevo");
-            })
+                })
+                .done(function(json) {
+                    if (json.success) {
+                        $("#state").html(json.html);
+                    }
+                })
+                .fail(function() {
+                    //   alert("Ocurrio un error al actualizar el estado intenta de nuevo");
+                })
         }
 
         function actualizaEdosUpdate(pais = null) {
             var pais = $('#nationality_update').val();
-            
+
             $.ajax({
                     url: '/Caja/ObtenerEstado',
                     type: 'POST',
@@ -843,15 +843,15 @@
                         pais: pais
                     },
 
-            })
-            .done(function(json) {
-                if (json.success) {
-                    $("#state_update").html(json.html);
-                }
-            })
-            .fail(function() {
-                //   alert("Ocurrio un error al actualizar el estado intenta de nuevo");
-            })
+                })
+                .done(function(json) {
+                    if (json.success) {
+                        $("#state_update").html(json.html);
+                    }
+                })
+                .fail(function() {
+                    //   alert("Ocurrio un error al actualizar el estado intenta de nuevo");
+                })
         }
 
         function borrarRegister(dato) {
@@ -1068,15 +1068,15 @@
                 }
             })
 
-            $("#categoria_gaf").on("change",function(){
+            $("#categoria_gaf").on("change", function() {
                 var categoria_gaf = $(this).val();
 
-                if(categoria_gaf == 2){
+                if (categoria_gaf == 2) {
                     $(".cont-porcentaje-becado").show();
                     $("#porcentaje_becado").attr('required', 'required');
                     $("#comentario_beca").attr('required', 'required');
-                    
-                }else{
+
+                } else {
                     $(".cont-porcentaje-becado").hide();
                     $("#porcentaje_becado").val("");
                     $("#comentario_beca").val("");
@@ -1085,12 +1085,12 @@
                 }
             });
 
-            $("#categoria_gaf_update").on("change",function(){
+            $("#categoria_gaf_update").on("change", function() {
                 var categoria_gaf = $(this).val();
 
-                if(categoria_gaf == 2){
+                if (categoria_gaf == 2) {
                     $(".cont-porcentaje-becado-update").show();
-                }else{
+                } else {
                     $(".cont-porcentaje-becado-update").hide();
                     $("#porcentaje_becado_update").val("");
                     $("#comentario_beca_update").val("");
@@ -1553,17 +1553,17 @@
                 $("#especialidades_update").val(respuesta.datos_user.especialidades);
                 $("#nationality_update").val(respuesta.datos_user.id_pais);
                 actualizaEdosUpdate();
-                setTimeout(function(){
+                setTimeout(function() {
                     $("#state_update").val(respuesta.datos_user.id_estado);
-                },1000);
+                }, 1000);
                 $("#categoria_gaf_update").val(respuesta.datos_user.categoria_gafete);
 
-                if(respuesta.datos_user.categoria_gafete == 2){
+                if (respuesta.datos_user.categoria_gafete == 2) {
                     $(".cont-porcentaje-becado-update").show();
                 }
                 $("#porcentaje_becado_update").val(respuesta.datos_user.porcentaje_beca);
                 $("#comentario_beca_update").val(respuesta.datos_user.comentario_beca);
-                
+
 
 
                 $("#business_name_iva_update").val(respuesta.datos_user.business_name_iva);
@@ -1573,9 +1573,9 @@
                 $("#postal_code_iva_update").val(respuesta.datos_user.postal_code_iva);
                 $("#cfdi_update").val(respuesta.datos_user.cfdi);
                 $("#regimen_fiscal_update").val(respuesta.datos_user.regimen_fiscal);
-                $("#direccion_user_update").val(respuesta.datos_user.direccion);              
-                
-                
+                $("#direccion_user_update").val(respuesta.datos_user.direccion);
+
+
             }
 
 
@@ -1719,11 +1719,32 @@
 
                     // if((id_product == 2 || id_product == 35) && $("#clave_socio").val() != ''){
                     if (id_product == 2 || id_product == 35) {
-                        //
-                        $(".precio_articulo").each(function(index) {
-                            $("#precio_articulo" + $(this).attr('data-id-producto')).val($(this).attr('data-precio-socio'));
+                        //1,23,34,44
 
-                        });
+                        // $(".precio_articulo").each(function(index) {
+                        //         $("#precio_articulo" + $(this).attr('data-id-producto')).val($(this).attr('data-precio-socio'));
+
+                        //     });
+                        if ($("#porcentaje_becado_update").val() > 0) {
+
+                            $(".precio_articulo").each(function(index) {
+                                $("#precio_articulo" + $(this).attr('data-id-producto')).val($(this).attr('data-precio-socio'));
+
+                            });
+
+                            $("#precio_articulo1").val($("#precio_articulo1").attr('data-precio'));
+                            $("#precio_articulo23").val($("#precio_articulo23").attr('data-precio'));
+                            $("#precio_articulo34").val($("#precio_articulo34").attr('data-precio'));
+                            $("#precio_articulo44").val($("#precio_articulo44").attr('data-precio'));
+
+                        }else{
+
+                            $(".precio_articulo").each(function(index) {
+                                $("#precio_articulo" + $(this).attr('data-id-producto')).val($(this).attr('data-precio-socio'));
+
+                            });
+                        }
+
 
                     }
 
