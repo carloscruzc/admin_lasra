@@ -423,61 +423,62 @@
                         </div>
                         <br>
 
+                        <div class="datos_fact">
+                            <h5 class="modal-title" id="">Datos de Facturación</h5>
 
-                        <h5 class="modal-title" id="">Datos de Facturación</h5>
+                            <hr>
 
-                        <hr>
+                            <!-- <input type="hidden" name="modal_user_id" id="modal_user_id"> -->
+                            <div class="row">
+                                <div class="col-12 col-sm-4">
+                                    <label>Razón Social </label>
+                                    <input class="multisteps-form__input form-control" type="text" id="business_name_iva_user" name="business_name_iva_user" style="text-transform: uppercase;" placeholder="eg. Christopher Prior Jones" maxlength="100">
+                                </div>
+                                <div class="col-12 col-sm-4 mt-1 mt-sm-0">
+                                    <label>RFC </label>
+                                    <input class="multisteps-form__input form-control" type="text" id="code_iva_user" name="code_iva_user" placeholder="eg. CPJ41250AS" maxlength="13" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                </div>
 
-                        <!-- <input type="hidden" name="modal_user_id" id="modal_user_id"> -->
-                        <div class="row">
-                            <div class="col-12 col-sm-4">
-                                <label>Razón Social </label>
-                                <input class="multisteps-form__input form-control" type="text" id="business_name_iva_user" name="business_name_iva_user" style="text-transform: uppercase;" placeholder="eg. Christopher Prior Jones" maxlength="100">
+
+                                <div class="col-md-4 col-sm-12">
+                                    <label>Correo Electrónico facturación </label>
+                                    <input class="multisteps-form__input form-control" type="text" id="email_receipt_iva_user" name="email_receipt_iva_user" placeholder="eg. user@domain.com">
+                                    <span class="mb-0 text-sm" id="error_email_send" style="display:none;color:red;">Correo electrónico incorrecto</span>
+                                </div>
+
+
+                                <div class="col-md-4 col-sm-12">
+                                    <label>CP</label>
+                                    <input class="multisteps-form__input form-control" id="postal_code_iva_user" name="postal_code_iva_user" type="number" min="1" maxlength="5" placeholder="Código postal" class="form-control ameg-shadow-box-two" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <label>CFDI * </label>
+                                    <select class="multisteps-form__select form-control all_input_select" name="cfdi" id="cfdi">
+                                        <option value="">Selecciona una opción</option>
+                                        <?= $usoCfdi ?>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <label>Régimen Fiscal * </label>
+                                    <select class="multisteps-form__select form-control all_input_select" name="regimen_fiscal" id="regimen_fiscal">
+                                        <option value="">Selecciona una opción</option>
+                                        <?= $remigenFiscal ?>
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-12 col-sm-12">
+                                    <label>Dirección Fiscal </label>
+                                    <textarea class="multisteps-form__input form-control" name="direccion_user" id="direccion_user" cols="30" rows="3"></textarea>
+                                    <!-- <input class="multisteps-form__input form-control" type="text" id="direccion_user" name="direccion_user" placeholder=""> -->
+                                </div>
+
+
                             </div>
-                            <div class="col-12 col-sm-4 mt-1 mt-sm-0">
-                                <label>RFC </label>
-                                <input class="multisteps-form__input form-control" type="text" id="code_iva_user" name="code_iva_user" placeholder="eg. CPJ41250AS" maxlength="13" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
-                            </div>
-
-
-                            <div class="col-md-4 col-sm-12">
-                                <label>Correo Electrónico facturación </label>
-                                <input class="multisteps-form__input form-control" type="text" id="email_receipt_iva_user" name="email_receipt_iva_user" placeholder="eg. user@domain.com">
-                                <span class="mb-0 text-sm" id="error_email_send" style="display:none;color:red;">Correo electrónico incorrecto</span>
-                            </div>
-
-
-                            <div class="col-md-4 col-sm-12">
-                                <label>CP</label>
-                                <input class="multisteps-form__input form-control" id="postal_code_iva_user" name="postal_code_iva_user" type="number" min="1" maxlength="5" placeholder="Código postal" class="form-control ameg-shadow-box-two" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
-                            </div>
-
-                            <div class="col-md-4 col-sm-12">
-                                <label>CFDI * </label>
-                                <select class="multisteps-form__select form-control all_input_select" name="cfdi" id="cfdi">
-                                    <option value="">Selecciona una opción</option>
-                                    <?= $usoCfdi ?>
-
-                                </select>
-
-                            </div>
-
-                            <div class="col-md-4 col-sm-12">
-                                <label>Régimen Fiscal * </label>
-                                <select class="multisteps-form__select form-control all_input_select" name="regimen_fiscal" id="regimen_fiscal">
-                                    <option value="">Selecciona una opción</option>
-                                    <?= $remigenFiscal ?>
-                                </select>
-
-                            </div>
-
-                            <div class="col-md-12 col-sm-12">
-                                <label>Dirección Fiscal </label>
-                                <textarea class="multisteps-form__input form-control" name="direccion_user" id="direccion_user" cols="30" rows="3"></textarea>
-                                <!-- <input class="multisteps-form__input form-control" type="text" id="direccion_user" name="direccion_user" placeholder=""> -->
-                            </div>
-
-
                         </div>
 
                     </div>
@@ -1083,6 +1084,31 @@
                     $("#porcentaje_becado").removeAttr('required');
                     $("#comentario_beca").removeAttr('required');
                 }
+
+                if (categoria_gaf == 3 || categoria_gaf == 4 || categoria_gaf == 5) {
+                    if (categoria_gaf == 3) {
+                        $(".cont-prefijo").show();
+                    } else {
+                        $(".cont-prefijo").hide();
+                    }
+
+                    $(".cont-telefono").hide();
+                    $("#cont-categoria").hide();
+                    $("#cont-especialidades").hide();
+                    $(".datos_fact").hide();
+                    $("#categorias").removeAttr('required');
+                    $("#especialidades").removeAttr('required');
+                } else {
+                    $(".cont-prefijo").show();
+                    $(".cont-telefono").show();
+                    $("#cont-categoria").show();
+                    $("#cont-especialidades").show();
+                    $(".datos_fact").show();
+                    $("#categorias").attr('required', 'required');
+                    $("#especialidades").attr('required', 'required');
+                }
+
+
             });
 
             $("#categoria_gaf_update").on("change", function() {
@@ -1575,6 +1601,41 @@
                 $("#regimen_fiscal_update").val(respuesta.datos_user.regimen_fiscal);
                 $("#direccion_user_update").val(respuesta.datos_user.direccion);
 
+                if ($("#check_curso_38").is(":checked")) {
+                    $("#check_curso_37").attr('disabled', 'disabled');
+                    $("#check_curso_36").attr('disabled', 'disabled');
+                }
+
+                if ($("#check_curso_41").is(":checked")) {
+                    $("#check_curso_40").attr('disabled', 'disabled');
+                    $("#check_curso_39").attr('disabled', 'disabled');
+                }
+
+
+
+                if ($("#check_curso_37").is(":checked")) {
+                    $("#check_curso_38").attr('disabled', 'disabled');
+                    $("#check_curso_36").attr('disabled', 'disabled');
+
+                }
+
+                if ($("#check_curso_40").is(":checked")) {
+                    $("#check_curso_41").attr('disabled', 'disabled');
+                    $("#check_curso_39").attr('disabled', 'disabled');
+
+                }
+
+                if ($("#check_curso_36").is(":checked")) {
+                    $("#check_curso_38").attr('disabled', 'disabled');
+                    $("#check_curso_37").attr('disabled', 'disabled');
+
+                }
+
+                if ($("#check_curso_39").is(":checked")) {
+                    $("#check_curso_41").attr('disabled', 'disabled');
+                    $("#check_curso_40").attr('disabled', 'disabled');
+
+                }
 
             }
 
@@ -1717,6 +1778,33 @@
 
                 if (this.checked) {
 
+                    if (nombre_producto == 'SUPRA Clinical WorkShop 2 hands on') {
+                        $("#check_curso_37").attr('disabled', 'disabled');
+                        $("#check_curso_36").attr('disabled', 'disabled');
+
+                        $("#check_curso_40").attr('disabled', 'disabled');
+                        $("#check_curso_39").attr('disabled', 'disabled');
+
+                    }
+
+                    if (nombre_producto == 'SUPRA Clinical WorkShop 3 hands on') {
+                        $("#check_curso_38").attr('disabled', 'disabled');
+                        $("#check_curso_36").attr('disabled', 'disabled');
+
+                        $("#check_curso_41").attr('disabled', 'disabled');
+                        $("#check_curso_39").attr('disabled', 'disabled');
+
+                    }
+
+                    if (nombre_producto == 'SUPRA Clinical WorkShop 4 hands on') {
+                        $("#check_curso_38").attr('disabled', 'disabled');
+                        $("#check_curso_37").attr('disabled', 'disabled');
+
+                        $("#check_curso_41").attr('disabled', 'disabled');
+                        $("#check_curso_40").attr('disabled', 'disabled');
+
+                    }
+
                     // if((id_product == 2 || id_product == 35) && $("#clave_socio").val() != ''){
                     if (id_product == 2 || id_product == 35) {
                         //1,23,34,44
@@ -1737,7 +1825,7 @@
                             $("#precio_articulo34").val($("#precio_articulo34").attr('data-precio'));
                             $("#precio_articulo44").val($("#precio_articulo44").attr('data-precio'));
 
-                        }else{
+                        } else {
 
                             $(".precio_articulo").each(function(index) {
                                 $("#precio_articulo" + $(this).attr('data-id-producto')).val($(this).attr('data-precio-socio'));
@@ -1787,6 +1875,33 @@
                     sumarProductos(productos);
 
                 } else if (!this.checked) {
+
+                    if (nombre_producto == 'SUPRA Clinical WorkShop 2 hands on') {
+                        $("#check_curso_37").removeAttr('disabled');
+                        $("#check_curso_36").removeAttr('disabled');
+
+                        $("#check_curso_40").removeAttr('disabled');
+                        $("#check_curso_39").removeAttr('disabled');
+
+                    }
+
+                    if (nombre_producto == 'SUPRA Clinical WorkShop 3 hands on') {
+                        $("#check_curso_38").removeAttr('disabled');
+                        $("#check_curso_36").removeAttr('disabled');
+
+                        $("#check_curso_41").removeAttr('disabled');
+                        $("#check_curso_39").removeAttr('disabled');
+
+                    }
+
+                    if (nombre_producto == 'SUPRA Clinical WorkShop 4 hands on') {
+                        $("#check_curso_38").removeAttr('disabled');
+                        $("#check_curso_37").removeAttr('disabled');
+
+                        $("#check_curso_41").removeAttr('disabled');
+                        $("#check_curso_40").removeAttr('disabled');
+
+                    }
 
                     if (id_product == 2 || id_product == 35) {
                         //

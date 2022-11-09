@@ -416,7 +416,13 @@ html;
         $nombre = html_entity_decode($datos_user['nombre'], ENT_QUOTES, "UTF-8");
         $apellidop = html_entity_decode($datos_user['apellido_paterno'], ENT_QUOTES, "UTF-8");
         $apellidom = html_entity_decode($datos_user['apellido_materno'], ENT_QUOTES, "UTF-8");
-        $nombre_completo = mb_strtoupper($nombre) . " " . mb_strtoupper($apellidop) . " " . mb_strtoupper($apellidom);
+
+        if ($datos_user['categoria_gafete'] == 1 || $datos_user['categoria_gafete'] == 2 || $datos_user['categoria_gafete'] == 3) {
+            $nombre_completo = mb_strtoupper($datos_user['title'])." ". mb_strtoupper($nombre) . " " . mb_strtoupper($apellidop) . " " . mb_strtoupper($apellidom);
+        }else{
+            $nombre_completo =  mb_strtoupper($nombre) . " " . mb_strtoupper($apellidop) . " " . mb_strtoupper($apellidom);
+        }
+        
         // $nombre_completo = mb_strtoupper($datos_user['nombre']) . "\n\n" . mb_strtoupper($datos_user['apellido_paterno']) . "\n\n" . mb_strtoupper($datos_user['apellido_materno']);
 
         $nombre_fichero = 'codigos_barras/';
@@ -456,7 +462,7 @@ html;
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetAutoPageBreak(true, 25);
         $pdf->SetMargins(30, 25, 30, 10);
-        $pdf->Multicell(140, 15, utf8_decode($nombre_completo), 0, 'C');
+        $pdf->Multicell(140, 7, utf8_decode($nombre_completo), 0, 'C');
         // $pdf->Multicell(150.8, 7, utf8_decode($clave), 1, 'C');
 
         unlink("codigos_barras/" . $clave . ".png"); //Eliminar codigo de barras
@@ -474,7 +480,7 @@ html;
         $nombre = html_entity_decode($datos_user['nombre'], ENT_QUOTES, "UTF-8");
         $apellidop = html_entity_decode($datos_user['apellido_paterno'], ENT_QUOTES, "UTF-8");
         $apellidom = html_entity_decode($datos_user['apellido_materno'], ENT_QUOTES, "UTF-8");
-        $nombre_completo = mb_strtoupper($nombre) . " " . mb_strtoupper($apellidop) . " " . mb_strtoupper($apellidom);
+        $nombre_completo = mb_strtoupper($datos_user['title'])." ".mb_strtoupper($nombre) . " " . mb_strtoupper($apellidop) . " " . mb_strtoupper($apellidom);
         // $nombre_completo = mb_strtoupper($datos_user['nombre']) . "\n\n" . mb_strtoupper($datos_user['apellido_paterno']) . "\n\n" . mb_strtoupper($datos_user['apellido_materno']);
 
         $nombre_fichero = 'codigos_barras/';

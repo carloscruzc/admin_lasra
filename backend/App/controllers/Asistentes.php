@@ -840,7 +840,7 @@ html;
             /***************************************************************************/
 
             //boton staff o expositores
-            if ($value['categoria_gafete'] == 4 || $value['categoria_gafete'] == 5) {
+            if ($value['categoria_gafete'] == 3  || $value['categoria_gafete'] == 4 || $value['categoria_gafete'] == 5) {
                 $btn_staff = '<a href="/RegistroAsistencia/abrirpdfGafete/'.$value['user_id'].'" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafete" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>';
             }
             /**************************************************************************** */

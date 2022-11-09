@@ -187,6 +187,12 @@ html;
             $es_socio = "";
         }
 
+        if(!isset($_POST['categorias']) || $_POST['categorias'] == null){
+            $categorias = '';
+        }else{
+            $categorias = $_POST['categorias'];
+        }
+
         $date = date('Y-m-d');
         $str_nombre = str_split($_POST['nombre_user']);
         $str_apellidop = str_split($_POST['apellidop_user']);
@@ -220,7 +226,7 @@ html;
         $data->_email = $email_user;
         $data->_telephone = $_POST['telephone'];
         $data->_referencia = $refernecia;
-        $data->_categorias = $_POST['categorias'];
+        $data->_categorias = $categorias;
         $data->_especialidades = $_POST['especialidades'];
         $data->_nationality = $_POST['nationality'];
         $data->_state = $_POST['state'];
