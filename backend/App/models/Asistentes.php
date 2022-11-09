@@ -594,10 +594,11 @@ sql;
   {
     $mysqli = Database::getInstance();
     $query = <<<sql
-      SELECT ua.usuario, ua.user_id,ap.id_producto
-      FROM utilerias_administradores ua
-      INNER JOIN asigna_producto ap ON (ua.user_id = ap.user_id)
-      WHERE ap.id_producto IN (36,37,38,39,40,41) AND ua.user_id = $user_id
+    SELECT ua.usuario, ua.user_id,ap.id_producto,pro.nombre
+    FROM utilerias_administradores ua
+    INNER JOIN asigna_producto ap ON (ua.user_id = ap.user_id)
+    INNER JOIN productos pro ON (pro.id_producto = ap.id_producto)
+    WHERE ap.id_producto IN (36,37,38,39,40,41) AND ua.user_id = $user_id
 sql;
 
     return $mysqli->queryAll($query);

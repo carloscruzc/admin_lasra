@@ -382,11 +382,11 @@ html;
             // $pdf->Image('https://convencionasofarma2022.mx/assets/pdf/iMAGEN_aso.png', 1, 0, 150, 40);
             $pdf->SetFont('Arial', '', 5);    //Letra Arial, negrita (Bold), tam. 20
 
-            $pdf->SetXY(8.3, 9);
+            $pdf->SetXY(9, 8);
             $pdf->SetFont('Times', 'B', 10);
             #4D9A9B
             $pdf->SetTextColor(0, 0, 0);
-            $pdf->Multicell(120, 4.2, $nombre_completo . utf8_decode(" #habitación") . " - " . $datos_user['numero_habitacion'], 0, 'C');
+            $pdf->Multicell(110, 4.2, $nombre_completo . utf8_decode(" #habitación") . " - " . $datos_user['numero_habitacion'], 0, 'C');
             // $pdf->Multicell(120, 4.2, $nombre_completo .utf8_decode(" #habitación") ." - ".$datos_user['numero_habitacion'], 0, 'C');
             // $pdf->Multicell(120, 3.5, $numero_habitacion, 0, 'C');
 
@@ -445,7 +445,7 @@ html;
 
         if ($datos_user['categoria_gafete'] == 1 || $datos_user['categoria_gafete'] == 2 || $datos_user['categoria_gafete'] == 3) {
             //HABILITAR CODIGO DE BARRAS ↓↓↓↓
-            $pdf->Image("codigos_barras/" . $clave . ".png", 84.5, 206, 40, 20);
+            $pdf->Image("codigos_barras/" . $clave . ".png", 84.5, 195, 40, 20);
             $tipo = 'Congreso';
         } else if ($datos_user['categoria_gafete'] == 4) {
             $tipo = 'Expositor';
@@ -456,13 +456,13 @@ html;
         $insertImpresionGafete = RegistroAsistenciaDao::insertImpGafete($datos_user['user_id'], $_SESSION['utilerias_administradores_id'], $tipo);
 
 
-        $pdf->setXY(40, 190);
-        $pdf->SetFont('Arial', 'B', 18);
+        $pdf->setXY(52, 170);
+        $pdf->SetFont('Arial', 'B', 17);
         #4D9A9B
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetAutoPageBreak(true, 25);
-        $pdf->SetMargins(30, 25, 30, 10);
-        $pdf->Multicell(140, 7, utf8_decode($nombre_completo), 0, 'C');
+        $pdf->SetMargins(32, 25, 30, 10);
+        $pdf->Multicell(100, 8, utf8_decode($nombre_completo), 0, 'C');
         // $pdf->Multicell(150.8, 7, utf8_decode($clave), 1, 'C');
 
         unlink("codigos_barras/" . $clave . ".png"); //Eliminar codigo de barras
@@ -509,13 +509,13 @@ html;
         $insertImpresionGafete = RegistroAsistenciaDao::insertImpGafete($datos_user['user_id'], $_SESSION['utilerias_administradores_id'], $tipo);
 
 
-        $pdf->setXY(40, 190);
+        $pdf->setXY(80, 190);
         $pdf->SetFont('Arial', 'B', 18);
         #4D9A9B
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetAutoPageBreak(true, 25);
         $pdf->SetMargins(30, 25, 30, 10);
-        $pdf->Multicell(140, 15, utf8_decode($nombre_completo), 0, 'C');
+        $pdf->Multicell(90, 10, utf8_decode($nombre_completo), 0, 'C');
         // $pdf->Multicell(150.8, 7, utf8_decode($clave), 1, 'C');
 
         unlink("codigos_barras/" . $clave . ".png"); //Eliminar codigo de barras
@@ -763,7 +763,7 @@ class PHPQRCode
     {
 
         // Imagen de código QR temporal
-        $tmp_qrcode_file = dirname(__FILE__) . '/tmp_qrcode_' . time() . mt_rand(100, 999) . '.png';
+        $tmp_qrcode_file = dirname(_FILE) . '/tmp_qrcode' . time() . mt_rand(100, 999) . '.png';
 
         // Crea un código QR temporal
         \QRcode::png($data, $tmp_qrcode_file, $this->_config['ecc'], $this->_config['size'], 2);

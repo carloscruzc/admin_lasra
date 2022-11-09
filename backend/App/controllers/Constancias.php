@@ -503,28 +503,26 @@ html;
         echo json_encode($data);
     }
 
-    public function abrirConstancia($clave, $id_producto, $no_horas = NULL)
+    public function abrirConstancia($clave, $nombre_supra,$id_producto = null, $no_horas = NULL)
     {
 
         // $this->generaterQr($clave_ticket);
-        // echo $clave;
+        $clave = base64_decode($clave);
+        $nombre_supra = base64_decode($nombre_supra);
+        $id_producto = base64_decode($id_producto);
 
+        // exit;
         $datos_user = GeneralDao::getUserRegisterByClave($clave)[0];
 
         // $nombre = explode(" ", $datos_user['nombre']);
 
-        // $nombre_completo = $datos_user['prefijo'] . " " . $nombre[0] . " " . $datos_user['apellidop']. " " . $datos_user['apellidom'];
-        $nombre_completo = $datos_user['nombre']." ".$datos_user['apellidop']." ".$datos_user['apellidom'];
-        $nombre_completo = mb_strtoupper($nombre_completo);
 
+        $title = html_entity_decode($datos_user['title']);
         $nombre = html_entity_decode($datos_user['nombre']);
         $apellido = html_entity_decode($datos_user['apellidop']);
         $segundo_apellido = html_entity_decode($datos_user['apellidom']);
-        $nombre_completo = ($nombre)." ".($apellido)." ".($segundo_apellido);
+        $nombre_completo = ($title)." ".($nombre)." ".($apellido)." ".($segundo_apellido);
         $nombre_completo = mb_strtoupper($nombre_completo);
-
-        // echo $nombre_completo;
-        // exit;
 
         $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($datos_user['user_id'],'Fisica',$id_producto);
         
@@ -533,68 +531,19 @@ html;
         $pdf->AddPage();
         $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
         $pdf->setY(1);
-        $pdf->SetFont('Arial', 'B', 16);
-        // $pdf->Image('constancias/plantillas/constancia_congreso_1.jpeg', 0, 0, 296, 210);
-        // $pdf->Image('constancias/plantillas/'.$nombre_imagen, 0, 0, 296, 210);
-        // $pdf->SetFont('Arial', 'B', 25);
-        // $pdf->Multicell(133, 80, $clave_ticket, 0, 'C');
-
-        //$pdf->Image('1.png', 1, 0, 190, 190);
-        $pdf->SetFont('Arial', 'B', 5);    //Letra Arial, negrita (Bold), tam. 20
-        //$nombre = utf8_decode("Jonathan Valdez Martinez");
-        //$num_linea =utf8_decode("Línea: 39");
-        //$num_linea2 =utf8_decode("Línea: 39");
-        if($id_producto == 1){
-        $pdf->SetXY(15, 82);
-        
-        $pdf->SetFont('Arial', 'B', 30);
-        #4D9A9B
+       
+        $pdf->SetXY(55, 66);        
+        $pdf->SetFont('Arial', 'B', 30);        
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(273, 30, utf8_decode($nombre_completo), 0, 'C');
-        // $pdf->SetFont('Arial', 'B', 15);
-        // $pdf->Multicell(275, 25, utf8_decode('Attended the:'), 0, 'C');
-        // $pdf->SetFont('Arial', '',20);
-        // if($id_producto == 1){
-        //     $pdf->Multicell(275, 10, utf8_decode($attend).' '.utf8_decode("$nombre_constancia").' ', 0, 'C');
-        // }else{
-        // $pdf->Multicell(275, 10, utf8_decode($attend).' "'.utf8_decode("$nombre_constancia").'"', 0, 'C');
-        // }
-        // //TIEMPO
-        // $pdf->SetFont('Arial', 'B',10);
-        // $pdf->SetXY(158, 177);
-        // $pdf->Multicell(10, 10, utf8_decode($no_horas), 0, 'C');
-        // //FECHA
-        // $pdf->SetFont('Arial', '',10);
-        // $pdf->SetXY(13, 179.99);
-        // $pdf->Multicell(275, 10, utf8_decode($fecha), 0, 'C');
-        $pdf->Output();
-        }
-        else{
-        $pdf->SetXY(15, 66);
+        $pdf->Multicell(200, 22, utf8_decode($nombre_completo), 0, 'C');
         
-        $pdf->SetFont('Arial', 'B', 30);
-        #4D9A9B
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(273, 20, utf8_decode($nombre_completo), 0, 'C');
-        // $pdf->SetFont('Arial', 'B', 15);
-        // $pdf->Multicell(275, 20, utf8_decode('Attended the:'), 0, 'C');
-        // $pdf->SetFont('Arial', '',20);
-        // if($id_producto == 1){
-        //     $pdf->Multicell(275, 10, utf8_decode($attend).' '.utf8_decode("$nombre_constancia").' ', 0, 'C');
-        // }else{
-        // $pdf->Multicell(275, 10, utf8_decode($attend).' "'.utf8_decode("$nombre_constancia").'"', 0, 'C');
-        // }
-        // //TIEMPO
-        // $pdf->SetFont('Arial', 'B',10);
-        // $pdf->SetXY(158, 177);
-        // $pdf->Multicell(10, 10, utf8_decode('5'), 0, 'C');
-        //FECHA
-        $pdf->SetFont('Arial', '',10);
-        $pdf->SetXY(13, 179.99);
-        $pdf->Multicell(275, 10, utf8_decode($fecha), 0, 'C');
+        //nombre Supra
+        $pdf->SetFont('Arial', 'B',14);
+        $pdf->SetXY(55, 100);
+        $pdf->Multicell(200, 8, utf8_decode('Por su participación como ASISTENTE en el : '.$nombre_supra), 0, 'C');
         $pdf->Output();
             
-        }
+      
         // $pdf->Output('F','constancias/'.$clave.$id_curso.'.pdf');
 
         // $pdf->Output('F', 'C:/pases_abordar/'. $clave.'.pdf');

@@ -826,7 +826,7 @@ html;
 
 
             $impreso = GeneralDao::getImpresionGafete($value['user_id']);
-            $imprimir = GeneralDao::getAllColaboradoresImprimir($value['user_id']);
+            // $imprimir = GeneralDao::getAllColaboradoresImprimir($value['user_id']);
 
 
             //get congreso
@@ -851,9 +851,13 @@ html;
             if (count($button_congreso) > 0) {
                 $btn_supras = '<a href="/RegistroAsistencia/abrirpdfGafeteSupras/'.$value['user_id'].'" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafete Supra" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafete Supra" target="_blank"><i class="fas fa-print"> </i></a>';
 
+                $btn_constancia_supra = '<a href="/Constancias/abrirConstancia/'.base64_encode($value['user_id']).'/'.base64_encode($button_congreso[0]['nombre']).'/'.base64_encode($button_congreso[0]['id_producto']).'" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia Supra '.$button_congreso[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
+
             }else{
                 $btn_supras = '';
+                $btn_constancia_supra = '';
             }
+            
 
             /***************************************************************************** */
 
@@ -865,6 +869,7 @@ html;
                     {$btn_staff}
                     {$btn_congreso} 
                     {$btn_supras}
+                    {$btn_constancia_supra}
 
 
                     <!--<a href="/Constancias/abrirConstancia/{$value['user_id']}/{$id_producto}" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia Impresa" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>
