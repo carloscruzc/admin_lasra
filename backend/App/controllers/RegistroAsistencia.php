@@ -503,13 +503,13 @@ html;
 
 
         //HABILITAR CODIGO DE BARRAS ↓↓↓↓
-        $pdf->Image("codigos_barras/" . $clave . ".png", 84.5, 206, 40, 20);
+        $pdf->Image("codigos_barras/" . $clave . ".png", 84.5, 210, 40, 20);
 
 
         $insertImpresionGafete = RegistroAsistenciaDao::insertImpGafete($datos_user['user_id'], $_SESSION['utilerias_administradores_id'], $tipo);
 
 
-        $pdf->setXY(80, 190);
+        $pdf->setXY(75, 190);
         $pdf->SetFont('Arial', 'B', 18);
         #4D9A9B
         $pdf->SetTextColor(0, 0, 0);

@@ -541,9 +541,12 @@ html;
         $pdf->SetFont('Arial', 'B',14);
         $pdf->SetXY(55, 100);
         $pdf->Multicell(200, 8, utf8_decode('Por su participación como ASISTENTE en el : '.$nombre_supra), 0, 'C');
-        $pdf->Output();
+        
+
+        //qr supra
+        $pdf->Image('constancias/plantillas/qr_supra.png',20,20, 25, 25);
             
-      
+        $pdf->Output();
         // $pdf->Output('F','constancias/'.$clave.$id_curso.'.pdf');
 
         // $pdf->Output('F', 'C:/pases_abordar/'. $clave.'.pdf');
