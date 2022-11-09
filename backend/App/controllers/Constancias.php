@@ -535,42 +535,46 @@ html;
 
         $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'A4');
         $pdf->AddPage();
+		$pdf->Image('constancias/plantillas/firmas.jpg', 0, 0, 250, 215);//imagen de firmas
         $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
         $pdf->setY(1);
        
-        $pdf->SetXY(55, 67);        
+        $pdf->SetXY(55, 69);        
         $pdf->SetFont('Arial', 'B', 30);        
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Multicell(200, 15, utf8_decode($nombre_completo), 0, 'C');
         
         //nombre Supra
-        $pdf->SetFont('Arial', 'B',14);
-        $pdf->SetXY(45, 104);
+        $pdf->SetFont('Arial', 'B',12);
+        $pdf->SetXY(45, 94);
         $pdf->Multicell(220, 10, utf8_decode('Por su participación como ASISTENTE en los talleres: '), 0, 'C');
 
-        $espace = 113;
+        $espace = 99;
         foreach($getTalleres as $key => $value){
             $cont++;
-            $pdf->SetFont('Arial', 'B',14);
+            $pdf->SetFont('Arial', 'B',10);
             $pdf->SetXY(45, $espace);
             $pdf->Multicell(220, 10, utf8_decode('Taller '.$cont.': '.$value['nombre']), 0, 'C');
             
-            $espace = $espace + 6;
+            $espace = $espace + 5;
         }
+		$pdf->SetFont('Arial', 'B',10);
+		$pdf->SetXY(45, $espace-1);
+		$pdf->Multicell(220, 10, utf8_decode('en el marco del'), 0, 'C');
 
         //firma 1
         //nombre Supra
-        $pdf->Image('constancias/plantillas/firma1_supra.jpg',80,160, 40, 25);
-        $pdf->SetFont('Arial', '',10);
-        $pdf->SetXY(70, 179.9);
-        $pdf->Multicell(60, 5, utf8_decode('Dr. José Ramón Saucillo Osuna Direcctor del Curso'), 0, 'C');
+        //$pdf->Image('constancias/plantillas/firma1_supra.jpg',80,162, 40, 25);
+        //$pdf->SetFont('Arial', '',10);
+        //$pdf->SetXY(70, 180);
+        //$pdf->Multicell(60, 3, utf8_decode('Dr. José Ramón Saucillo Osuna Director del curso'), 0, 'C');
         
 
         //firma 2
-        $pdf->Image('constancias/plantillas/firma2_supra.jpg',185,160, 25, 25);
-        $pdf->SetFont('Arial', '',10);
-        $pdf->SetXY(170, 179.9);
-        $pdf->Multicell(60, 5, utf8_decode('Dra. Sandra Patricia Gaspar Carrillo Direcctor del Cruso'), 0, 'C');
+        //$pdf->Image('constancias/plantillas/firma2_supra.jpg',150,162, 25, 25);
+        //$pdf->SetFont('Arial', '',10);
+        //$pdf->SetXY(135, 180);
+        //$pdf->Multicell(60, 3, utf8_decode('Dra. Sandra Patricia Gaspar Carrillo Director del curso'), 0, 'C');
         
         
 
@@ -614,16 +618,42 @@ html;
         $pdf->SetXY(55, 66);
         $pdf->SetFont('Arial', 'B', 30);
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(200, 22, utf8_decode($nombre_completo), 0, 'C');
+        $pdf->Multicell(200, 15, utf8_decode($nombre_completo), 0, 'C');
 
-        // //nombre Supra
-        // $pdf->SetFont('Arial', 'B', 14);
-        // $pdf->SetXY(55, 100);
-        // $pdf->Multicell(200, 8, utf8_decode('Por su participación como ASISTENTE en el : ' . $nombre_supra), 0, 'C');
+        //nombre Supra
+        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->SetXY(55, 100);
+        $pdf->Multicell(200, 8, utf8_decode('Por su participación como ASISTENTE en el '), 0, 'C');
 
 
-        //qr supra
+        //qr congreso
         $pdf->Image('constancias/plantillas/qr_congreso.png', 240, 10, 25, 25);
+
+        //firma 1
+        $pdf->Image('constancias/plantillas/firma3_congreso.jpg', 15, 160, 40, 25);
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->SetXY(15, 180);
+        $pdf->Multicell(60, 3, utf8_decode('Dr. Alberto Amado Vázquez Lomas VICE-PRESIDENTE'), 0, 'C');
+
+        //firma 2
+        $pdf->Image('constancias/plantillas/firma1_supra.jpg', 75, 160, 50, 25);
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->SetXY(70, 180);
+        $pdf->Multicell(60, 3, utf8_decode('Dr. José Ramón Saucillo Osuna PRESIDENTE'), 0, 'C');
+
+
+        //firma 3
+        $pdf->Image('constancias/plantillas/firma4_congreso.jpg', 132, 155, 40, 25);
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->SetXY(122, 180);
+        $pdf->Multicell(60, 3, utf8_decode('Dra. María Magdalena Tun Martín SECRETARIO'), 0, 'C');
+
+
+        //firma 4
+        $pdf->Image('constancias/plantillas/firma2_supra.jpg', 187, 158, 25, 25);
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->SetXY(175, 180);
+        $pdf->Multicell(60, 3, utf8_decode('Dra. Sandra Patricia Gaspar Carrillo TESORERO'), 0, 'C');
 
         $pdf->Output();
         // $pdf->Output('F','constancias/'.$clave.$id_curso.'.pdf');
