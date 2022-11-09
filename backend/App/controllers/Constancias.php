@@ -592,7 +592,7 @@ html;
 
 
         //qr supra
-        $pdf->Image('constancias/plantillas/qr_congreso.png', 20, 20, 25, 25);
+        $pdf->Image('constancias/plantillas/qr_congreso.png', 240, 10, 25, 25);
 
         $pdf->Output();
         // $pdf->Output('F','constancias/'.$clave.$id_curso.'.pdf');
