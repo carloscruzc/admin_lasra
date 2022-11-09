@@ -409,7 +409,7 @@
                             <div class="col-12 col-sm-4 cont-porcentaje-becado" style="display: none;">
 
                                 <label id="label-porcentaje-becado">Becado %</label>
-                                <input type="number" min="1" value="0" class="form-control" id="porcentaje_becado" name="porcentaje_becado">
+                                <input type="number" min="0" value="0" class="form-control" id="porcentaje_becado" name="porcentaje_becado">
 
                             </div>
 
@@ -614,7 +614,7 @@
                             <div class="col-12 col-sm-4 cont-porcentaje-becado-update" style="display: none;">
 
                                 <label id="label-porcentaje-becado">Becado %</label>
-                                <input type="number" min="1" class="form-control" id="porcentaje_becado_update" name="porcentaje_becado">
+                                <input type="number" min="0" class="form-control" id="porcentaje_becado_update" name="porcentaje_becado">
 
                             </div>
 
@@ -1073,8 +1073,8 @@
 
                 if (categoria_gaf == 2) {
                     $(".cont-porcentaje-becado").show();
-                    $("#porcentaje_becado").attr('required', 'required');
-                    $("#comentario_beca").attr('required', 'required');
+                    // $("#porcentaje_becado").attr('required', 'required');
+                    // $("#comentario_beca").attr('required', 'required');
 
                 } else {
                     $(".cont-porcentaje-becado").hide();
