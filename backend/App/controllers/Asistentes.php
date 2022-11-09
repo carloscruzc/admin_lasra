@@ -940,11 +940,11 @@ html;
                 </td>
                 <td style="text-align:center; vertical-align:middle;">
                     <div class="d-flex flex-column justify-content-center">
-                        <a href="/Asistentes/Detalles/{$value['user_id']}" target="_blank">
-                            <h6 class="mb-0 text-sm text-move text-black">
+                        <!--<a href="/Asistentes/Detalles/{$value['user_id']}" target="_blank">-->
+                            <h6 class="mb-0 text-sm text-black">
                                 <span class="fa fa-user-md" style="font-size: 13px"></span> {$nombre_completo} </span>
                             </h6>
-                        </a>
+                       <!-- </a>-->
                     </div>
                 </td>
                 <td>
@@ -995,17 +995,18 @@ html;
         echo json_encode($data);
     }
 
-    public function ticketImp($clave,$user_id = null)
+    public function ticketImp($clave,$user_id)
     {
 
         date_default_timezone_set('America/Mexico_City');
 
 
-        $user_id = $_SESSION['user_id'];
+        
         // $clave = $this->generateRandomString();
         $datos_user = CajaDao::getDataUser($user_id);
         $productos = CajaDao::getTicketUser($user_id, $clave);
 
+     
 
         $fecha =  date("Y-m-d");       
 
