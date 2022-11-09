@@ -514,6 +514,11 @@ html;
         // exit;
         $datos_user = GeneralDao::getUserRegisterByClave($clave)[0];
 
+        $getTalleres = AsistentesDao::getTalleresByUserId($clave);
+
+        // var_dump($getTalleres);
+        // exit;
+
         // $nombre = explode(" ", $datos_user['nombre']);
 
 
@@ -523,6 +528,7 @@ html;
         $segundo_apellido = html_entity_decode($datos_user['apellidom']);
         $nombre_completo = ($title)." ".($nombre)." ".($apellido)." ".($segundo_apellido);
         $nombre_completo = mb_strtoupper($nombre_completo);
+        $cont = 0;
 
         $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($datos_user['user_id'],'Fisica',$id_producto);
         
@@ -539,8 +545,24 @@ html;
         
         //nombre Supra
         $pdf->SetFont('Arial', 'B',14);
-        $pdf->SetXY(55, 104);
-        $pdf->Multicell(200, 8, utf8_decode('Por su participación como ASISTENTE en el : '.$nombre_supra), 0, 'C');
+        $pdf->SetXY(45, 104);
+        $pdf->Multicell(220, 10, utf8_decode('Por su participación como ASISTENTE en los talleres: '), 0, 'C');
+
+        $espace = 113;
+        foreach($getTalleres as $key => $value){
+            $cont++;
+            $pdf->SetFont('Arial', 'B',14);
+            $pdf->SetXY(45, $espace);
+            $pdf->Multicell(220, 10, utf8_decode('Taller '.$cont.': '.$value['nombre']), 0, 'C');
+            
+            $espace = $espace + 6;
+        }
+
+        //firma 1
+        $pdf->Image('constancias/plantillas/firma1_supra.jpg',100,165, 25, 25);
+
+        //firma 2
+        $pdf->Image('constancias/plantillas/firma2_supra.jpg',180,165, 25, 25);
         
 
         //qr supra

@@ -445,7 +445,7 @@ html;
 
         if ($datos_user['categoria_gafete'] == 1 || $datos_user['categoria_gafete'] == 2 || $datos_user['categoria_gafete'] == 3) {
             //HABILITAR CODIGO DE BARRAS ↓↓↓↓
-            $pdf->Image("codigos_barras/" . $clave . ".png", 84.5, 195, 40, 20);
+            $pdf->Image("codigos_barras/" . $clave . ".png", 84.5, 197, 40, 20);
             $tipo = 'Congreso';
         } else if ($datos_user['categoria_gafete'] == 4) {
             $tipo = 'Expositor';
@@ -456,7 +456,7 @@ html;
         $insertImpresionGafete = RegistroAsistenciaDao::insertImpGafete($datos_user['user_id'], $_SESSION['utilerias_administradores_id'], $tipo);
 
 
-        $pdf->setXY(52, 170);
+        $pdf->setXY(52, 180);
         $pdf->SetFont('Arial', 'B', 17);
         #4D9A9B
         $pdf->SetTextColor(0, 0, 0);
@@ -503,19 +503,19 @@ html;
 
 
         //HABILITAR CODIGO DE BARRAS ↓↓↓↓
-        $pdf->Image("codigos_barras/" . $clave . ".png", 84.5, 210, 40, 20);
+        $pdf->Image("codigos_barras/" . $clave . ".png", 84.5, 215, 40, 20);
 
 
         $insertImpresionGafete = RegistroAsistenciaDao::insertImpGafete($datos_user['user_id'], $_SESSION['utilerias_administradores_id'], $tipo);
 
 
-        $pdf->setXY(75, 190);
+        $pdf->setXY(75, 185);
         $pdf->SetFont('Arial', 'B', 18);
         #4D9A9B
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetAutoPageBreak(true, 25);
         $pdf->SetMargins(30, 25, 30, 10);
-        $pdf->Multicell(90, 10, utf8_decode($nombre_completo), 0, 'C');
+        $pdf->Multicell(85, 10, utf8_decode($nombre_completo), 0, 'C');
         // $pdf->Multicell(150.8, 7, utf8_decode($clave), 1, 'C');
 
         unlink("codigos_barras/" . $clave . ".png"); //Eliminar codigo de barras

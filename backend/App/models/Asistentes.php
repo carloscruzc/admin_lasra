@@ -604,4 +604,18 @@ sql;
 
     return $mysqli->queryAll($query);
   }
+
+  public static function getTalleresByUserId($user_id)
+  {
+    $mysqli = Database::getInstance();
+    $query = <<<sql
+    SELECT  ua.user_id,ap.id_producto,pro.nombre
+    FROM utilerias_administradores ua
+    INNER JOIN asigna_producto ap ON (ua.user_id = ap.user_id)
+    INNER JOIN productos pro ON (pro.id_producto = ap.id_producto)
+    WHERE pro.tipo = 'TALLER' AND ua.user_id = $user_id;
+sql;
+
+    return $mysqli->queryAll($query);
+  }
 }
