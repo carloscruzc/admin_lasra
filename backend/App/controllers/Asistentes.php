@@ -820,7 +820,7 @@ html;
 html;
             }
 
-            $socio = GeneralDao::getAdeudosUser($value['user_id']);
+            // $socio = GeneralDao::getAdeudosUser($value['user_id']);
             // $imprimir = GeneralDao::getAllColaboradoresImprimir($value['user_id']);
 
 
@@ -837,8 +837,15 @@ html;
                 }
 
                 
+                $constancia_impresa = GeneralDao::getImpresionConstancia($value['user_id'],'1,23,34');
 
-                $btn_constancia_congreso = '<a href="/Constancias/abrirConstanciaCongreso/'.base64_encode($value['user_id']).'/'.base64_encode($button_congreso[0]['id_producto']).'" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia '.$button_congreso[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
+                if(!$constancia_impresa){
+                    $btn_constancia_congreso = '<a href="/Constancias/abrirConstanciaCongreso/'.base64_encode($value['user_id']).'/'.base64_encode($button_congreso[0]['id_producto']).'" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia '.$button_congreso[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
+                }else{
+                    $btn_constancia_congreso = '<a href="javascript:void(0)" class="btn bg-turquoise-1 btn-icon-only text-white" title="Ya se ha impreso la constancia '.$button_congreso[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la constancia"><i class="fas fa-print"> </i></a>';
+                }
+
+                
 
             }else if($value['porcentaje_beca'] >= 100){
 
@@ -849,6 +856,7 @@ html;
                 }else{
                     $btn_congreso = '<a href="javascript:void(0)" class="btn bg-turquoise btn-icon-only text-white" title="Ya se ha impreso el gafete de congreso" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes"><i class="fas fa-print"> </i></a>';
                 }
+
 
                 $btn_constancia_congreso = '<a href="/Constancias/abrirConstanciaCongreso/'.base64_encode($value['user_id']).'/'.base64_encode($button_congreso[0]['id_producto']).'" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia '.$button_congreso[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
             }else{
@@ -876,8 +884,16 @@ html;
                     $btn_supras = '<a href="javascript:void(0)" class="btn bg-turquoise btn-icon-only text-white" title="Ya se ha impreso el gafete para Supra" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso el gafete para Supra"><i class="fas fa-print"> </i></a>';
                 }
                 
+                
+                $constancia_impresa_supra = GeneralDao::getImpresionConstancia($value['user_id'],'36,37,38,39,40,41');
 
-                $btn_constancia_supra = '<a href="/Constancias/abrirConstancia/'.base64_encode($value['user_id']).'/'.base64_encode($button_congreso[0]['nombre']).'/'.base64_encode($button_congreso[0]['id_producto']).'" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia Supra '.$button_congreso[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
+                if(!$constancia_impresa_supra){
+
+                    $btn_constancia_supra = '<a href="/Constancias/abrirConstancia/'.base64_encode($value['user_id']).'/'.base64_encode($button_congreso[0]['nombre']).'/'.base64_encode($button_congreso[0]['id_producto']).'" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia Supra '.$button_congreso[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
+
+                }else{
+                    $btn_constancia_supra = '<a href="javascript:void(0)" class="btn bg-turquoise-1 btn-icon-only text-white" title="Ya se ha impreso la Constancia Supra '.$button_congreso[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la Constancia Impresa"><i class="fas fa-print"> </i></a>';
+                }                
 
             }else{
                 $btn_supras = '';

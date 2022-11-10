@@ -187,6 +187,16 @@ sql;
     return $mysqli->queryOne($query);
   }
 
+  public static function getImpresionConstancia($id,$ids)
+  {
+    $mysqli = Database::getInstance();
+    $query = <<<sql
+  SELECT * FROM `impresion_constancia` WHERE user_id = '$id' and id_producto in ($ids)
+sql;
+
+    return $mysqli->queryOne($query);
+  }
+
   public static function getAdeudosUser($id)
   {
     $mysqli = Database::getInstance();

@@ -228,6 +228,7 @@
                                 <td>${el.nombre}  ${el.apellidop}  ${el.apellidom}  </td>
                                 <td id="descripcion_asistencia" width="20">${el.productos}</td>
                                 <td class="text-center">$ ${el.total_pesos}</td> 
+                                <td class="text-center"> ${el.tipo_pago_moneda}</td> 
                                 <td class="text-center"> ${el.tipo_pago}</td>  
                                 <td class="text-center"> ${el.nombre_caja}</td>
                                 <td class="text-center"> ${el.fecha_transaccion}</td>
@@ -302,9 +303,10 @@
                                 <td>${el.nombre}  ${el.apellidop}  ${el.apellidom}  </td>
                                 <td id="descripcion_asistencia" width="20">${el.productos}</td>
                                 <td class="text-center">$ ${el.total_pesos}</td> 
+                                <td class="text-center">$ ${el.tipo_pago_moneda}</td> 
                                 <td class="text-center"> ${el.tipo_pago}</td>  
-                                <td class="text-center"> ${el.nombre_caja}</td>
                                 <td class="text-center"> ${el.fecha_transaccion}</td>
+                                <td class="text-center"> ${el.nombre_caja}</td>
                                 <td class="text-center">
                                     <a href='/ComprobantesCaja/print/${el.id_transaccion_compra}' style='' class='btn btn-icon-only btn-info' value='${el.id_registrado}' data-bs-toggle="tooltip" target="_blank" data-bs-placement="left" data-bs-original-title="ver comprobante"><i class="fa fal fa-file"></i></a>
                                 </td>

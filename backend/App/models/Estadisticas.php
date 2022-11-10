@@ -34,9 +34,10 @@ sql;
     public static function getDataCajaByFecha($date){
       $mysqli = Database::getInstance();
       $query=<<<sql
-      SELECT ua.nombre,ua.apellidop,ua.apellidom,tc.productos,tc.total_pesos,tc.fecha_transaccion
+      SELECT ua.nombre,ua.apellidop,ua.apellidom,tc.id_transaccion_compra,tc.productos,tc.total_pesos,tc.fecha_transaccion,tc.tipo_pago,tc.tipo_pago_moneda,uaa.nombre as nombre_caja
       FROM utilerias_administradores ua
       INNER JOIN transaccion_compra tc ON (ua.user_id = tc.user_id)
+      INNER JOIN utilerias_administradores_admin uaa ON (tc.utilerias_administradores_id = uaa.utilerias_administradores_id)
       WHERE fecha_transaccion LIKE '%$date%';
 sql;
       return $mysqli->queryAll($query);
@@ -388,5 +389,17 @@ sql;
       SELECT COUNT(*) AS total FROM asistencias
 sql;
       return $mysqli->queryOne($query);
+    }
+
+    public static function getDataCajaAll(){
+      $mysqli = Database::getInstance();
+      $query=<<<sql
+      SELECT tc.id_transaccion_compra,ua.nombre,ua.apellidop,ua.apellidom,tc.productos,tc.total_pesos,tc.fecha_transaccion,tc.tipo_pago,tc.tipo_pago_moneda,uaa.nombre as nombre_caja
+      FROM utilerias_administradores ua
+      INNER JOIN transaccion_compra tc ON (ua.user_id = tc.user_id)
+      INNER JOIN utilerias_administradores_admin uaa ON (tc.utilerias_administradores_id = uaa.utilerias_administradores_id)
+sql;
+      return $mysqli->queryAll($query);
+        
     }
 } 
