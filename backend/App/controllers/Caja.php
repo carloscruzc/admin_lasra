@@ -324,12 +324,12 @@ html;
                 $pend_validar = 'Pendiente de Pagar';
                 // $btn_imp = '<a class="btn btn-primary" href="/Home/print/'.$productos_pendientes_comprados[0]['clave'].'" target="blank_">Imprimir Formato de Pago</a>';
                 // $ocultar = '';
-                $disabled = 'disabled';
+                // $disabled = 'disabled';
                 $checked = 'checked';
                 $total_productos += $count_producto['numero_productos'];
                 $total_pago += $count_producto['numero_productos'] * $precio;
-                // array_push($array_precios, ['id_product' => $value['id_producto'], 'precio' => $precio, 'cantidad' => $count_producto['numero_productos']]);
-                // array_push($array_productos, ['id_product' => $value['id_producto'], 'precio' => $precio, 'cantidad' => $count_producto['numero_productos'], 'nombre_producto' => $value['nombre_producto']]);
+                array_push($array_precios, ['id_product' => $value['id_producto'], 'precio' => $precio, 'cantidad' => $count_producto['numero_productos']]);
+                array_push($array_productos, ['id_product' => $value['id_producto'], 'precio' => $precio, 'cantidad' => $count_producto['numero_productos'], 'nombre_producto' => $value['nombre_producto']]);
             }
 
             if ($value['max_compra'] <= 1) {
