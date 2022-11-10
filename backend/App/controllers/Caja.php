@@ -394,7 +394,7 @@ html;
 
         //productos que no se han comprado
         $productos_no_comprados = CajaDao::getProductosNoComprados($user_id);
-
+        // $option_beca = '';
 
         foreach ($productos_no_comprados as $key => $value) {
 
@@ -408,6 +408,7 @@ html;
 
                     $valor = ($value['porcentaje_beca'] * $value['precio_socio']) / 100;
                     $precio = $value['precio_socio'] - $valor;
+                    
                     
                     }else{
                         $precio = $value['precio_socio'];
@@ -484,6 +485,12 @@ html;
             $numero_productos = '';
         }
 
+        if($data_user['porcentaje_beca'] > 0 ){
+            $option_beca = '<option value="Beca">Beca</option>';
+        }else{
+            $option_beca = '';
+        }
+
 
         $data = [
             "status" => "success",
@@ -491,7 +498,8 @@ html;
             "precios" => $array_precios,
             "productos" => $array_productos,
             "nombre_completo" => $data_user['nombre'] . ' ' . $data_user['apellidop'] . ' ' . $data_user['apellidom'],
-            "datos_user" => $data_user
+            "datos_user" => $data_user,
+            "option_beca" => $option_beca
         ];
 
         echo json_encode($data);

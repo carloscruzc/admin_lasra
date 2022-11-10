@@ -218,8 +218,7 @@
                                                                     <select class="form-control" id="metodo_pago" name="metodo_pago">
                                                                         <option value="">Seleccione una opción</option>
                                                                         <option value="Efectivo">Efectivo</option>
-                                                                        <option value="Tarjeta">Tarjeta Credito / Debito</option>
-                                                                        <option value="Beca">Beca</option>
+                                                                        <option value="Tarjeta">Tarjeta Credito / Debito</option>                             
 
                                                                     </select>
                                                                 </div>
@@ -1286,8 +1285,12 @@
                 var tipo_moneda = $("#tipo_moneda").val();
 
                 if (metodo_pago == "Tarjeta") {
+
                     $(".cont_cambio_pesos").hide();
                     $(".cont_cambio_dolares").hide();
+
+                    $("#tipo_moneda option[value='-']").remove();
+
                 } else if (metodo_pago == "Efectivo") {
 
                     if (tipo_moneda == "MXN") {
@@ -1296,18 +1299,25 @@
                         $(".cont_cambio_dolares").show();
                     }
 
-                } else if (metodo_pago == "Beca") {
+                    $("#tipo_moneda option[value='-']").remove();
 
-                    // $('#tipo_moneda  option').each(function() {
-                    //     if (this.value == '-') {
-                    //         //ya existe
-                    //         var op = '<option id="option_beca" value="-">-</option>';
-                    //         $("#tipo_moneda").append(op);
-                    //     } else {
-                    //         var op = '<option id="option_beca" value="-">-</option>';
-                    //         $("#tipo_moneda").append(op);
-                    //     }
-                    // });
+                } else if (metodo_pago == "Beca") {
+                    var existe = false;
+
+                    $('#tipo_moneda  option').each(function() {
+
+                        if (this.value == '-') {
+                            existe = true;
+                        }
+
+                    });
+                    if (!existe) {
+                        var op = '<option id="option_beca" value="-" selected>-</option>';
+                        $("#tipo_moneda").append(op);
+                    }
+
+                    $("#txt_pago").val(0);
+                    $("#btn_pagar").removeAttr('disabled');
 
 
                 }
@@ -1323,74 +1333,80 @@
                 console.log(tipo_moneda);
 
 
-
-                if (metodo_pago != '') {
+                if (productos.length <= 0) {
                     Swal.fire({
-                        title: 'Se va a procesar el pago.',
-                        text: "",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        cancelButtonText: 'Cancelar',
-                        confirmButtonText: 'Pagar'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                url: "/Caja/setPay",
-                                type: "POST",
-                                data: {
-                                    'array': JSON.stringify(productos),
-                                    user_id,
-                                    metodo_pago,
-                                    tipo_moneda,
-                                    total_pesos,
-                                    total_dolares,
-                                    descripcion
-                                },
-                                // dataType: 'json',
-                                beforeSend: function() {
-                                    console.log("Procesando....");
-                                },
-                                success: function(respuesta) {
-                                    console.log(respuesta);
+                            title: 'Debes de seleccionar al menos un prodcuto',
+                            text: "",
+                            icon: 'info',
+                            
+                        })
+                } else {
+                    if (metodo_pago != '') {
+                        Swal.fire({
+                            title: 'Se va a procesar el pago.',
+                            text: "",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            cancelButtonText: 'Cancelar',
+                            confirmButtonText: 'Pagar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    url: "/Caja/setPay",
+                                    type: "POST",
+                                    data: {
+                                        'array': JSON.stringify(productos),
+                                        user_id,
+                                        metodo_pago,
+                                        tipo_moneda,
+                                        total_pesos,
+                                        total_dolares,
+                                        descripcion
+                                    },
+                                    // dataType: 'json',
+                                    beforeSend: function() {
+                                        console.log("Procesando....");
+                                    },
+                                    success: function(respuesta) {
+                                        console.log(respuesta);
 
-                                    if (respuesta == 'success') {
+                                        if (respuesta == 'success') {
 
-                                        $('#imprimir_comprobante')[0].click();
+                                            $('#imprimir_comprobante')[0].click();
 
-                                        Swal.fire({
-                                            icon: "success",
-                                            title: "Info",
-                                            text: "Pago generado correctamente.",
-                                            closeOnClickOutside: false,
-                                            closeOnEsc: false,
-                                            allowOutsideClick: false
-                                        }).then(() => {
-                                            // $('#generar_gafete')[0].click();
-                                            getCombo(user_id);
+                                            Swal.fire({
+                                                icon: "success",
+                                                title: "Info",
+                                                text: "Pago generado correctamente.",
+                                                closeOnClickOutside: false,
+                                                closeOnEsc: false,
+                                                allowOutsideClick: false
+                                            }).then(() => {
+                                                // $('#generar_gafete')[0].click();
+                                                getCombo(user_id);
 
-                                        });
+                                            });
 
+
+                                        }
+                                    },
+                                    error: function(respuesta) {
 
                                     }
-                                },
-                                error: function(respuesta) {
 
-                                }
+                                });
+                            }
 
-                            });
-                        }
-
-                    })
-                    // var total_usd = $("#total_usd").text();
-                    // alert(total_usd);
-                } else {
-                    //seleccionar metodo de pago
-                    Swal.fire('Selecciona un metodo de pago', '', 'info');
+                        })
+                        // var total_usd = $("#total_usd").text();
+                        // alert(total_usd);
+                    } else {
+                        //seleccionar metodo de pago
+                        Swal.fire('Selecciona un metodo de pago', '', 'info');
+                    }
                 }
-
-
 
             });
 
@@ -1582,6 +1598,14 @@
                 $("#telefono_user").html(respuesta.datos_user.telefono);
                 $("#clave_socio").val(respuesta.datos_user.clave_socio);
                 $("#imprimir_comprobante").attr('href', '/Caja/print/' + respuesta.datos_user.user_id + '/' + respuesta.datos_user.clave);
+
+                
+                if(respuesta.option_beca != ""){
+                    $("#metodo_pago").append(respuesta.option_beca);
+                }else{
+                    $("#tipo_moneda option[value='-']").remove();
+                    $("#metodo_pago option[value='Beca']").remove();
+                }
 
                 //modal facturacion
                 $("#title_update").val(respuesta.datos_user.title);
