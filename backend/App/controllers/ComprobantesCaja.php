@@ -385,8 +385,8 @@ html;
 
     $productos = CajaDao::getTransaccion($id_transaccion);
 
-    $datos_user = CajaDao::getDataUser($productos['id_registrado']);
-    $user_id = $datos_user['id_registrado'];
+    $datos_user = CajaDao::getDataUser($productos['user_id']);
+    $user_id = $datos_user['user_id'];
 
 
     $reference = $productos['referencia_transaccion'];
@@ -423,7 +423,7 @@ html;
     $pdf->SetFont('Arial', 'B', 5);    //Letra Arial, negrita (Bold), tam. 20
 
 
-    $espace = 142;
+    $espace = 135;
     $total = array();
     $pro = explode(",", $productos['productos']);
 
@@ -496,98 +496,98 @@ html;
     }
 
 
-    //folio
-    $pdf->SetXY(5, 75);
-    $pdf->SetFont('Arial', 'B', 13);
-    $pdf->SetTextColor(94, 94, 94);
-    $pdf->Multicell(100, 10, $ini_folio . $id_transaccion, 0, 'C');
+     //folio
+     $pdf->SetXY(5, 75);
+     $pdf->SetFont('Arial', 'B', 13);
+     $pdf->SetTextColor(94, 94, 94);
+     $pdf->Multicell(100, 10, $ini_folio . $id_transaccion, 0, 'C');
 
-    //fecha
-    $pdf->SetXY(10, 110);
-    $pdf->SetFont('Arial', 'B', 13);
-    $pdf->SetTextColor(94, 94, 94);
-    $pdf->Multicell(100, 10, $fecha, 0, 'C');
+     //fecha
+     $pdf->SetXY(10, 110);
+     $pdf->SetFont('Arial', 'B', 13);
+     $pdf->SetTextColor(94, 94, 94);
+     $pdf->Multicell(100, 10, $fecha, 0, 'C');
 
-    //Nombre
-    $pdf->SetXY(120, 85);
-    $pdf->SetFont('Arial', 'B', 9);
-    $pdf->SetTextColor(94, 94, 94);
-    $pdf->Multicell(114, 6, utf8_decode($nombre_completo), 0, 'C');
+     //Nombre
+     $pdf->SetXY(149, 79);
+     $pdf->SetFont('Arial', 'B', 9);
+     $pdf->SetTextColor(94, 94, 94);
+     $pdf->Multicell(55, 6, utf8_decode($nombre_completo), 0, 'L');
 
-    //correo
-    $pdf->SetXY(120, 95);
-    $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetTextColor(94, 94, 94);
-    $pdf->Multicell(114, 10, utf8_decode($datos_user['direccion_fiscal']), 0, 'C');
+     //correo
+     $pdf->SetXY(149, 85);
+     $pdf->SetFont('Arial', 'B', 10);
+     $pdf->SetTextColor(94, 94, 94);
+     $pdf->Multicell(55, 10, utf8_decode($datos_user['direccion']), 0, 'L');
 
-    //Nombre empresa
-    $pdf->SetXY(120, 100);
-    $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetTextColor(94, 94, 94);
-    $pdf->Multicell(114, 10, utf8_decode($datos_user['razon_social']), 0, 'C');
+     //Nombre empresa
+     $pdf->SetXY(149, 92);
+     $pdf->SetFont('Arial', 'B', 10);
+     $pdf->SetTextColor(94, 94, 94);
+     $pdf->Multicell(55, 10, utf8_decode($datos_user['business_name_iva']), 0, 'L');
 
-    //RFC
-    $pdf->SetXY(120, 105);
-    $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetTextColor(94, 94, 94);
-    $pdf->Multicell(114, 10, utf8_decode($datos_user['rfc']), 0, 'C');
+     //RFC
+     $pdf->SetXY(149, 97);
+     $pdf->SetFont('Arial', 'B', 10);
+     $pdf->SetTextColor(94, 94, 94);
+     $pdf->Multicell(55, 10, utf8_decode($datos_user['code_iva']), 0, 'L');
 
-    //correo
-    $pdf->SetXY(120, 110);
-    $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetTextColor(94, 94, 94);
-    $pdf->Multicell(114, 10, utf8_decode($datos_user['email_fac']), 0, 'C');
+     //correo
+     $pdf->SetXY(149, 103);
+     $pdf->SetFont('Arial', 'B', 10);
+     $pdf->SetTextColor(94, 94, 94);
+     $pdf->Multicell(55, 10, utf8_decode($datos_user['email_receipt_iva']), 0, 'L');
 
-    //correo
-    $pdf->SetXY(120, 115);
-    $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetTextColor(94, 94, 94);
-    $pdf->Multicell(114, 10, utf8_decode($datos_user['cp_fiscal']), 0, 'C');
-
-
-
-    $letras = new EnLetras();
-    $TotalLetra = $total;
-    $total_en_letras = $letras->ValorEnLetras($TotalLetra, $complemeto_total_letras);
+     //correo
+     $pdf->SetXY(149, 107);
+     $pdf->SetFont('Arial', 'B', 10);
+     $pdf->SetTextColor(94, 94, 94);
+     $pdf->Multicell(55, 10, utf8_decode($datos_user['postal_code_iva']), 0, 'L');
 
 
-    //total 
-    $pdf->SetXY(138, 255);
-    $pdf->SetFont('Arial', 'B', 13);
-    $pdf->SetTextColor(0, 0, 0);
-    $pdf->Multicell(100, 10, '$ ' . number_format($total, 2) . '', 0, 'C');
 
-    //total  letra
-    $pdf->SetXY(5, 247);
-    $pdf->SetFont('Arial', 'B', 13);
-    $pdf->SetTextColor(94, 94, 94);
-    $pdf->Multicell(120, 5, $total_en_letras, 0, 'C');
+     $letras = new EnLetras();
+     $TotalLetra = $total;
+     $total_en_letras = $letras->ValorEnLetras($TotalLetra, $complemeto_total_letras);
+
+
+     //total 
+     $pdf->SetXY(138, 248);
+     $pdf->SetFont('Arial', 'B', 13);
+     $pdf->SetTextColor(0, 0, 0);
+     $pdf->Multicell(100, 10, '$ ' . number_format($total, 2) . '', 0, 'C');
+
+     //total  letra
+     $pdf->SetXY(5, 240);
+     $pdf->SetFont('Arial', 'B', 13);
+     $pdf->SetTextColor(94, 94, 94);
+     $pdf->Multicell(120, 5, $total_en_letras, 0, 'C');
 
     if ($tipo_pago == "Tarjeta_Credito") {
 
       //tipo pago
-      $pdf->SetXY(22, 215);
+      $pdf->SetXY(22, 208);
       $pdf->SetFont('Arial', 'B', 9);
       $pdf->SetTextColor(0, 0, 0);
       $pdf->Multicell(100, 10, '$ ' . number_format($total, 2) . '', 0, 'C');
     } else if ($tipo_pago == "Tarjeta_Debito") {
 
       //tipo pago
-      $pdf->SetXY(26, 218.5);
+      $pdf->SetXY(26, 211.5);
       $pdf->SetFont('Arial', 'B', 9);
       $pdf->SetTextColor(0, 0, 0);
       $pdf->Multicell(100, 10, '$ ' . number_format($total, 2) . '', 0, 'C');
     } else if ($tipo_pago == "Efectivo") {
 
       //tipo pago
-      $pdf->SetXY(12, 208);
+      $pdf->SetXY(12, 201);
       $pdf->SetFont('Arial', 'B', 9);
       $pdf->SetTextColor(0, 0, 0);
       $pdf->Multicell(100, 10, '$ ' . number_format($total, 2) . '', 0, 'C');
     } else if ($tipo_pago == "Transferencia") {
 
       //tipo pago
-      $pdf->SetXY(22, 215);
+      $pdf->SetXY(22, 208);
       $pdf->SetFont('Arial', 'B', 9);
       $pdf->SetTextColor(0, 0, 0);
       $pdf->Multicell(100, 10, '$ ' . number_format($total, 2) . '', 0, 'C');

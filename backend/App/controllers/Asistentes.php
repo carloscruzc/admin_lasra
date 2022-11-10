@@ -821,18 +821,22 @@ html;
             }
 
             $socio = GeneralDao::getAdeudosUser($value['user_id']);
-
-
-
-
-            $impreso = GeneralDao::getImpresionGafete($value['user_id']);
             // $imprimir = GeneralDao::getAllColaboradoresImprimir($value['user_id']);
 
 
             //get congreso
             $button_congreso = AsistentesDao::getCongresoByUserId($value['user_id']);
             if (count($button_congreso) > 0) {
-                $btn_congreso = '<a href="/RegistroAsistencia/abrirpdfGafete/'.$value['user_id'].'" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafete Congreso" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>';
+
+                $impreso = GeneralDao::getImpresionGafeteTipo($value['user_id'],'Congreso');
+
+                if(!$impreso){
+                    $btn_congreso = '<a href="/RegistroAsistencia/abrirpdfGafete/'.$value['user_id'].'" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafete Congreso" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes" target="_blank"><i class="fas fa-print"> </i></a>';
+                }else{
+                    $btn_congreso = '<a href="javascript:void(0)" class="btn bg-turquoise btn-icon-only text-white" title="Ya se ha impreso el gafete de congreso" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafetes"><i class="fas fa-print"> </i></a>';
+                }
+
+                
 
                 $btn_constancia_congreso = '<a href="/Constancias/abrirConstanciaCongreso/'.base64_encode($value['user_id']).'/'.base64_encode($button_congreso[0]['id_producto']).'" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia '.$button_congreso[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
 
@@ -852,7 +856,15 @@ html;
             $button_congreso = AsistentesDao::getSupraByUserId($value['user_id']);
 
             if (count($button_congreso) > 0) {
-                $btn_supras = '<a href="/RegistroAsistencia/abrirpdfGafeteSupras/'.$value['user_id'].'" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafete Supra" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafete Supra" target="_blank"><i class="fas fa-print"> </i></a>';
+
+                $impreso = GeneralDao::getImpresionGafeteTipo($value['user_id'],'Supra');
+
+                if(!$impreso){
+                    $btn_supras = '<a href="/RegistroAsistencia/abrirpdfGafeteSupras/'.$value['user_id'].'" class="btn bg-turquoise btn-icon-only text-white" title="Imprimir Gafete Supra" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Gafete Supra" target="_blank"><i class="fas fa-print"> </i></a>';
+                }else{
+                    $btn_supras = '<a href="javascript:void(0)" class="btn bg-turquoise btn-icon-only text-white" title="Ya se ha impreso el gafete para Supra" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso el gafete para Supra"><i class="fas fa-print"> </i></a>';
+                }
+                
 
                 $btn_constancia_supra = '<a href="/Constancias/abrirConstancia/'.base64_encode($value['user_id']).'/'.base64_encode($button_congreso[0]['nombre']).'/'.base64_encode($button_congreso[0]['id_producto']).'" class="btn bg-turquoise-1 btn-icon-only text-white" title="Imprimir Constancia Supra '.$button_congreso[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
 
