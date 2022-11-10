@@ -219,6 +219,7 @@
                                                                         <option value="">Seleccione una opción</option>
                                                                         <option value="Efectivo">Efectivo</option>
                                                                         <option value="Tarjeta">Tarjeta Credito / Debito</option>
+                                                                        <option value="Beca">Beca</option>
 
                                                                     </select>
                                                                 </div>
@@ -1287,13 +1288,27 @@
                 if (metodo_pago == "Tarjeta") {
                     $(".cont_cambio_pesos").hide();
                     $(".cont_cambio_dolares").hide();
-                } else {
+                } else if (metodo_pago == "Efectivo") {
 
                     if (tipo_moneda == "MXN") {
                         $(".cont_cambio_pesos").show();
                     } else if (tipo_moneda == "USD") {
                         $(".cont_cambio_dolares").show();
                     }
+
+                } else if (metodo_pago == "Beca") {
+
+                    // $('#tipo_moneda  option').each(function() {
+                    //     if (this.value == '-') {
+                    //         //ya existe
+                    //         var op = '<option id="option_beca" value="-">-</option>';
+                    //         $("#tipo_moneda").append(op);
+                    //     } else {
+                    //         var op = '<option id="option_beca" value="-">-</option>';
+                    //         $("#tipo_moneda").append(op);
+                    //     }
+                    // });
+
 
                 }
             });
