@@ -206,10 +206,10 @@ html;
             $constancia_impresa = GeneralDao::getImpresionConstancia($value['user_id'],'1,23,34');
 
                 if(!$constancia_impresa){
-                    $btn_constancia_congreso = '<a href="/Constancias/abrirConstanciaCongreso/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_general[0]['id_producto']).'" class="btn btn-info text-white w-100" title="Imprimir Constancia '.$constancia_general[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
+                    $btn_constancia_congreso = '<a href="/Constanciasdoc/abrirConstanciaCongreso/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_general[0]['id_producto']).'" class="btn btn-info text-white w-100" title="Imprimir Constancia '.$constancia_general[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
                 }
                 else{
-                    $btn_constancia_congreso = '<a href="/Constancias/abrirConstanciaCongreso/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_general[0]['id_producto']).'" class="btn btn-warning text-white w-100" title="Ya se ha impreso la constancia '.$constancia_general[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la constancia"><i class="fas fa-print"> </i></a>';
+                    $btn_constancia_congreso = '<a href="/Constanciasdoc/abrirConstanciaCongreso/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_general[0]['id_producto']).'" class="btn btn-warning text-white w-100" title="Ya se ha impreso la constancia '.$constancia_general[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la constancia"><i class="fas fa-print"> </i></a>';
                 }
 
             $no_cards++;
@@ -248,11 +248,11 @@ html;
 
             if(!$constancia_impresa_supra){
 
-                $btn_constancia_supra = '<a href="/Constancias/abrirConstancia/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_supra[0]['nombre']).'/'.base64_encode($constancia_supra[0]['id_producto']).'" class="btn btn-info btn-icon-only text-white w-100" title="Imprimir Constancia Supra '.$constancia_supra[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
+                $btn_constancia_supra = '<a href="/Constanciasdoc/abrirConstancia/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_supra[0]['nombre']).'/'.base64_encode($constancia_supra[0]['id_producto']).'" class="btn btn-info btn-icon-only text-white w-100" title="Imprimir Constancia Supra '.$constancia_supra[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
 
             }
             else{
-                $btn_constancia_supra = '<a href="/Constancias/abrirConstancia/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_supra[0]['nombre']).'/'.base64_encode($constancia_supra[0]['id_producto']).'" class="btn btn-warning btn-icon-only text-white w-100" title="Ya se ha impreso la Constancia Supra '.$constancia_supra[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la Constancia Impresa"><i class="fas fa-print"> </i></a>';
+                $btn_constancia_supra = '<a href="/Constanciasdoc/abrirConstancia/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_supra[0]['nombre']).'/'.base64_encode($constancia_supra[0]['id_producto']).'" class="btn btn-warning btn-icon-only text-white w-100" title="Ya se ha impreso la Constancia Supra '.$constancia_supra[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la Constancia Impresa"><i class="fas fa-print"> </i></a>';
             } 
 
             $no_cards++;
@@ -328,317 +328,160 @@ html;
         //   $url = explode('/', $qrcode );
     }
 
-    public function abrirConstanciaGeneral($nombre_user,  $id_registrado)
-    {
-        $nombre_completo = base64_decode($nombre_user);
-        $nombre_completo = mb_strtoupper($nombre_completo);
-        $user_id = base64_decode($id_registrado); 
-
-
-        $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($user_id, 'Fisica', 100);
-
-
-        $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'A4');
-        $pdf->AddPage();
-        $pdf->Image('constancias/plantillas/constancia_45.jpg', -1, 0.5, 300, 209);
-
-        $pdf->SetXY(27, 78);
-        $pdf->SetFont('Arial', 'B', 35);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(250, 12, utf8_decode($nombre_completo), 0, 'C');
-
-        $pdf->SetXY(37, 110);
-        $pdf->SetFont('Arial', 'B', 14);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(230, 8, utf8_decode('Por su participación como ASISTENTE en la :'), 0, 'C');
-
-
-        $pdf->Output();
-    }
-
-    public function abrirConstancia($nombre_user, $id_plenaria = null, $id_registrado = null)
-    {
-        $nombre_completo = base64_decode($nombre_user);
-        $nombre_completo = mb_strtoupper($nombre_completo);
-        $id_asistencia = base64_decode($id_plenaria);
-        $user_id = base64_decode($id_registrado);
-
-
-        $getNombrePlenaria = AsistenciasDao::getPlenarias($id_asistencia);
-
-
-        $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($user_id, 'Fisica', $id_asistencia);
-
-
-        $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'A4');
-        $pdf->AddPage();
-        // $pdf->Image('constancias/plantillas/constancia.jpeg', -1, 0.5, 300, 209);
-        $pdf->SetXY(27, 75);
-        $pdf->SetFont('Arial', 'B', 35);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(250, 12, utf8_decode($nombre_completo), 0, 'C');
-
-        $pdf->SetXY(37, 105);
-        $pdf->SetFont('Arial', 'B', 14);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(230, 8, utf8_decode('Por su participación en la ' . $getNombrePlenaria['nombre'] . ', en la:'), 0, 'C');
-
-
-        $pdf->Output();
-    }
-
-    public function abrirConstanciaManualGeneral()
-    {
-
-        $nombre = $_GET['nombre'];
-        $id_asis = $_GET['id_asis'];
-        $gafete = $_GET['gafete'];
-
-        $nombre_completo =  $nombre;
-        $nombre_completo = mb_strtoupper($nombre_completo);
-        $id_asistencia =  $id_asis;
-        $user_id = $gafete;
-
-     
-
-
-        $insert_impresion_constancia = AsistentesDao::insertImpresionConstanciaManual($nombre_completo, $user_id, 'Manual', $id_asistencia);
-
-
-        $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'A4');
-        $pdf->AddPage();
-        $pdf->Image('constancias/plantillas/constancia_45.jpg', -1, 0.5, 300, 209);
-        $pdf->SetXY(27, 78);
-        $pdf->SetFont('Arial', 'B', 35);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(250, 12, utf8_decode($nombre_completo), 0, 'C');
-
-        $pdf->SetXY(37, 110);
-        $pdf->SetFont('Arial', 'B', 14);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(230, 8, utf8_decode('Por su participación como ASISTENTE en la :'), 0, 'C');
-
-
-        $pdf->Output();
-    }
-    
-    public function abrirConstanciaManual()
-    {
-        $nombre = $_GET['nombre'];
-        $id_asis = $_GET['asis'];
-        $gafete = $_GET['gafete'];
-
-        $nombre_completo = ($nombre);
-        $nombre_completo = mb_strtoupper($nombre_completo);
-        $id_asistencia = ($id_asis);
-        $user_id = ($gafete);
-
-      
-        $getNombrePlenaria = AsistenciasDao::getPlenarias($id_asistencia);
-      
-        
-        $insert_impresion_constancia = AsistentesDao::insertImpresionConstanciaManual($nombre_completo,$user_id,'Manual',$id_asistencia);
-        
-
-        $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'A4');
-        $pdf->AddPage();       
-        $pdf->Image('constancias/plantillas/constancia_45.jpg', -1, 0.5, 300, 209);
-        $pdf->SetXY(27, 75);        
-        $pdf->SetFont('Arial', 'B', 35);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(250, 12, utf8_decode($nombre_completo), 0, 'C');
-
-        $pdf->SetXY(37, 105);        
-        $pdf->SetFont('Arial', 'B', 14);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(230, 8, utf8_decode('Por su participación en la '.$getNombrePlenaria['nombre'].', en la:'), 0, 'C');
-        
-             
-        $pdf->Output();
-      
-    }
-
-
-    public function abrirConstanciaProg()
-    {
-        $nombre_completo = "MARIA TERESA HERNANDEZ LOPEZ";
-        $nombre_completo = mb_strtoupper($nombre_completo);
-        $id_asistencia = 5;
-        $user_id = 0;
-
-
-        $getNombrePlenaria = AsistenciasDao::getPlenarias($id_asistencia);
-
-
-        // $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($user_id,'Fisica',$id_asistencia);
-
-
-        $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'A4');
-        $pdf->AddPage();
-        // $pdf->Image('constancias/plantillas/constancia.jpeg', -1, 0.5, 300, 209);
-        $pdf->SetXY(27, 75);
-        $pdf->SetFont('Arial', 'B', 35);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(250, 12, utf8_decode($nombre_completo), 0, 'C');
-
-        $pdf->SetXY(37, 105);
-        $pdf->SetFont('Arial', 'B', 14);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(230, 8, utf8_decode('Por su participación en la ' . $getNombrePlenaria['nombre'] . ', en la:'), 0, 'C');
-
-
-        $pdf->Output();
-    }
-
-    public function abrirConstanciaDigital($clave, $id_producto, $no_horas = NULL)
+    public function abrirConstancia($clave, $nombre_supra,$id_producto = null, $no_horas = NULL)
     {
 
         // $this->generaterQr($clave_ticket);
-        // echo $clave;
+        $clave = base64_decode($clave);
+        $nombre_supra = base64_decode($nombre_supra);
+        $id_producto = base64_decode($id_producto);
 
-        // $productos = AsistentesDao::getProductosById($id_producto);
-        // $progresos_productos = AsistentesDao::getProgresosById($id_producto,$clave);
-        // $progresos_productos_congreso = AsistentesDao::getProgresosCongresoById($id_producto,$clave);
-
-        // echo $progresos_productos_congreso['segundos'];
         // exit;
+        $datos_user = GeneralDao::getUserRegisterByClave($clave)[0];
 
-        $nombre_constancia = $productos['nombre_ingles'];
+        $getTalleres = AsistentesDao::getTalleresByUserId($clave);
 
-        if ($id_producto == 1) {
-            $attend = '';
-            $progreso = $progresos_productos_congreso;
-            $nombre_constancia = '';
-            $fecha = 'June, 21 to 24, 2022';
-        } else if ($id_producto == 2) {
-            $attend = 'Trans-Congress Course I';
-            $progreso = $progresos_productos;
-            $fecha = 'Tuesday 21st June, 2022';
-        } else if ($id_producto == 3) {
-            $attend = 'Trans-Congress Course II';
-            $progreso = $progresos_productos;
-            $fecha = 'Tuesday 21st June, 2022';
-        } else if ($id_producto == 4) {
-            $attend = 'Trans-Congress Course III';
-            $progreso = $progresos_productos;
-            $fecha = 'Tuesday 21st June, 2022';
-        } else if ($id_producto == 5) {
-            $attend = 'Trans-Congress Course IV';
-            $progreso = $progresos_productos;
-            $fecha = 'Tuesday 21st June, 2022';
-        } else if ($id_producto == 6) {
-            $attend = 'Trans-Congress Course V';
-            $progreso = $progresos_productos;
-            $fecha = 'Tuesday 21st June, 2022';
-        } else if ($id_producto == 7) {
-            $attend = 'Trans-Congress Course VI';
-            // $nombre_imagen = 'constancia_transcongreso_7.png';
-            $progreso = $progresos_productos;
-            $fecha = 'Thursday 23 June, 2022';
-        } else if ($id_producto == 8) {
-            $attend = 'Trans-Congress Course VII';
-            // $nombre_imagen = 'constancia_transcongreso_8.png';
-            $progreso = $progresos_productos;
-            $fecha = 'Thursday 23 June, 2022';
-        } else if ($id_producto == 9) {
-            $attend = 'Trans-Congress Course VIII';
-            // $nombre_imagen = 'constancia_transcongreso_9.png';
-            $progreso = $progresos_productos;
-            $fecha = 'Friday 24th, June, 2022';
-        }
-
-        $datos_user = GeneralDao::getUserRegisterByClave($clave, $id_producto)[0];
+        // var_dump($getTalleres);
+        // exit;
 
         // $nombre = explode(" ", $datos_user['nombre']);
 
-        // $nombre_completo = $datos_user['prefijo'] . " " . $nombre[0] . " " . $datos_user['apellidop']. " " . $datos_user['apellidom'];
-        $nombre_completo = $datos_user['nombre'] . " " . $datos_user['apellidop'] . " " . $datos_user['apellidom'];
-        $nombre_completo = mb_strtoupper($nombre_completo);
 
+        $title = html_entity_decode($datos_user['title']);
         $nombre = html_entity_decode($datos_user['nombre']);
         $apellido = html_entity_decode($datos_user['apellidop']);
         $segundo_apellido = html_entity_decode($datos_user['apellidom']);
-        $nombre_completo = ($nombre) . " " . ($apellido) . " " . ($segundo_apellido);
+        $nombre_completo = ($title)." ".($nombre)." ".($apellido)." ".($segundo_apellido);
+        $nombre_completo = mb_strtoupper($nombre_completo);
+        $cont = 0;
+
+        $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($datos_user['user_id'],'Fisica',$id_producto);
+        
+
+        $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'A4');
+        $pdf->AddPage();
+		$pdf->Image('constancias/plantillas/firmas.jpg', 0, 0, 250, 215);//imagen de firmas
+        $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
+        $pdf->setY(1);
+       
+        $pdf->SetXY(40, 76.5);        
+        $pdf->SetFont('Arial', 'B', 25);        
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->Multicell(225, 12, utf8_decode($nombre_completo), 0, 'C');
+        
+        //nombre Supra
+        $pdf->SetFont('Arial', 'B',12);
+        $pdf->SetXY(45, 90);
+        $pdf->Multicell(220, 10, utf8_decode('Por su participación como ASISTENTE en los talleres: '), 0, 'C');
+
+        $espace = 95;
+        foreach($getTalleres as $key => $value){
+            $cont++;
+            $pdf->SetFont('Arial', 'B',10);
+            $pdf->SetXY(45, $espace);
+            $pdf->Multicell(220, 10, utf8_decode('Taller '.$cont.': '.$value['nombre']), 0, 'C');
+            
+            $espace = $espace + 5;
+        }
+		$pdf->SetFont('Arial', 'B',10);
+		$pdf->SetXY(45, $espace-1);
+		$pdf->Multicell(220, 10, utf8_decode('en el marco del'), 0, 'C');
+
+        //firma 1
+        //nombre Supra
+        //$pdf->Image('constancias/plantillas/firma1_supra.jpg',80,162, 40, 25);
+        //$pdf->SetFont('Arial', '',10);
+        //$pdf->SetXY(70, 180);
+        //$pdf->Multicell(60, 3, utf8_decode('Dr. José Ramón Saucillo Osuna Director del curso'), 0, 'C');
+        
+
+        //firma 2
+        //$pdf->Image('constancias/plantillas/firma2_supra.jpg',150,162, 25, 25);
+        //$pdf->SetFont('Arial', '',10);
+        //$pdf->SetXY(135, 180);
+        //$pdf->Multicell(60, 3, utf8_decode('Dra. Sandra Patricia Gaspar Carrillo Director del curso'), 0, 'C');
+        
+        
+
+        //qr supra
+        $pdf->Image('constancias/plantillas/qr_supra.png',20,20, 25, 25);
+            
+        $pdf->Output();
+        // $pdf->Output('F','constancias/'.$clave.$id_curso.'.pdf');
+
+        // $pdf->Output('F', 'C:/pases_abordar/'. $clave.'.pdf');
+    }
+
+    public function abrirConstanciaCongreso($clave, $id_producto = null, $no_horas = NULL)
+    {
+
+        // $this->generaterQr($clave_ticket);
+        $clave = base64_decode($clave);
+        $id_producto = base64_decode($id_producto);
+
+        // exit;
+        $datos_user = GeneralDao::getUserRegisterByClave($clave)[0];
+
+        // $nombre = explode(" ", $datos_user['nombre']);
+
+
+        $title = html_entity_decode($datos_user['title']);
+        $nombre = html_entity_decode($datos_user['nombre']);
+        $apellido = html_entity_decode($datos_user['apellidop']);
+        $segundo_apellido = html_entity_decode($datos_user['apellidom']);
+        $nombre_completo = ($title) . " " . ($nombre) . " " . ($apellido) . " " . ($segundo_apellido);
         $nombre_completo = mb_strtoupper($nombre_completo);
 
-        // echo $nombre_completo;
-        // exit;
-        $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($datos_user['user_id'], 'Digital', $id_producto);
+        $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($datos_user['user_id'], 'Fisica', $id_producto);
 
 
         $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'A4');
         $pdf->AddPage();
+		$pdf->Image('constancias/plantillas/firmas_congreso.jpeg', 0, 0, 250, 215);//imagen de firmas
         $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
         $pdf->setY(1);
+
+        $pdf->SetXY(43, 83);
+        $pdf->SetFont('Arial', 'B', 30);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->Multicell(230, 15, utf8_decode($nombre_completo), 0, 'C');
+
+        //nombre Supra
         $pdf->SetFont('Arial', 'B', 16);
-        $pdf->Image('constancias/plantillas/constancia_congreso_1.jpeg', 0, 0, 296, 210);
-        // $pdf->Image('constancias/plantillas/'.$nombre_imagen, 0, 0, 296, 210);
-        // $pdf->SetFont('Arial', 'B', 25);
-        // $pdf->Multicell(133, 80, $clave_ticket, 0, 'C');
+        $pdf->SetXY(40, 115);
+        $pdf->Multicell(230, 8, utf8_decode('Por su participación como ASISTENTE, en el marco del:'), 0, 'C');
 
-        //$pdf->Image('1.png', 1, 0, 190, 190);
-        $pdf->SetFont('Arial', 'B', 5);    //Letra Arial, negrita (Bold), tam. 20
-        //$nombre = utf8_decode("Jonathan Valdez Martinez");
-        //$num_linea =utf8_decode("Línea: 39");
-        //$num_linea2 =utf8_decode("Línea: 39");
 
-        if ($id_producto == 1) {
-            $pdf->SetXY(15, 80);
+        //qr congreso
+        $pdf->Image('constancias/plantillas/qr_congreso.png', 240, 10, 25, 25);
 
-            $pdf->SetFont('Arial', 'B', 30);
-            #4D9A9B
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->Multicell(273, 30, utf8_decode($nombre_completo), 0, 'C');
-            //ATTEND MESSAGE
-            // $pdf->SetFont('Arial', 'B', 15);
-            // $pdf->Multicell(275, 25, utf8_decode('Attended the:'), 0, 'C');
-            // $pdf->SetFont('Arial', '',20);
-            // if($id_producto == 1){
-            //     $pdf->Multicell(275, 10, utf8_decode($attend).' '.utf8_decode("$nombre_constancia").' ', 0, 'C');
-            // }else{
-            // $pdf->Multicell(275, 10, utf8_decode($attend).' "'.utf8_decode("$nombre_constancia").'"', 0, 'C');
-            // }
-            // $pdf->SetFont('Arial', 'B',10);
-            // $pdf->SetXY(156, 170.5);
-            // $pdf->Multicell(10, 10, utf8_decode(round($progreso['segundos']/3600)), 0, 'C');
-            //TIEMPO
-            // $pdf->SetFont('Arial', 'B',10);
-            // $pdf->SetXY(157, 170.5);
-            // $pdf->Multicell(10, 10, utf8_decode($no_horas), 0, 'C');
-            //FECHA
-            $pdf->SetFont('Arial', '', 10);
-            $pdf->SetXY(13, 175);
-            $pdf->Multicell(275, 10, utf8_decode($fecha), 0, 'C');
-            $pdf->Output();
-        } else {
-            $pdf->SetXY(15, 66);
+        //firma 1
+        //$pdf->Image('constancias/plantillas/firma3_congreso.jpg', 15, 160, 40, 25);
+        //$pdf->SetFont('Arial', '', 9);
+        //$pdf->SetXY(15, 180);
+        //$pdf->Multicell(60, 3, utf8_decode('Dr. Alberto Amado Vázquez Lomas VICE-PRESIDENTE'), 0, 'C');
 
-            $pdf->SetFont('Arial', 'B', 30);
-            #4D9A9B
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->Multicell(273, 20, utf8_decode($nombre_completo), 0, 'C');
-            //ATTEND MESSAGE
-            // $pdf->SetFont('Arial', 'B', 15); 
-            // $pdf->Multicell(275, 20, utf8_decode('Attended the:'), 0, 'C');
-            // $pdf->SetFont('Arial', '',20);
-            // if($id_producto == 1){
-            //     $pdf->Multicell(275, 10, utf8_decode($attend).' '.utf8_decode("$nombre_constancia").' ', 0, 'C');
-            // }else{
-            // $pdf->Multicell(275, 10, utf8_decode($attend).' "'.utf8_decode("$nombre_constancia").'"', 0, 'C');
-            // }
-            // $pdf->SetFont('Arial', 'B',10);
-            // $pdf->SetXY(156, 170.5);
-            // $pdf->Multicell(10, 10, utf8_decode(round($progreso['segundos']/3600)), 0, 'C');
-            //TIEMPO
-            // $pdf->SetFont('Arial', 'B',10);
-            // $pdf->SetXY(156, 170.5);
-            // $pdf->Multicell(10, 10, utf8_decode('5'), 0, 'C');
-            //FECHA
-            $pdf->SetFont('Arial', '', 10);
-            $pdf->SetXY(13, 175);
-            $pdf->Multicell(275, 10, utf8_decode($fecha), 0, 'C');
-            $pdf->Output();
-        }
+        //firma 2
+        //$pdf->Image('constancias/plantillas/firma1_supra.jpg', 75, 160, 50, 25);
+        //$pdf->SetFont('Arial', '', 9);
+        //$pdf->SetXY(70, 180);
+        //$pdf->Multicell(60, 3, utf8_decode('Dr. José Ramón Saucillo Osuna PRESIDENTE'), 0, 'C');
+
+
+        //firma 3
+        //$pdf->Image('constancias/plantillas/firma4_congreso.jpg', 132, 155, 40, 25);
+        //$pdf->SetFont('Arial', '', 9);
+        //$pdf->SetXY(122, 180);
+        //$pdf->Multicell(60, 3, utf8_decode('Dra. María Magdalena Tun Martín SECRETARIO'), 0, 'C');
+
+
+        //firma 4
+        //$pdf->Image('constancias/plantillas/firma2_supra.jpg', 187, 158, 25, 25);
+        //$pdf->SetFont('Arial', '', 9);
+        //$pdf->SetXY(175, 180);
+        //$pdf->Multicell(60, 3, utf8_decode('Dra. Sandra Patricia Gaspar Carrillo TESORERO'), 0, 'C');
+
+        $pdf->Output();
         // $pdf->Output('F','constancias/'.$clave.$id_curso.'.pdf');
 
         // $pdf->Output('F', 'C:/pases_abordar/'. $clave.'.pdf');
