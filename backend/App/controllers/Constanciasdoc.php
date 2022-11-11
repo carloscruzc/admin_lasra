@@ -28,10 +28,10 @@ class Constanciasdoc
         $extraHeader = <<<html
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/amh.png">
-        <link rel="icon" type="image/png" href="/assets/img/amh.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/logo_lasra.png">
+        <link rel="icon" type="image/png" href="/assets/img/logo_lasra.png">
         <title>
-            CONSTANCIAS - AMN 
+            CONSTANCIAS - LASRA 
         </title>
         <!--     Fonts and icons     -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -101,8 +101,8 @@ html;
         $extraHeader = <<<html
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/amh.png">
-        <link rel="icon" type="image/png" href="/assets/img/amh.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/logo_lasra.png">
+        <link rel="icon" type="image/png" href="/assets/img/logo_lasra.png">
         <title>
             CONSTANCIAS - AMN 
         </title>
@@ -179,12 +179,22 @@ html;
 
     public function getConstancias()
     {
-        $nombre = $_POST['nombre'];
-        $nombre_enviar = $nombre;
+        // $nombre = $_POST['nombre'];
+        // $nombre_enviar = $nombre;
         $cont_cards = '';
         $user_id = $_POST['id_gafete'];
+        $no_cards = 0;
 
-        $constancia_general = AsistentesDao::getCongresoByUserId($user_id);
+        $nombre = AsistentesDao::getNombreUser($user_id);
+
+        if (is_numeric($_POST['id_gafete'])) {
+            $constancia_general = AsistentesDao::getCongresoByUserId($user_id);
+        } else {
+            
+            $constancia_general = AsistentesDao::getCongresoByUserEmail($user_id);
+        }
+
+
 
         $cont_cards .= <<<html
         <div class="row">
@@ -201,6 +211,8 @@ html;
                 else{
                     $btn_constancia_congreso = '<a href="/Constancias/abrirConstanciaCongreso/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_general[0]['id_producto']).'" class="btn btn-warning text-white w-100" title="Ya se ha impreso la constancia '.$constancia_general[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la constancia"><i class="fas fa-print"> </i></a>';
                 }
+
+            $no_cards++;
 
 
             $cont_cards .= <<<html
@@ -220,8 +232,13 @@ html;
 
 
         /*Constancia supra */
-
-        $constancia_supra = AsistentesDao::getSupraByUserId($value['user_id']);
+        if (is_numeric($_POST['id_gafete'])) {
+            
+            $constancia_supra = AsistentesDao::getSupraByUserId($user_id);
+        } else {
+            
+            $constancia_supra = AsistentesDao::getSupraByUserEmail($user_id);
+        }
 
 
         foreach ($constancia_supra as $key => $value) {
@@ -238,6 +255,7 @@ html;
                 $btn_constancia_supra = '<a href="/Constancias/abrirConstancia/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_supra[0]['nombre']).'/'.base64_encode($constancia_supra[0]['id_producto']).'" class="btn btn-warning btn-icon-only text-white w-100" title="Ya se ha impreso la Constancia Supra '.$constancia_supra[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la Constancia Impresa"><i class="fas fa-print"> </i></a>';
             } 
 
+            $no_cards++;
 
             $cont_cards .= <<<html
             
@@ -262,7 +280,8 @@ html;
         $data = [
             "status" => "success",
             "cont_cards" => $cont_cards,
-            "nombre_completo" => $nombre_enviar
+            "no_cards" => $no_cards,
+            "nombre_completo" => $nombre['nombre_completo']
         ];
 
 

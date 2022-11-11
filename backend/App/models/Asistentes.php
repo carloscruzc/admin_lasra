@@ -591,6 +591,20 @@ sql;
     return $mysqli->queryAll($query);
   }
 
+  public static function getCongresoByUserEmail($user_id)
+  {
+    $mysqli = Database::getInstance();
+    $query = <<<sql
+      SELECT ua.usuario, ua.user_id,ap.id_producto, pro.nombre
+      FROM utilerias_administradores ua
+      INNER JOIN asigna_producto ap ON (ua.user_id = ap.user_id)
+      INNER JOIN productos pro ON (pro.id_producto = ap.id_producto)
+      WHERE ap.id_producto IN (1,23,34) AND ua.usuario = '$user_id'
+sql;
+
+    return $mysqli->queryAll($query);
+  }
+
   public static function getSupraByUserId($user_id)
   {
     $mysqli = Database::getInstance();
@@ -603,6 +617,30 @@ sql;
 sql;
 
     return $mysqli->queryAll($query);
+  }
+
+  public static function getSupraByUserEmail($user_id)
+  {
+    $mysqli = Database::getInstance();
+    $query = <<<sql
+    SELECT ua.usuario, ua.user_id,ap.id_producto,pro.nombre
+    FROM utilerias_administradores ua
+    INNER JOIN asigna_producto ap ON (ua.user_id = ap.user_id)
+    INNER JOIN productos pro ON (pro.id_producto = ap.id_producto)
+    WHERE ap.id_producto IN (36,37,38,39,40,41) AND ua.usuario = '$user_id'
+sql;
+
+    return $mysqli->queryAll($query);
+  }
+
+  public static function getNombreUser($user_id)
+  {
+    $mysqli = Database::getInstance();
+    $query = <<<sql
+    SELECT concat_ws(' ',nombre,apellidop,apellidom) as nombre_completo from utilerias_administradores WHERE user_id = '$user_id' or usuario = '$user_id'
+sql;
+
+    return $mysqli->queryOne($query);
   }
 
   public static function getTalleresByUserId($user_id)
