@@ -70,4 +70,15 @@ sql;
 sql;
       return $mysqli->queryOne($query);
     }
+
+    public static function getUsuarioGafete($search){
+      $mysqli = Database::getInstance();
+      
+        $query=<<<sql
+      select user_id, usuario,concat_ws(' ',nombre, apellidop, apellidom) as nombre_completo from utilerias_administradores WHERE CONCAT_WS(' ',user_id,usuario) LIKE '%$search%'
+sql;
+      
+      return $mysqli->queryAll($query);
+        
+    }
 } 
