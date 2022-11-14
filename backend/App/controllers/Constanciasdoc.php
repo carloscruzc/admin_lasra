@@ -358,47 +358,49 @@ html;
         $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($datos_user['user_id'],'Fisica',$id_producto);
         
 
-        $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'A4');
+        $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'Letter');
+		//$pdf->setSourceFile("constancias/plantillas/supra.pdf");
         $pdf->AddPage();
-		$pdf->Image('constancias/plantillas/firmas.jpg', 0, 0, 250, 215);//imagen de firmas
+		$pdf->Image('constancias/plantillas/constancia_supra.jpg','0','0','279.5', '216');
+		//$pdf->Image('constancias/plantillas/firmas.jpg', 70, 183, 100, 25);//imagen de firmas
         $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
         $pdf->setY(1);
        
-        $pdf->SetXY(40, 76.5);        
+        $pdf->SetXY(10, 83);        
         $pdf->SetFont('Arial', 'B', 25);        
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(225, 12, utf8_decode($nombre_completo), 0, 'C');
+        $pdf->Multicell(260, 12, utf8_decode($nombre_completo), 0, 'C');
         
         //nombre Supra
         $pdf->SetFont('Arial', 'B',12);
-        $pdf->SetXY(45, 90);
-        $pdf->Multicell(220, 10, utf8_decode('Por su participación como ASISTENTE en los talleres: '), 0, 'C');
+        $pdf->SetXY(10, 90);
+        $pdf->Multicell(260, 10, utf8_decode('Por su participación como ASISTENTE en los talleres: '), 0, 'C');
 
         $espace = 95;
         foreach($getTalleres as $key => $value){
             $cont++;
             $pdf->SetFont('Arial', 'B',10);
-            $pdf->SetXY(45, $espace);
-            $pdf->Multicell(220, 10, utf8_decode('Taller '.$cont.': '.$value['nombre']), 0, 'C');
+            $pdf->SetXY(10, $espace);
+            $pdf->Multicell(260, 10, utf8_decode('Taller '.$cont.': '.$value['nombre']), 0, 'C');
             
             $espace = $espace + 5;
         }
 		$pdf->SetFont('Arial', 'B',10);
-		$pdf->SetXY(45, $espace-1);
-		$pdf->Multicell(220, 10, utf8_decode('en el marco del'), 0, 'C');
+		$pdf->SetXY(10, $espace-1);
+		$pdf->Multicell(260, 10, utf8_decode('en el marco del'), 0, 'C');
 
         //firma 1
         //nombre Supra
-        //$pdf->Image('constancias/plantillas/firma1_supra.jpg',80,162, 40, 25);
+        //$pdf->Image('constancias/plantillas/firma1_supra.jpg',80,165, 40, 25);
         //$pdf->SetFont('Arial', '',10);
-        //$pdf->SetXY(70, 180);
+        //$pdf->SetXY(70, 183);
         //$pdf->Multicell(60, 3, utf8_decode('Dr. José Ramón Saucillo Osuna Director del curso'), 0, 'C');
         
 
         //firma 2
-        //$pdf->Image('constancias/plantillas/firma2_supra.jpg',150,162, 25, 25);
+        //$pdf->Image('constancias/plantillas/firma2_supra.jpg',150,165, 25, 25);
         //$pdf->SetFont('Arial', '',10);
-        //$pdf->SetXY(135, 180);
+        //$pdf->SetXY(135, 183);
         //$pdf->Multicell(60, 3, utf8_decode('Dra. Sandra Patricia Gaspar Carrillo Director del curso'), 0, 'C');
         
         
@@ -435,21 +437,23 @@ html;
         $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($datos_user['user_id'], 'Fisica', $id_producto);
 
 
-        $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'A4');
+        $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'Letter');
+		//$pdf->setSourceFile("constancias/plantillas/congreso.pdf");
         $pdf->AddPage();
-		$pdf->Image('constancias/plantillas/firmas_congreso.jpeg', 0, 0, 250, 215);//imagen de firmas
+		$pdf->Image('constancias/plantillas/constancia_congreso.jpg','0','0','279.5', '216');
+		//$pdf->Image('constancias/plantillas/firmas_congreso.jpeg', 0, 0, 250, 215);//imagen de firmas
         $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
         $pdf->setY(1);
 
-        $pdf->SetXY(43, 83);
-        $pdf->SetFont('Arial', 'B', 30);
+        $pdf->SetXY(45, 84);
+        $pdf->SetFont('Arial', 'B', 25);
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->Multicell(230, 15, utf8_decode($nombre_completo), 0, 'C');
+        $pdf->Multicell(200, 15, utf8_decode($nombre_completo), 0, 'C');
 
         //nombre Supra
         $pdf->SetFont('Arial', 'B', 16);
         $pdf->SetXY(40, 115);
-        $pdf->Multicell(230, 8, utf8_decode('Por su participación como ASISTENTE, en el marco del:'), 0, 'C');
+        //$pdf->Multicell(230, 8, utf8_decode('Por su participación como ASISTENTE, en el marco del:'), 0, 'C');
 
 
         //qr congreso
