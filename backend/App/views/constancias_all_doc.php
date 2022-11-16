@@ -429,7 +429,7 @@
             $("#btn_search_constancia").on("click", function() {
                 var concidencia = $("#codigo_qr_venta").val();
                 
-                console.log(concidencia)
+                // console.log(concidencia)
 
                 $.ajax({
                     // url: "https://sasv2.congresoneurologia.com/gafetes/api/" + concidencia,
@@ -449,7 +449,7 @@
                     },
                     success: function(respuesta) {
                         // console.log(respuesta);
-                        console.log("tamaño de respeusta " + respuesta.length);
+                        // console.log("tamaño de respeusta " + respuesta.length);
 
                         if (respuesta.length > 0) {
                             // $.each(respuesta, function(key, value) {
@@ -484,7 +484,7 @@
           
             function getConstancias(id_gafete) {
 
-                console.log("lo que se tiene que buscar " +id_gafete)
+                // console.log("lo que se tiene que buscar " +id_gafete)
                 // console.log(nombre);
 
                 $.ajax({
@@ -500,8 +500,8 @@
                     },
                     success: function(respuesta) {
 
-                        console.log(respuesta)
-                        console.log("gafetes " + id_gafete);
+                        // console.log(respuesta)
+                        // console.log("gafetes " + id_gafete);
 
                             contCards(respuesta);
                         
@@ -509,7 +509,7 @@
                     },
                     error: function(respuesta) {
                       
-                        console.log(respuesta);
+                        // console.log(respuesta);
                         $("#cont_cards").html(`<div class="row">
                                                         <div class="col-md-12">
                                                             <p>El usuario buscado no existe </p>

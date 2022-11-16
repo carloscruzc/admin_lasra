@@ -182,7 +182,7 @@ html;
         // $nombre = $_POST['nombre'];
         // $nombre_enviar = $nombre;
         $cont_cards = '';
-        $user_id = $_POST['id_gafete'];
+        $user_id = trim($_POST['id_gafete']);
         $no_cards = 0;
 
         $nombre = AsistentesDao::getNombreUser($user_id);
@@ -203,14 +203,13 @@ html;
         foreach ($constancia_general as $key => $value) {
 
 
-            $constancia_impresa = GeneralDao::getImpresionConstancia($value['user_id'],'1,23,34');
+            $constancia_impresa = GeneralDao::getImpresionConstancia($value['user_id'], '1,23,34');
 
-                if(!$constancia_impresa){
-                    $btn_constancia_congreso = '<a href="/Constanciasdoc/abrirConstanciaCongreso/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_general[0]['id_producto']).'" class="btn btn-info text-white w-100" title="Imprimir Constancia '.$constancia_general[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia" target="_blank"><i class="fas fa-print"> </i></a>';
-                }
-                else{
-                    $btn_constancia_congreso = '<a href="/Constanciasdoc/abrirConstanciaCongreso/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_general[0]['id_producto']).'" class="btn btn-warning text-white w-100" title="Ya se ha impreso la constancia '.$constancia_general[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la constancia" target="_blank"><i class="fas fa-print"> </i></a>';
-                }
+            if (!$constancia_impresa) {
+                $btn_constancia_congreso = '<a href="/Constanciasdoc/abrirConstanciaCongreso/' . base64_encode($value['user_id']) . '/' . base64_encode($constancia_general[0]['id_producto']) . '" class="btn btn-info text-white w-100" title="Imprimir Constancia ' . $constancia_general[0]['nombre'] . '" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia" target="_blank"><i class="fas fa-print"> </i></a>';
+            } else {
+                $btn_constancia_congreso = '<a href="/Constanciasdoc/abrirConstanciaCongreso/' . base64_encode($value['user_id']) . '/' . base64_encode($constancia_general[0]['id_producto']) . '" class="btn btn-warning text-white w-100" title="Ya se ha impreso la constancia ' . $constancia_general[0]['nombre'] . '" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la constancia" target="_blank"><i class="fas fa-print"> </i></a>';
+            }
 
             $no_cards++;
 
@@ -227,13 +226,12 @@ html;
                     </div>
                 </div>
 html;
-
         }
 
 
         /*Constancia supra */
         if (is_numeric($_POST['id_gafete'])) {
-            
+
             $constancia_supra = AsistentesDao::getSupraByUserId($user_id);
         } else {
             $email_user = $nombre['usuario'];
@@ -244,16 +242,14 @@ html;
         foreach ($constancia_supra as $key => $value) {
 
 
-            $constancia_impresa_supra = GeneralDao::getImpresionConstancia($value['user_id'],'36,37,38,39,40,41');
+            $constancia_impresa_supra = GeneralDao::getImpresionConstancia($value['user_id'], '36,37,38,39,40,41');
 
-            if(!$constancia_impresa_supra){
+            if (!$constancia_impresa_supra) {
 
-                $btn_constancia_supra = '<a href="/Constanciasdoc/abrirConstancia/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_supra[0]['nombre']).'/'.base64_encode($constancia_supra[0]['id_producto']).'" class="btn btn-info btn-icon-only text-white w-100" title="Imprimir Constancia Supra '.$constancia_supra[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
-
+                $btn_constancia_supra = '<a href="/Constanciasdoc/abrirConstancia/' . base64_encode($value['user_id']) . '/' . base64_encode($constancia_supra[0]['nombre']) . '/' . base64_encode($constancia_supra[0]['id_producto']) . '" class="btn btn-info btn-icon-only text-white w-100" title="Imprimir Constancia Supra ' . $constancia_supra[0]['nombre'] . '" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
+            } else {
+                $btn_constancia_supra = '<a href="/Constanciasdoc/abrirConstancia/' . base64_encode($value['user_id']) . '/' . base64_encode($constancia_supra[0]['nombre']) . '/' . base64_encode($constancia_supra[0]['id_producto']) . '" class="btn btn-warning btn-icon-only text-white w-100" title="Ya se ha impreso la Constancia Supra ' . $constancia_supra[0]['nombre'] . '" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
             }
-            else{
-                $btn_constancia_supra = '<a href="/Constanciasdoc/abrirConstancia/'.base64_encode($value['user_id']).'/'.base64_encode($constancia_supra[0]['nombre']).'/'.base64_encode($constancia_supra[0]['id_producto']).'" class="btn btn-warning btn-icon-only text-white w-100" title="Ya se ha impreso la Constancia Supra '.$constancia_supra[0]['nombre'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
-            } 
 
             $no_cards++;
 
@@ -269,28 +265,36 @@ html;
                     </div>
                 </div>
 html;
-
         }
 
-        /*Constancia profesor */       
+        /*Constancia profesor */
 
-        if($nombre['categoria_gafete'] == 3){          
+        if ($nombre['categoria_gafete'] == 3) {
 
 
-                $constancia_impresa_profesor = GeneralDao::getImpresionConstancia($nombre['user_id'],'1');
-    
-                if(!$constancia_impresa_profesor){
-    
-                    $btn_constancia_profesor = '<a href="/Constanciasdoc/abrirConstanciaCongreso/'.base64_encode($nombre['user_id']).'/'.base64_encode(1).'" class="btn btn-info btn-icon-only text-white w-100" title="Imprimir Constancia Supra '.$nombre['nombre_completo'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia" target="_blank"><i class="fas fa-print"> </i></a>';
-    
-                }
-                else{
-                    $btn_constancia_profesor = '<a href="/Constanciasdoc/abrirConstanciaCongreso/'.base64_encode($nombre['user_id']).'/'.base64_encode(1).'" class="btn btn-warning btn-icon-only text-white w-100" title="Ya se ha impreso la Constancia Supra '.$nombre['nombre_completo'].'" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la Constancia" target="_blank"><i class="fas fa-print"> </i></a>';
-                } 
-    
-                $no_cards++;
-    
-                $cont_cards .= <<<html
+            $constancia_impresa_profesor = GeneralDao::getImpresionConstancia($nombre['user_id'], '1');
+
+            if (!$constancia_impresa_profesor) {
+
+                $btn_constancia_profesor = '<a href="/Constanciasdoc/abrirConstanciaCongreso/' . base64_encode($nombre['user_id']) . '/' . base64_encode(1) . '" class="btn btn-info btn-icon-only text-white w-100" title="Imprimir Constancia Supra ' . $nombre['nombre_completo'] . '" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia" target="_blank"><i class="fas fa-print"> </i></a>';
+            } else {
+                $btn_constancia_profesor = '<a href="/Constanciasdoc/abrirConstanciaCongreso/' . base64_encode($nombre['user_id']) . '/' . base64_encode(1) . '" class="btn btn-warning btn-icon-only text-white w-100" title="Ya se ha impreso la Constancia Supra ' . $nombre['nombre_completo'] . '" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ya se ha impreso la Constancia" target="_blank"><i class="fas fa-print"> </i></a>';
+            }
+
+            $constancia_impresa_profesor_supra = GeneralDao::getImpresionConstancia($nombre['user_id'], '36,37,38,39,40,41');
+
+            if (!$constancia_impresa_profesor_supra) {
+
+                $btn_constancia_profesor_supra = '<a href="/Constanciasdoc/abrirConstancia/' . base64_encode($nombre['user_id']) . '/' . base64_encode($nombre['nombre_completo']) . '/' . base64_encode(36) . '" class="btn btn-info btn-icon-only text-white w-100" title="Imprimir Constancia Supra" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
+            } else {
+
+                $btn_constancia_profesor_supra = '<a href="/Constanciasdoc/abrirConstancia/' . base64_encode($nombre['user_id']) . '/' . base64_encode($nombre['nombre_completo']) . '/' . base64_encode(36) . '" class="btn btn-warning btn-icon-only text-white w-100" title="Imprimir Constancia Supra" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Imprimir Constancia Impresa" target="_blank"><i class="fas fa-print"> </i></a>';
+            }
+
+            $no_cards++;
+
+            //congreso
+            $cont_cards .= <<<html
                 
                     <div class="col-md-4 col-sm-12">
                         <div class="card">                        
@@ -303,7 +307,19 @@ html;
                     </div>
     html;
 
-
+            //supra
+            $cont_cards .= <<<html
+                
+                    <div class="col-md-4 col-sm-12">
+                        <div class="card">                        
+                            <div class="card-body">
+                                <h3 class="card-title mb-3">Supra</h3>
+                                <p class="card-text mb-1">(Profesor)</p>                            
+                                {$btn_constancia_profesor_supra}
+                            </div>
+                        </div>
+                    </div>
+    html;
         }
 
         $cont_cards .= <<<html
@@ -362,7 +378,7 @@ html;
         //   $url = explode('/', $qrcode );
     }
 
-    public function abrirConstancia($clave, $nombre_supra,$id_producto = null, $no_horas = NULL)
+    public function abrirConstancia($clave, $nombre_supra, $id_producto = null, $no_horas = NULL)
     {
 
         // $this->generaterQr($clave_ticket);
@@ -375,53 +391,56 @@ html;
 
         $getTalleres = AsistentesDao::getTalleresByUserId($clave);
 
-        // var_dump($getTalleres);
-        // exit;
-
-        // $nombre = explode(" ", $datos_user['nombre']);
-
-
         $title = html_entity_decode($datos_user['title']);
         $nombre = html_entity_decode($datos_user['nombre']);
         $apellido = html_entity_decode($datos_user['apellidop']);
         $segundo_apellido = html_entity_decode($datos_user['apellidom']);
-        $nombre_completo = ($title)." ".($nombre)." ".($apellido)." ".($segundo_apellido);
+        $nombre_completo = ($title) . " " . ($nombre) . " " . ($apellido) . " " . ($segundo_apellido);
         $nombre_completo = mb_strtoupper($nombre_completo);
         $cont = 0;
 
-        $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($datos_user['user_id'],'Fisica',$id_producto);
-        
+        $insert_impresion_constancia = AsistentesDao::insertImpresionConstancia($datos_user['user_id'], 'Fisica', $id_producto);
+
 
         $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'Letter');
-		//$pdf->setSourceFile("constancias/plantillas/supra.pdf");
+        //$pdf->setSourceFile("constancias/plantillas/supra.pdf");
         $pdf->AddPage();
-		$pdf->Image('constancias/plantillas/constancia_supra.jpg','0','0','279.5', '216');
-		//$pdf->Image('constancias/plantillas/firmas.jpg', 70, 183, 100, 25);//imagen de firmas
+        $pdf->Image('constancias/plantillas/constancia_supra.jpg', '0', '0', '279.5', '216');
+        //$pdf->Image('constancias/plantillas/firmas.jpg', 70, 183, 100, 25);//imagen de firmas
         $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
         $pdf->setY(1);
-       
-        $pdf->SetXY(10, 83);        
-        $pdf->SetFont('Arial', 'B', 25);        
+
+        $pdf->SetXY(10, 83);
+        $pdf->SetFont('Arial', 'B', 25);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Multicell(260, 12, utf8_decode($nombre_completo), 0, 'C');
-        
-        //nombre Supra
-        $pdf->SetFont('Arial', 'B',12);
-        $pdf->SetXY(10, 90);
-        $pdf->Multicell(260, 10, utf8_decode('Por su participación como ASISTENTE en los talleres: '), 0, 'C');
 
-        $espace = 95;
-        foreach($getTalleres as $key => $value){
-            $cont++;
-            $pdf->SetFont('Arial', 'B',10);
-            $pdf->SetXY(10, $espace);
-            $pdf->Multicell(260, 10, utf8_decode('Taller '.$cont.': '.$value['nombre']), 0, 'C');
-            
-            $espace = $espace + 5;
+        //nombre Supra       
+
+        if ($datos_user['categoria_gafete'] != 3) {
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->SetXY(10, 90);
+            $pdf->Multicell(260, 10, utf8_decode('Por su participación como ASISTENTE en los talleres: '), 0, 'C');
+
+            $espace = 95;
+            foreach ($getTalleres as $key => $value) {
+                $cont++;
+                $pdf->SetFont('Arial', 'B', 10);
+                $pdf->SetXY(10, $espace);
+                $pdf->Multicell(260, 10, utf8_decode('Taller ' . $cont . ': ' . $value['nombre']), 0, 'C');
+
+                $espace = $espace + 5;
+            }
+            $pdf->SetFont('Arial', 'B', 10);
+            $pdf->SetXY(10, $espace - 1);
+            $pdf->Multicell(260, 10, utf8_decode('en el marco del'), 0, 'C');
+        } else {
+            //aqui va el texto Por su participación como ASISTENTE, en el marco del curso:
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->SetXY(10, 100);
+            $pdf->Multicell(260, 10, utf8_decode('Por su participación como ASISTENTE, en el marco del curso: '), 0, 'C');
         }
-		$pdf->SetFont('Arial', 'B',10);
-		$pdf->SetXY(10, $espace-1);
-		$pdf->Multicell(260, 10, utf8_decode('en el marco del'), 0, 'C');
+
 
         //firma 1
         //nombre Supra
@@ -429,19 +448,19 @@ html;
         //$pdf->SetFont('Arial', '',10);
         //$pdf->SetXY(70, 183);
         //$pdf->Multicell(60, 3, utf8_decode('Dr. José Ramón Saucillo Osuna Director del curso'), 0, 'C');
-        
+
 
         //firma 2
         //$pdf->Image('constancias/plantillas/firma2_supra.jpg',150,165, 25, 25);
         //$pdf->SetFont('Arial', '',10);
         //$pdf->SetXY(135, 183);
         //$pdf->Multicell(60, 3, utf8_decode('Dra. Sandra Patricia Gaspar Carrillo Director del curso'), 0, 'C');
-        
-        
+
+
 
         //qr supra
-        $pdf->Image('constancias/plantillas/qr_supra.png',20,20, 25, 25);
-            
+        $pdf->Image('constancias/plantillas/qr_supra.png', 20, 20, 25, 25);
+
         $pdf->Output();
         // $pdf->Output('F','constancias/'.$clave.$id_curso.'.pdf');
 
@@ -472,10 +491,10 @@ html;
 
 
         $pdf = new \FPDF($orientation = 'L', $unit = 'mm', $format = 'Letter');
-		//$pdf->setSourceFile("constancias/plantillas/congreso.pdf");
+        //$pdf->setSourceFile("constancias/plantillas/congreso.pdf");
         $pdf->AddPage();
-		$pdf->Image('constancias/plantillas/constancia_congreso.jpg','0','0','279.5', '216');
-		//$pdf->Image('constancias/plantillas/firmas_congreso.jpeg', 0, 0, 250, 215);//imagen de firmas
+        $pdf->Image('constancias/plantillas/constancia_congreso.jpg', '0', '0', '279.5', '216');
+        //$pdf->Image('constancias/plantillas/firmas_congreso.jpeg', 0, 0, 250, 215);//imagen de firmas
         $pdf->SetFont('Arial', 'B', 8);    //Letra Arial, negrita (Bold), tam. 20
         $pdf->setY(1);
 
@@ -524,7 +543,7 @@ html;
 
         // $pdf->Output('F', 'C:/pases_abordar/'. $clave.'.pdf');
     }
-   
+
 
 
     function generateRandomString($length = 6)
