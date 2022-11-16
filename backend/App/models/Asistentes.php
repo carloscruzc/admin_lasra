@@ -649,7 +649,7 @@ sql;
   {
     $mysqli = Database::getInstance();
     $query = <<<sql
-    SELECT concat_ws(' ',nombre,apellidop,apellidom) as nombre_completo, user_id, categoria_gafete, usuario from utilerias_administradores WHERE user_id = '$user_id' or usuario = '$user_id' or  CONCAT_WS(' ',nombre,apellidop,apellidom) = '$user_id'
+    SELECT concat_ws(' ',nombre,apellidop,apellidom) as nombre_completo, user_id, categoria_gafete, usuario from utilerias_administradores WHERE user_id = '$user_id' or usuario = '$user_id' or  CONCAT_WS(' ',nombre,apellidop,apellidom) LIKE '%$user_id'
 sql;
 
     return $mysqli->queryOne($query);
