@@ -91,7 +91,7 @@
                                                     <div class="row gx-2 gx-sm-3">
 
                                                     <div class="col">
-                                                        <p>Nota : Puedes buscar tu constancia por tu número de gafete ó por tu correo electrónico.</p>
+                                                        <p>Nota : Puedes buscar tu constancia por tu número de gafete, correo electrónico ó tu nombre completo.</p>
                                                     </div>
                                                     </div>
 
