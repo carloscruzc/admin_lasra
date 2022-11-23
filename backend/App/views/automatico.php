@@ -600,7 +600,7 @@
                     actualizaEdosUpdate();
                     setTimeout(function() {
                         $("#state_update").val(respuesta.datos_user.id_estado);
-                    }, 1000);
+                    }, 2000);
                     $("#categoria_gaf_update").val(respuesta.datos_user.categoria_gafete);
                     // if (respuesta.datos_user.categoria_gafete == 2) {
                     //     $(".cont-porcentaje-becado-update").show();
