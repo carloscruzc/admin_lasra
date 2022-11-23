@@ -822,6 +822,42 @@ sql;
                 return $mysqli->update($query, $params);
         }
 
+        // metodo para actualizar desde el automatico
+        public static function UpdateDataUserAuto($usuario)
+        {
+                $mysqli = Database::getInstance(true);
+                $query = <<<sql
+        UPDATE utilerias_administradores SET usuario =:usuario, title = :title, nombre = :nombre, apellidop = :apellidop, apellidom = :apellidom, telefono = :telefono,  especialidades = :especialidades, id_pais = :id_pais,id_estado = :id_estado, txt_especialidad = :txt_especialidad, business_name_iva = :business_name_iva, code_iva = :code_iva, email_receipt_iva = :email_receipt_iva, direccion = :direccion, postal_code_iva = :postal_code_iva, regimen_fiscal = :regimen_fiscal, cfdi = :cfdi, socio = :socio, porcentaje_beca = :porcentaje_beca, comentario_beca = :comentario_beca  WHERE user_id = :user_id
+sql;
+
+                $params = array(
+                        ':user_id' => $usuario->_user_id,
+                        ':usuario' => $usuario->_email,
+                        ':title' => $usuario->_title,
+                        ':nombre' => $usuario->_nombre,
+                        ':apellidop' => $usuario->_apellidop,
+                        ':apellidom' => $usuario->_apellidom,
+                        ':telefono' => $usuario->_telephone,
+                        ':especialidades' => $usuario->_especialidades,
+                        ':id_pais' => $usuario->_nationality,
+                        ':id_estado' => $usuario->_state,
+                        ':txt_especialidad' => $usuario->_txt_especialidad,
+                        ':socio' => $usuario->_socio,
+                        ':porcentaje_beca' => $usuario->_porcentaje_becado,
+                        ':comentario_beca' => $usuario->_comentario_beca,
+                        ':regimen_fiscal' => $usuario->_regimen_fiscal,
+                        ':cfdi' => $usuario->_cfdi,
+                        ':business_name_iva' => $usuario->_business_name_iva,
+                        ':code_iva' => $usuario->_code_iva,
+                        ':email_receipt_iva' => $usuario->_email_receipt_iva,
+                        ':direccion' => $usuario->_direccion,
+                        ':postal_code_iva' => $usuario->_postal_code_iva
+                );
+
+
+                return $mysqli->update($query, $params);
+        }
+
         public static function updateStatusSocio($user_id)
         {
                 $mysqli = Database::getInstance();

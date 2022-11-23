@@ -1228,7 +1228,6 @@
         });
 
 
-
         $("#categoria_gaf_update").on("change", function() {
             var categoria_gaf = $(this).val();
 
