@@ -668,4 +668,19 @@ sql;
 
     return $mysqli->queryAll($query);
   }
+
+  public static function getProductosByUser($search){
+    $mysqli = Database::getInstance();
+    
+      $query=<<<sql
+      SELECT pp.*,ap.status as status_as,pro.nombre
+      FROM pendiente_pago pp
+      INNER JOIN productos pro ON (pro.id_producto = pp.id_producto)
+      LEFT JOIN asigna_producto ap ON(pp.user_id = ap.user_id and pp.id_producto = ap.id_producto)
+      WHERE pp.user_id = $search
+sql;
+    
+    return $mysqli->queryAll($query);
+      
+  }
 }

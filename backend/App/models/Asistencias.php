@@ -81,4 +81,16 @@ sql;
       return $mysqli->queryAll($query);
         
     }
+
+    public static function getUserById($search){
+      $mysqli = Database::getInstance();
+      
+        $query=<<<sql
+      select user_id, usuario,concat_ws(' ',nombre, apellidop, apellidom) as nombre_completo from utilerias_administradores WHERE user_id = '$search'
+sql;
+      
+      return $mysqli->queryAll($query);
+        
+    }
+    
 } 
