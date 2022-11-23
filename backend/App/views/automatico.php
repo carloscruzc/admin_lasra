@@ -377,6 +377,8 @@
             // $("[data-clave=5gyku]").prop('checked', true);
         })
 
+        actualizaEdosUpdate();
+
         function actualizaEdosUpdate(pais = null) {
             var pais = $('#nationality_update').val();
 
