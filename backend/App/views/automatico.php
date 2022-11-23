@@ -381,7 +381,7 @@
 
         function actualizaEdosUpdate(pais = null) {
             var pais = $('#nationality_update').val();
-            alert("se actualiza")
+           
             $.ajax({
                     url: '/Caja/ObtenerEstado',
                     type: 'POST',
