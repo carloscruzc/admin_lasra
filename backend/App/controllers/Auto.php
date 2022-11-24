@@ -266,22 +266,20 @@ html;
     {
         $pais = $_POST['pais'];
 
-        echo $pais ."sadasdasdasdasd";
-
-        // // if ($pais != 156) {
-        // $estados = CajaDao::getState($pais);
-        // $html = "";
-        // foreach ($estados as $estado) {
-        //     $html .= '<option value="' . $estado['id_estado'] . '">' . $estado['estado'] . '</option>';
-        // }
+        // if ($pais != 156) {
+        $estados = CajaDao::getState($pais);
+        $html = "";
+        foreach ($estados as $estado) {
+            $html .= '<option value="' . $estado['id_estado'] . '">' . $estado['estado'] . '</option>';
+        }
         
 
 
-        // $respuesta = new respuesta();
-        // $respuesta->success = true;
-        // $respuesta->html = $html;
+        $respuesta = new respuesta();
+        $respuesta->success = true;
+        $respuesta->html = $html;
 
-        // echo json_encode($respuesta);
+        echo json_encode($respuesta);
     }
 
     public function getUsuariosGafetes()
@@ -1147,3 +1145,10 @@ class PHPQRCode
         return $ext_type;
     }
 } // class end
+
+//class respuesta
+class respuesta
+{
+    public $success;
+    public $html;
+}

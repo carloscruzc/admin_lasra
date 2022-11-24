@@ -385,7 +385,7 @@
                 var pais = $('#nationality_update').val();
 
                 $.ajax({
-                        url: '/Caja/ObtenerEstado',
+                        url: '/Auto/ObtenerEstado',
                         type: 'POST',
                         dataType: 'json',
                         data: {
@@ -402,12 +402,6 @@
                           alert("Ocurrio un error al actualizar el estado intenta de nuevo");
                     })
             }
-
-            
-            // actualizaEdosUpdate(156);
-
-
-
             //Actulizar usuarios
             $("#update_fiscal_data").on("submit", function(event) {
                 event.preventDefault();
@@ -609,7 +603,7 @@
 
                     setTimeout(function() {
                         $("#state_update").val(respuesta.datos_user.id_estado);
-                    }, 2000);
+                    }, 1000);
 
 
                     $("#categoria_gaf_update").val(respuesta.datos_user.categoria_gafete);
