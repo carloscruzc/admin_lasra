@@ -79,8 +79,8 @@ html;
         <script src="/assets/js/soft-ui-dashboard.min.js?v=1.0.5"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js" defer></script>
-        <link rel="stylesheet" href="http://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" />
+       <!-- <script src="http://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js" defer></script>
+        <link rel="stylesheet" href="http://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" />-->
         
         <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js" defer></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" />
