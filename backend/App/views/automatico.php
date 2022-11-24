@@ -381,7 +381,7 @@
 
         function actualizaEdosUpdate(pais = null) {
             var pais = $('#nationality_update').val();
-           
+           alert("pais "+pais);
             $.ajax({
                     url: '/Caja/ObtenerEstado',
                     type: 'POST',
@@ -601,11 +601,15 @@
                     $("#categorias_update").val(respuesta.datos_user.id_categoria);
                     $("#especialidades_update").val(respuesta.datos_user.especialidades);
                     $("#nationality_update").val(respuesta.datos_user.id_pais);
+
+
                     actualizaEdosUpdate(respuesta.datos_user.id_pais);
-                    alert(respuesta.datos_user.id_pais);
+                    
                     setTimeout(function() {
                         $("#state_update").val(respuesta.datos_user.id_estado);
                     }, 2000);
+
+
                     $("#categoria_gaf_update").val(respuesta.datos_user.categoria_gafete);
                     // if (respuesta.datos_user.categoria_gafete == 2) {
                     //     $(".cont-porcentaje-becado-update").show();

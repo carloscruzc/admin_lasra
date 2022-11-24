@@ -242,6 +242,26 @@ html;
         echo json_encode($data);
     }
 
+    public function ObtenerEstado()
+    {
+        $pais = $_POST['pais'];
+
+        // if ($pais != 156) {
+        $estados = CajaDao::getState($pais);
+        $html = "";
+        foreach ($estados as $estado) {
+            $html .= '<option value="' . $estado['id_estado'] . '">' . $estado['estado'] . '</option>';
+        }
+        
+
+
+        $respuesta = new respuesta();
+        $respuesta->success = true;
+        $respuesta->html = $html;
+
+        echo json_encode($respuesta);
+    }
+
     public function getUsuariosGafetes()
     {
         $concidencia = $_POST['concidencia'];
