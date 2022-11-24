@@ -377,34 +377,36 @@
             // $("[data-clave=5gyku]").prop('checked', true);
         })
 
-        // actualizaEdosUpdate();
-
-        function actualizaEdosUpdate(pais = null) {
-            var pais = $('#nationality_update').val();
-           alert("pais "+pais);
-            $.ajax({
-                    url: '/Caja/ObtenerEstado',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        pais: pais
-                    },
-
-                })
-                .done(function(json) {
-                    if (json.success) {
-                        $("#state_update").html(json.html);
-                    }
-                })
-                .fail(function() {
-                    //   alert("Ocurrio un error al actualizar el estado intenta de nuevo");
-                })
-        }
-
+      
 
         $(document).ready(function() {
 
-            // actualizaEdosUpdate();
+            function actualizaEdosUpdate(pais = null) {
+                var pais = $('#nationality_update').val();
+
+                $.ajax({
+                        url: '/Caja/ObtenerEstado',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            pais
+                        }
+                    })
+                    .done(function(json) {
+                        console.log(json)
+                        if (json.success) {
+                            $("#state_update").html(json.html);
+                        }
+                    })
+                    .fail(function() {
+                          alert("Ocurrio un error al actualizar el estado intenta de nuevo");
+                    })
+            }
+
+            
+            // actualizaEdosUpdate(156);
+
+
 
             //Actulizar usuarios
             $("#update_fiscal_data").on("submit", function(event) {
@@ -604,7 +606,7 @@
 
 
                     actualizaEdosUpdate(respuesta.datos_user.id_pais);
-                    
+
                     setTimeout(function() {
                         $("#state_update").val(respuesta.datos_user.id_estado);
                     }, 2000);
