@@ -404,7 +404,7 @@
 
         $(document).ready(function() {
 
-            actualizaEdosUpdate();
+            // actualizaEdosUpdate();
 
             //Actulizar usuarios
             $("#update_fiscal_data").on("submit", function(event) {
@@ -432,7 +432,7 @@
                             swal("¡Se actualizaron los Datos Correctamente!", "", "success")
                             // $('#cerrar_modal').click();
                             $("#cerrar_modal_datos_fac").click();
-                            getSell(formData.get('modal_user_id'));
+
                         } else {
                             console.log(respuesta);
                             swal("¡Hubo un error al actualizar!", "Contacte a soporte", "error")
@@ -601,10 +601,11 @@
                     $("#categorias_update").val(respuesta.datos_user.id_categoria);
                     $("#especialidades_update").val(respuesta.datos_user.especialidades);
                     $("#nationality_update").val(respuesta.datos_user.id_pais);
-                    // actualizaEdosUpdate();
-                    // setTimeout(function() {
-                    //     $("#state_update").val(respuesta.datos_user.id_estado);
-                    // }, 2000);
+                    actualizaEdosUpdate(respuesta.datos_user.id_pais);
+                    alert(respuesta.datos_user.id_pais);
+                    setTimeout(function() {
+                        $("#state_update").val(respuesta.datos_user.id_estado);
+                    }, 2000);
                     $("#categoria_gaf_update").val(respuesta.datos_user.categoria_gafete);
                     // if (respuesta.datos_user.categoria_gafete == 2) {
                     //     $(".cont-porcentaje-becado-update").show();
