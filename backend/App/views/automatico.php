@@ -404,6 +404,8 @@
 
         $(document).ready(function() {
 
+            actualizaEdosUpdate();
+
             //Actulizar usuarios
             $("#update_fiscal_data").on("submit", function(event) {
                 event.preventDefault();
@@ -599,7 +601,7 @@
                     $("#categorias_update").val(respuesta.datos_user.id_categoria);
                     $("#especialidades_update").val(respuesta.datos_user.especialidades);
                     $("#nationality_update").val(respuesta.datos_user.id_pais);
-                    actualizaEdosUpdate();
+                    // actualizaEdosUpdate();
                     // setTimeout(function() {
                     //     $("#state_update").val(respuesta.datos_user.id_estado);
                     // }, 2000);
